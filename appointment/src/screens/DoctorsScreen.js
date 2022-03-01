@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { StatusBar, FlatList,Button, Pressable,ScrollView,Image, Animated, Text, View, Dimensions, StyleSheet, TouchableOpacity, Easing, SafeAreaViewBase, SafeAreaView } from 'react-native';
 const { width, height } = Dimensions.get('screen');
 import { SearchBar } from 'react-native-elements';
@@ -8,78 +8,19 @@ import {
   } from 'react-navigation';
 
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
-
+import doctors from '../db/doctors'
   
 
 const DoctorsScreen = ({navigation}) =>{
     const {setOptions, toggleDrawer} = useNavigation();
+
   
 
 
 
     const [selectedId, setSelectedId] = useState(null)
     const [animatePress, setAnimatePress] = useState(new Animated.Value(1))
-    const [doctors,setDoctors] =useState([  {
-        id: 1,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor1.jpg')
-    },
-    {
-        id: 2,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor2.jpg')
-    },
-    {
-        id: 3,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor3.jpg')
-    },
-    {
-        id: 4,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor4.jpg')
-    },
-    {
-        id: 5,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor5.jpg')
-    },
-    {
-        id: 6,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor1.jpg')
-    },
-    {
-        id: 7,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor2.jpg')
-    },
-    {
-        id: 8,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor3.jpg')
-    },
-    {
-        id: 9,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor4.jpg')
-    },
-    {
-        id: 10,
-        name: 'Dr. John Doe',
-        speciality: 'Cardiologist',
-        image: require('../assets/images/doctor5.jpg')
-    },
-   ])
+    const [doctorsList,setDoctorsList] =useState()
    
  
 
@@ -88,6 +29,9 @@ const DoctorsScreen = ({navigation}) =>{
 
   
  }
+ useEffect(()=>{
+    setDoctorsList(doctors)
+ },[])
 const animateIn = () => {
     Animated.timing(animatePress, {
       toValue: 0.5,
