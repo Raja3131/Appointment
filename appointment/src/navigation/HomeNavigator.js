@@ -4,6 +4,7 @@ import {View,Text,Button} from 'react-native'
 import DoctorsScreen from './../screens/DoctorsScreen';
 import DoctorDetailsScreen from './../screens/DoctorDetailsScreen';
 import Appointment from './../screens/Appointment';
+import BookingScreen from './../screens/BookingScreen';
 
 
 const HomeScreen = () => {
@@ -14,6 +15,7 @@ const HomeScreen = () => {
             <HomeStack.Screen name="Home" component={DoctorsScreen} />
             <HomeStack.Screen name="DoctorProfile" component={DoctorDetailsScreen} />
             <HomeStack.Screen name="Appointment" component={Appointment} />
+            <HomeStack.Screen name="Booking" component={BookingScreen} />
 
         </HomeStack.Navigator>
     );

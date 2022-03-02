@@ -18,6 +18,7 @@ const Appointment = ({ route, navigation }) => {
     useEffect(() => {
         setTimeSlot(TimeSlot)
     }, [])
+  
 
     return (
         <>
@@ -49,28 +50,24 @@ const Appointment = ({ route, navigation }) => {
             <View style={styles.timeSlot}>{
                 timeSlot.map(slot => {
                     return (
-                        <TouchableHighlight onPress={() => setSelect(slot)}>
+                        <>
+                        <TouchableHighlight key={slot.id} onPress={() => setSelect(slot)}>
                             <View style={[styles.timeSlotItem, select === slot ? styles.timeSlotItemSelect : null]}>
                                 <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
                             </View>
                         </TouchableHighlight>
+                        </>
                     )
                 })
             }
-               
                 </View>
+                
+                
+                <View>
+            <Button title="Book" onPress={() => navigation.navigate('Booking', { doctorId, date,select })} />
 
-
-
-
-
-
-
-
-
-        </>
-
-
+                </View>
+                       </>
     )
 }
 
