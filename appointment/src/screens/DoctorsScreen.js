@@ -42,15 +42,7 @@ const animateIn = () => {
    
     return(
         <SafeAreaView style={styles.container}>
-             
-            <View>
-            <SearchBar
-        placeholder="Type Here..."
-        onChangeText={filterSearch}
-        value={''}
-      />
-
-            </View>
+           
             <View style={styles.body}>
                 <Animated.FlatList
                     data={doctors}
@@ -105,18 +97,7 @@ const styles = StyleSheet.create({
      
         
     },
-    header: {
-        height: height * 0.1,
-        backgroundColor: '#00BFFF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row'
-    },
-    headerText: {
-        color: '#fff',
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
+ 
     body: {
         flex: 1,
         backgroundColor: '#fff',
@@ -129,20 +110,20 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         elevation: 2,
     },
-    doctorItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20,
-      
-    },
+
     doctorImage: {
         width: 80,
         height: 80,
         borderRadius: 40,
+        marginRight: 20,
+        marginBottom: 20,
     },
     doctorInfo: {
         flex: 1,
         marginLeft: 20,
+        flexDirection: 'row',   
+        justifyContent: 'space-between',
+        position: 'relative',
     },
     doctorName: {
         fontSize: 20,
@@ -168,11 +149,14 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
+        backgroundColor: '#009387',
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: 'black',
+        position: 'absolute',
+        bottom: 80,
+        right: 0,
+        left: 250,
+        color: '#009387',
       },
       text: {
         fontSize: 16,

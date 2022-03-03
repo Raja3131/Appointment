@@ -5,6 +5,7 @@ import DoctorsScreen from './../screens/DoctorsScreen';
 import DoctorDetailsScreen from './../screens/DoctorDetailsScreen';
 import Appointment from './../screens/Appointment';
 import BookingScreen from './../screens/BookingScreen';
+import PatientDetails from '../screens/Patient';
 
 
 const HomeScreen = () => {
@@ -12,7 +13,8 @@ const HomeScreen = () => {
     const HomeStack = createNativeStackNavigator();
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen name="Home" component={DoctorsScreen} />
+            <HomeStack.Screen options={{ headerShown: false }} name="Patients" component={PatientDetails} />
+            <HomeStack.Screen name="Doctors" component={DoctorsScreen} />
             <HomeStack.Screen name="DoctorProfile" component={DoctorDetailsScreen} />
             <HomeStack.Screen name="Appointment" component={Appointment} />
             <HomeStack.Screen name="Booking" component={BookingScreen} />

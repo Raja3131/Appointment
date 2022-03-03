@@ -4,45 +4,33 @@ import { useState, useEffect } from "react";
 import doctors from '../db/doctors'
 import TimeSlot from '../db/TimeSlot';
 
+const Booking = ({ route, navigation }) => {
 
 
 
-const Booking = ({route,navigation})=>{
+    const { date } = route.params;
+    const { select } = route.params;
+    const { doctorId } = route.params;
 
-    
-
-    const {date} = route.params;
-    const {select} = route.params;
-    const {doctorId} = route.params;
-
-  
-   
- 
-
-
-    return(
+    return (
         <>
-        <View style={styles.docInfo}>
-            <Image style={styles.docImage} source={doctors.find(doctor=>doctor.id===doctorId).image} />
+            <View style={styles.docInfo}>
+                <Image style={styles.docImage} source={doctors.find(doctor => doctor.id === doctorId).image} />
 
-            <Text style={styles.docName}>{doctors.find(doctor=>doctor.id===doctorId).name}</Text>
-            <Text style={styles.docSpeciality}>{doctors.find(doctor=>doctor.id===doctorId).speciality}</Text>
+                <Text style={styles.docName}>{doctors.find(doctor => doctor.id === doctorId).name}</Text>
+                <Text style={styles.docSpeciality}>{doctors.find(doctor => doctor.id === doctorId).speciality}</Text>
             </View>
             <View style={styles.datePicker}>
-            <Text style={styles.datePickerButtonText}>{date.toDateString()}</Text>
+                <Text style={styles.datePickerButtonText}>{date.toDateString()}</Text>
             </View>
             <View>
-            <Text style={styles.timeSlot}>{select.startTime}</Text>
+                <Text style={styles.timeSlot}>{select.startTime}</Text>
 
             </View>
-
-          
-
-       
         </>
     )
 
-       
+
 }
 
 const styles = StyleSheet.create({
