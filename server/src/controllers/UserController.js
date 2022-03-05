@@ -68,11 +68,22 @@ export const login = async (req, res, next) => {
                 email: user.email,
                 userId: user._id
             }, 'secret key 123', { expiresIn: '1h' });
+
+            // const withOutPassword = { 
+            //     ...user._doc,
+            //     password: null
+            // }
+            const symbolPassword =Symbol(user.password);
+            const userDetails ={
+                ...user._doc,
+                password: symbolPassword
+            }
+
             res.status(200).json({
                 status: 'success',
                 token,
                 userId: user._id,
-                user
+                userDetails
 
             })
          

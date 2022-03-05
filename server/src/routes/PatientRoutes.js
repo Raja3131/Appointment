@@ -4,7 +4,7 @@ import { CreatePatient } from './../controllers/PatientController.js';
 
 const PatientRouter = express.Router();
 
-PatientRouter.post('/', CreatePatient);
+PatientRouter.post('/patient', CreatePatient);
 
 export default PatientRouter;
 
