@@ -1,11 +1,12 @@
 import React from 'react';
 import { Input, Icon } from 'react-native-elements';
 import { Button, ButtonGroup, withTheme, Text } from 'react-native-elements';
-import  { useState } from 'react';
+import  { useState,useEffect} from 'react';
 import { View, StyleSheet, Alert  } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import { useForm, Controller } from "react-hook-form";
+import axios from 'axios'
 
 
 
@@ -16,6 +17,18 @@ const PatientDetails = ({navigation})=>{
     const {control, handleSubmit, errors} = useForm();
     const icon = <FontAwesome5 name={'user'} style={styles.userIcon} />;
     const phoneIcon = <FontAwesome5 name={'phone'} style={styles.phoneIcon} />;
+
+    const API_URL = 'http://localhost:5000/patient/';
+   
+    const [patientDetails,setPatientDetails]=useState({});
+    const onSubmit = data => {
+        setPatientDetails(data);
+        console.log(data);
+    };
+
+
+
+
 
     return(
       <>         
@@ -32,7 +45,8 @@ const PatientDetails = ({navigation})=>{
             onChangeText={onChange}
             onBlur={onBlur}
             value={value}
-            style={styles.input}
+            inputContainerStyle={styles.input}
+         
           />
         )}
 
@@ -51,28 +65,40 @@ const PatientDetails = ({navigation})=>{
             onChangeText={onChange}
             onBlur={onBlur}
             value={value}
-            style={styles.phoneInput}
+            inputContainerStyle={styles.phoneInput}
             />
         )}
         />
+        <Controller
+        control={control}
+        rules={{
+            required: true,
+            pattern: /^\d{4}$/
+        }}
+        render={({ onChange, onBlur, value }) => (
+            <Input
+            placeholder="Age"
+            leftIcon={icon}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            value={value}
+            inputContainerStyle={styles.input}
+            />
+        )}
+        />
+       <Button
+        title="Submit"
+        onPress={handleSubmit(onSubmit)}
+        buttonStyle={styles.button}
+        titleStyle={styles.buttonText}
+        />
+
 
             </View>
 
 
 
-           
-            <View style={styles.buttonContainer}>
-                <Button
-                    title='Book'
-                    type='outline'
-                    buttonStyle={{ backgroundColor: 'rgba(39, 39, 39, 1)' }}
-                    titleStyle={{ color: 'white', marginHorizontal: 20 }}
-                    onPress={() => {
-                        navigation.navigate('Doctors')
-
-                     }}
-                />
-            </View>
+        
         </>
 
     )
@@ -86,21 +112,47 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor:"#fff",
+        marginTop:150,
     },
   
-    buttonContainer: {
-        width: '50%',
-        backgroundColor: '#fff',
-        
-
-    },
+ 
     phoneIcon: {
         fontSize: 16,
     },
     userIcon: {
         fontSize: 16,
     },
+    input: {
+        width: '50%',
+        marginVertical: 10,
+        borderBottomColor: '#000',
+        marginLeft: 100,
+
+    },
+ 
+    phoneInput: {
+        width: '50%',
+        borderBottomColor: '#000',
+        marginLeft: 100,
+    },
+    button: {
+        backgroundColor: '#000',
+        borderRadius: 10,
+        padding: 10,
+        marginBottom: 200,
+        textAlignVertical: 'center',
+        textAlign: 'center',
+        width:100
+    },
+    text: {
+        color: '#fff',
+        fontSize: 20,
+    },
+});
+
+       
+ 
+
    
   
-});
 export default PatientDetails;

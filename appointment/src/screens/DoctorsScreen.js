@@ -61,7 +61,7 @@ const animateIn = () => {
                                 <Image source={item.image} style={styles.doctorImage}/>
                                 <View style={styles.doctorInfo}>
                                     <Text style={styles.doctorName}>{item.name}</Text>
-                                    <Text style={styles.doctorSpeciality}>{item.speciality}</Text>
+                                    {/* <Text style={styles.doctorSpeciality}>{item.speciality}</Text> */}
                                     <Pressable
                                         onPress={() => navigation.navigate('DoctorProfile',{
                                             id: item.id,
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 10,
         elevation: 2,
+        marginTop: -20,
     },
 
     doctorImage: {
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     },
     doctorInfo: {
         flex: 1,
-        marginLeft: 20,
+        marginLeft: 30,
         flexDirection: 'row',   
         justifyContent: 'space-between',
         position: 'relative',
