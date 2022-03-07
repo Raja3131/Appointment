@@ -150,21 +150,18 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#009387',
+        backgroundColor: '#fff',
         borderRadius: 4,
         elevation: 3,
         position: 'absolute',
         bottom: 80,
         right: 0,
         left: 250,
-        color: '#009387',
       },
       text: {
-        fontSize: 16,
-        lineHeight: 21,
-        fontWeight: 'bold',
-        letterSpacing: 0.25,
-        color: 'white',
+        fontSize: 18,
+    fontWeight: 'bold',
+    color: '#009387',
       },
 });
 

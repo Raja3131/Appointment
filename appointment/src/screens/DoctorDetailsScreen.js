@@ -53,13 +53,14 @@ const styles = StyleSheet.create({
     marginTop: 24,
     paddingVertical: 12,
     paddingHorizontal: 30,
-    backgroundColor: '#00a8ff',
+    backgroundColor: '#009387',
     borderRadius: 10,
     width: '80%'
   },
   buttonText: {
     fontSize: 18,
-    color: '#fff'
+    fontWeight: 'bold',
+    textAlign: 'center',
   }
 });
 export default DoctorDetailsScreen;

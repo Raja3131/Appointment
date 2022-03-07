@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useRef} from "react";
 import {
   View,
   Text,
@@ -10,27 +10,33 @@ import {
   StyleSheet,
   ScrollView,
   StatusBar, KeyboardAvoidingView,
-  Pressable
+  Pressable,
+  Alert
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather'
 import { useForm, Controller } from "react-hook-form";
 import Api from '../api/Api'
 import { useTheme } from '@react-navigation/native';
+import { ButtonGroup } from 'react-native-elements'
 
 const PatientDetails = ({ navigation }) => {
+    
   const [data, setData] = React.useState({
     name: '',
     age: '',
-    mobile: '',
-    address: '',
     check_textInputChange: false,
+    secureTextEntry: true,
+
     isValidUser: true,
+
 });
 
+
 const { colors } = useTheme();
+const nameRef = useRef();
+const ageRef = useRef();
 
 
 const textInputChange = (val) => {
@@ -40,6 +46,7 @@ const textInputChange = (val) => {
             name: val,
             check_textInputChange: true,
             isValidUser: true
+            
         });
     } else {
         setData({
@@ -57,12 +64,15 @@ const handleAgeChange = (val) => {
             ...data,
             age: val,
             check_textInputChange: true,
+            isValidUser: true
         });
     } else {
         setData({
             ...data,
             age: val,
             check_textInputChange: false,
+            isValidUser: false
+
         });
     }
    
@@ -82,21 +92,36 @@ const handleValidUser = (val) => {
         });
     }
 }
+
 const handleSubmit = (val) => {
-    console.log(val)
-    Api.post('/patient', {
-        name: val.name,
-        age: val.age
-    }) ? navigation.navigate('Doctors') : null
-    .then((response) => {
-        console.log(response)
-    })
-    .catch((error) => {
-        console.log(error)
-    })
+    if ( data.name.length == 0 || data.age.length == 0 ) {
+        Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
+            {text: 'Okay'}
+        ]);
+        return;
+    }
+    if ( data.name.length < 4 ) {
+        Alert.alert('Wrong Input!', 'Username must be at least 4 characters long.', [
+            {text: 'Okay'}
+        ]);
+        return;
+    }
+    navigation.navigate('Doctors', {
+        name: data.name,
+        age: data.age
+    });
+
+
+  
 }
 
 return (
+    <>
+    <KeyboardAvoidingView
+        behavior="padding"
+        style={{ flex: 1 }}
+    >
+
   <View style={styles.container}>
       <StatusBar backgroundColor='#009387' barStyle="light-content"/>
     <View style={styles.header}>
@@ -123,9 +148,11 @@ return (
                 style={[styles.textInput, {
                     color: colors.text
                 }]}
+
                 autoCapitalize="none"
                 onChangeText={(val) => textInputChange(val)}
                 onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+                ref={nameRef}
             />
             {data.check_textInputChange ? 
             <Animatable.View
@@ -164,9 +191,26 @@ return (
                 }]}
                 autoCapitalize="none"
                 onChangeText={(val) => handleAgeChange(val)}
+                onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+                ref={ageRef}
+                
             />
           
         </View>
+        { data.check_textInputChange ?
+        <Animatable.View animation="bounceIn" duration={500}>
+            <Feather 
+                name="check-circle"
+                color="green"
+                size={20}
+            />
+        </Animatable.View>
+        : null}
+        { data.isValidUser ? null :
+        <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Age must be 2 characters long.</Text>
+        </Animatable.View>
+        }
 
         
 
@@ -187,6 +231,8 @@ return (
             </TouchableOpacity>
     </Animatable.View>
   </View>
+</KeyboardAvoidingView>
+</>
 );
 };
 
