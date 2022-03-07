@@ -7,11 +7,14 @@ const patientSchema = new mongoose.Schema({
   age: {
     type: Number,
   },
-  // phone: {
-  //   type: String,
-  // },
-  // avatar: String,
-  // tokens: [{ type: Object }],
+  mobile: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+ 
+ 
 })
 
 const Patient = mongoose.model('Patient', patientSchema)
