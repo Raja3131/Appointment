@@ -1,9 +1,12 @@
 import React from "react";
-import { Text, View, TextInput, Button, Alert,StyleSheet } from "react-native";
+import { Text, View, TextInput, Button, Alert,StyleSheet,StatusBar,KeyboardAvoidingView } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import Api from '../api/Api'
+import { useTheme } from '@react-navigation/native';
 
- const PatientDetails=()=> {
+ const PatientDetails=({navigation})=> {
+  const { colors } = useTheme();
+  const theme = useTheme();
   const { control, handleSubmit,reset, formState: { errors } } = useForm({
     defaultValues: {
       name: '',
@@ -18,6 +21,7 @@ import Api from '../api/Api'
 
     .then(res=>{
       console.log(res.data)
+      navigation.navigate('Doctors')
       reset()
 
     })
@@ -27,7 +31,17 @@ import Api from '../api/Api'
   }
 
   return (
-    <View>
+    <View style={styles.container}>
+      <StatusBar barStyle= { theme.dark ? "light-content" : "dark-content" }/>
+       <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <StatusBar translucent={true}></StatusBar>
+
+
+      <Text style={{color: colors.text}}>Home Screen</Text>
+
       <Controller
         control={control}
         rules={{
@@ -39,6 +53,7 @@ import Api from '../api/Api'
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            placeholder="Name"
           />
         )}
         name="name"
@@ -56,22 +71,51 @@ import Api from '../api/Api'
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            placeholder="Age"
+            autoCapitalize="words"
           />
         )}
         name="age"
       />
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      <Button title="Submit" onPress={handleSubmit(onSubmit)} color='#000' />
+      </KeyboardAvoidingView>
+      
     </View>
   );
 };
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#009387',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 30,
+  
+    
+   
+  },
   input: {
-    borderWidth: 1,
-    borderColor: '#777',
+    borderWidth: 2,
+    borderColor: '#fff',
     padding: 8,
     margin: 10,
     width: 200,
+    borderRadius: 6,
+    fontSize: 20,
+    textAlign: 'center',
+    position: 'relative',
+    paddingLeft: 10,
+    color: '#fff',
+  },
+  text: {
+    fontSize: 30,
+    color: '#fff',
+    fontWeight: 'bold',
+    position:'absolute',
+    top:50,
+
+    
   },
 });
  export default PatientDetails;

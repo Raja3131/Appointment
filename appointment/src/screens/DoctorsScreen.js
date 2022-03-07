@@ -55,7 +55,7 @@ const animateIn = () => {
                             <TouchableOpacity
                                onPress={() =>animateIn}
                                  
-                                style={styles.doctor}
+                                // style={styles.doctor}
                             style={[styles.doctorContainer, selectedId === item.id ? styles.doctorContainerSelected : null]}
                             >
                                 <Image source={item.image} style={styles.doctorImage}/>
