@@ -1,4 +1,4 @@
-import React,{useRef} from "react";
+import React,{useRef,useState} from "react";
 import {
   View,
   Text,
@@ -16,227 +16,135 @@ import {
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather'
-import { useForm, Controller } from "react-hook-form";
 import Api from '../api/Api'
 import { useTheme } from '@react-navigation/native';
-import { ButtonGroup } from 'react-native-elements'
+import * as Yup from 'yup';
+import { Formik } from 'formik';
+
+const validationSchema = Yup.object({
+    name: Yup.string()
+      .trim()
+      .min(3, 'Invalid name!')
+
+      
+      .required('Name is required!')
+      .matches(/^[a-zA-Z ]*$/, 'Invalid name!'),
+    age: Yup.number()
+        .positive('Invalid age!')
+        .required('Age is required!')
+        .min(1, 'Invalid age!')
+        .max(2, 'Invalid age!')
+        .moreThan(0, 'Invalid age!')
+        .lessThan(100, 'Invalid age!')
+
+      
+
+
+    
+  });
 
 const PatientDetails = ({ navigation }) => {
+    const userInfo = {
+        name: '',
+        age: '',
+      };
+      const [error, setError] = useState('');
+
+  const { name, age } = userInfo;
+  const handleOnChangeText = (value, fieldName) => {
+    setUserInfo({ ...userInfo, [fieldName]: value });
+  };
+  const isValidForm = () => {
+    // we will accept only if all of the fields have value
+    if (!isValidObjField(userInfo))
+      return updateError('Required all fields!', setError);
+    // if valid name with 3 or more characters
+    if (!name.trim() || name.length < 3)
+      return updateError('Invalid name!', setError);
+    // only valid email id is allowed
+    if (!isValidEmail(age)) return updateError('Invalid Age!', setError);
+
+
+    return true;
+  };
+
+const onSubmit = async(values) => {
+    console.log(values);
+    const { name, age } = values;
+    navigation.navigate('Doctors', { name, age });
     
-  const [data, setData] = React.useState({
-    name: '',
-    age: '',
-    check_textInputChange: false,
-    secureTextEntry: true,
-
-    isValidUser: true,
-
-});
-
-
-const { colors } = useTheme();
-const nameRef = useRef();
-const ageRef = useRef();
-
-
-const textInputChange = (val) => {
-    if( val.trim().length >= 4 ) {
-        setData({
-            ...data,
-            name: val,
-            check_textInputChange: true,
-            isValidUser: true
-            
-        });
-    } else {
-        setData({
-            ...data,
-            name: val,
-            check_textInputChange: false,
-            isValidUser: false
-        });
-    }
-}
-
-const handleAgeChange = (val) => {
-    if( val.trim().length >= 2 ) {
-        setData({
-            ...data,
-            age: val,
-            check_textInputChange: true,
-            isValidUser: true
-        });
-    } else {
-        setData({
-            ...data,
-            age: val,
-            check_textInputChange: false,
-            isValidUser: false
-
-        });
-    }
    
-}
-
-
-const handleValidUser = (val) => {
-    if( val.trim().length >= 4 ) {
-        setData({
-            ...data,
-            isValidUser: true
-        });
-    } else {
-        setData({
-            ...data,
-            isValidUser: false
-        });
-    }
-}
-
-const handleSubmit = (val) => {
-    if ( data.name.length == 0 || data.age.length == 0 ) {
-        Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-            {text: 'Okay'}
-        ]);
-        return;
-    }
-    if ( data.name.length < 4 ) {
-        Alert.alert('Wrong Input!', 'Username must be at least 4 characters long.', [
-            {text: 'Okay'}
-        ]);
-        return;
-    }
-    navigation.navigate('Doctors', {
-        name: data.name,
-        age: data.age
-    });
-
-
-  
-}
-
-return (
-    <>
-    <KeyboardAvoidingView
-        behavior="padding"
-        style={{ flex: 1 }}
-    >
-
-  <View style={styles.container}>
-      <StatusBar backgroundColor='#009387' barStyle="light-content"/>
-    <View style={styles.header}>
-        <Text style={styles.text_header}>Welcome!</Text>
-    </View>
-    <Animatable.View 
-        animation="fadeInUpBig"
-        style={[styles.footer, {
-            backgroundColor: colors.background
-        }]}
-    >
-        <Text style={[styles.text_footer, {
-            color: colors.text
-        }]}>Username</Text>
-        <View style={styles.action}>
-            <FontAwesome 
-                name="user-o"
-                color={colors.text}
-                size={20}
-            />
-            <TextInput 
-                placeholder="Username"
-                placeholderTextColor="#666666"
-                style={[styles.textInput, {
-                    color: colors.text
-                }]}
-
-                autoCapitalize="none"
-                onChangeText={(val) => textInputChange(val)}
-                onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
-                ref={nameRef}
-            />
-            {data.check_textInputChange ? 
+    };
+    return (
+        <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+        >
+        <ScrollView>
+            <View style={styles.header}>
+            <Text style={styles.text_header}>Welcome</Text>
+            </View>
             <Animatable.View
-                animation="bounceIn"
+            animation="fadeInUpBig"
+            style={[styles.footer, {
+                backgroundColor: '#fff',
+                borderTopLeftRadius: 30,
+                borderTopRightRadius: 30,
+                paddingHorizontal: 30,
+                paddingVertical: 30,
+            }]}
             >
-                <Feather 
-                    name="check-circle"
-                    color="green"
-                    size={20}
-                />
+            <Formik
+                initialValues={userInfo}
+                onSubmit={onSubmit}
+                validationSchema={validationSchema}
+            >
+                {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                <View>
+                    <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Name</Text>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={handleChange('name')}
+                        onBlur={handleBlur('name')}
+                        value={values.name}
+                        contextMenuHidden={true}  
+
+                    />
+                    {touched.name && errors.name && (
+                        <Text style={styles.error}>{errors.name}</Text>
+                    )}
+                    </View>
+                    <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Age</Text>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={handleChange('age')}
+                        onBlur={handleBlur('age')}
+                        value={values.age}
+                        keyboardType='numeric'
+                        maxLength={10}
+                    />
+                    {touched.age && errors.age && (
+                        <Text style={styles.error}>{errors.age}</Text>
+                    )}
+                    </View>
+                    <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleSubmit}
+                    >
+                        <Text style={styles.text_button}>Submit</Text>
+                    </TouchableOpacity>
+                    </View>
+                </View>
+                )}
+            </Formik>
             </Animatable.View>
-            : null}
-        </View>
-        { data.isValidUser ? null : 
-        <Animatable.View animation="fadeInLeft" duration={500}>
-        <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
-        </Animatable.View>
-        }
-        
-
-        <Text style={[styles.text_footer, {
-            color: colors.text,
-            marginTop: 35
-        }]}>Age</Text>
-        <View style={styles.action}>
-            <Feather 
-                name="user"
-                color={colors.text}
-                size={20}
-            />
-            <TextInput 
-                placeholder="Your Age"
-                placeholderTextColor="#666666"
-                style={[styles.textInput, {
-                    color: colors.text
-                }]}
-                autoCapitalize="none"
-                onChangeText={(val) => handleAgeChange(val)}
-                onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
-                ref={ageRef}
-                
-            />
-          
-        </View>
-        { data.check_textInputChange ?
-        <Animatable.View animation="bounceIn" duration={500}>
-            <Feather 
-                name="check-circle"
-                color="green"
-                size={20}
-            />
-        </Animatable.View>
-        : null}
-        { data.isValidUser ? null :
-        <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>Age must be 2 characters long.</Text>
-        </Animatable.View>
-        }
-
-        
-
-       
-
-       
-            <TouchableOpacity
-                onPress={() => handleSubmit(data)}
-                style={[styles.signIn, {
-                    borderColor: '#009387',
-                    borderWidth: 1,
-                    marginTop: 180
-                }]}
-            >
-                <Text style={[styles.textSign, {
-                    color: '#009387'
-                }]}>Submit</Text>
-            </TouchableOpacity>
-    </Animatable.View>
-  </View>
-</KeyboardAvoidingView>
-</>
-);
+        </ScrollView>
+        </KeyboardAvoidingView>
+    );
 };
-
-
 const styles = StyleSheet.create({
 container: {
   flex: 1, 
@@ -268,9 +176,7 @@ text_footer: {
 action: {
     flexDirection: 'row',
     marginTop: 10,
-    borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
-    paddingBottom: 5
 },
 actionError: {
     flexDirection: 'row',
