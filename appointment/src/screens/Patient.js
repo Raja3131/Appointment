@@ -20,29 +20,31 @@ import { useForm, Controller } from "react-hook-form";
 import Api from '../api/Api'
 import { useTheme } from '@react-navigation/native';
 import { ButtonGroup } from 'react-native-elements'
-import DropDownPicker from 'react-native-dropdown-picker';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { Picker } from '@react-native-picker/picker';
 
 const PatientDetails = ({ navigation }) => {
+    const [selectGender, setSelectGender] = useState('');
 
 
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()
+            .matches(/^[a-zA-Z ]+$/, 'Name is not valid')
             .required('Name is required')
             .min(3, 'Name must be at least 3 characters')
-            .max(50, 'Name must be less than 50 characters'),
+            .max(50, 'Name must be less than 50 characters')
+            .test('is-name', 'Name must be alphabet', value => {
+                return /^[a-zA-Z]+$/.test(value)
+            })
+            .trim(),
 
 
 
-        age: Yup.number()
+        age: Yup.string().matches(/^[0-9]+$/, 'Age must be number')
             .required('Age is required')
-            .min(0, 'Age must be at least 0')
-            .max(120, 'Age must be less than 120')
-            .typeError('Age must be a number')
-            .integer('Age must be an integer')
-            .positive('Age must be positive')
+
             .test('mobile', 'Mobile number must be positive', value => {
                 return value > 0;
             })
@@ -56,29 +58,25 @@ const PatientDetails = ({ navigation }) => {
                 return value > 0;
             }),
 
-        mobile: Yup.number()
+        mobile: Yup.string()
+            .matches(/^[0-9]+$/, 'Mobile number is not valid')
             .required('Mobile is required')
             .min(10, 'Mobile must be at least 10 characters')
             .typeError('Mobile must be a number')
-            .positive('Mobile must be positive')
-            .integer('Mobile must be an integer')
+
+
             .test('mobile', 'Mobile number must be positive', value => {
                 return value > 0;
             })
             .test('mobile', 'Mobile number must be an integer', value => {
                 return value % 1 === 0;
-            })
+            }),
+
 
 
     })
 
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
-        { label: 'Male', value: 'Male' },
-        { label: 'Female', value: 'Female' },
-        { label: 'Transgender', value: 'Transgender' }
-    ]);
+
 
     const { colors } = useTheme();
 
@@ -95,10 +93,15 @@ const PatientDetails = ({ navigation }) => {
                         <Text style={styles.text_header}>Welcome!</Text>
                     </View>
                     <Formik
-                        initialValues={{ name: '', age: '', mobile: '' }}
+                        initialValues={{
+                            name: '', age: '', mobile: '', gender: selectGender
+
+                        }}
                         onSubmit={(values, actions) => {
+
+                            navigation.navigate('Doctors', { name: values.name, age: values.age, mobile: values.mobile, gender: values.gender });
                             console.log(values);
-                            navigation.navigate('Doctors', { name: values.name, age: values.age, mobile: values.mobile });
+
                             actions.resetForm();
                         }}
                         validationSchema={validationSchema}
@@ -169,14 +172,30 @@ const PatientDetails = ({ navigation }) => {
 
 
                                 <View style={styles.dropdown}>
-                                    <DropDownPicker
-                                        open={open}
-                                        value={value}
-                                        items={items}
-                                        setOpen={setOpen}
-                                        setValue={setValue}
-                                        setItems={setItems}
-                                    />
+
+                                    <Picker
+                                        selectedValue={selectGender}
+
+
+                                        onValueChange={(item, itemIndex) => {
+                                            setSelectGender(item)
+                                            console.log(item)
+
+                                        }
+                                        }
+
+                                        
+
+
+                                    >
+
+                                        <Picker.Item label="Female" value="Female" />
+                                        <Picker.Item label="Male" value="Male" />
+
+
+                                        <Picker.Item label="Transgender" value="Transgender" />
+                                    </Picker>
+
 
                                 </View>
                                 <Text style={[styles.text_footer, {
@@ -201,7 +220,7 @@ const PatientDetails = ({ navigation }) => {
                                         value={values.mobile}
                                         keyboardType='numeric'
                                         maxLength={10}
-                                        />
+                                    />
                                     <Text style={styles.errorMsg}>
                                         {touched.mobile && errors.mobile}
                                     </Text>

@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, Image, Button, StyleSheet, Pressable } from "react-native";
 import { useState, useEffect } from "react";
 import doctors from '../db/doctors'
+import { color } from "@mui/system";
 const DoctorDetailsScreen = ({ route, navigation }) => {
   const { id } = route.params;
   const [doctorsList, setDoctorsList] = useState([])
@@ -42,11 +43,11 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   about: {
-    marginTop: 10,
-    fontSize: 16,
-    color: '#888',
-    width: '80%',
-    lineHeight: 25,
+    fontSize: 18,
+    marginTop: 20,
+    marginBottom: 20,
+    color: 'grey'
+ 
 
   },
   button: {
