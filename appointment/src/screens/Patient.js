@@ -22,10 +22,11 @@ import { useTheme } from '@react-navigation/native';
 import { ButtonGroup } from 'react-native-elements'
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { Picker } from '@react-native-picker/picker';
+// import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 
 const PatientDetails = ({ navigation }) => {
-    const [selectGender, setSelectGender] = useState('');
+    // const [selectGender, setSelectGender] = useState('');
 
 
 
@@ -94,9 +95,15 @@ const PatientDetails = ({ navigation }) => {
                     </View>
                     <Formik
                         initialValues={{
-                            name: '', age: '', mobile: '', gender: selectGender
+                            name: '', age: '', mobile: '', gender:''
+                          
 
+                            
                         }}
+
+
+
+
                         onSubmit={(values, actions) => {
 
                             navigation.navigate('Doctors', { name: values.name, age: values.age, mobile: values.mobile, gender: values.gender });
@@ -173,7 +180,7 @@ const PatientDetails = ({ navigation }) => {
 
                                 <View style={styles.dropdown}>
 
-                                    <Picker
+                                    {/* <Picker
                                         selectedValue={selectGender}
 
 
@@ -184,7 +191,7 @@ const PatientDetails = ({ navigation }) => {
                                         }
                                         }
 
-                                        
+
 
 
                                     >
@@ -194,8 +201,21 @@ const PatientDetails = ({ navigation }) => {
 
 
                                         <Picker.Item label="Transgender" value="Transgender" />
-                                    </Picker>
+                                    </Picker> */}
 
+<RNPickerSelect
+            onValueChange={(value) => {
+                values.gender=value
+                console.log(values.gender)
+            }
+                
+            }
+            items={[
+                { label: 'Male', value: 'Male' },
+                { label: 'Female', value: 'Female' },
+                { label: 'Transgender', value: 'Transgender' },
+            ]}
+        />
 
                                 </View>
                                 <Text style={[styles.text_footer, {
