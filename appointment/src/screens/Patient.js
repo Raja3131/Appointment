@@ -22,125 +22,65 @@ import { useTheme } from '@react-navigation/native';
 import { ButtonGroup } from 'react-native-elements'
 import DropDownPicker from 'react-native-dropdown-picker';
 import * as Yup from 'yup';
+import { Formik } from 'formik';
 
 const PatientDetails = ({ navigation }) => {
 
+
+
     const validationSchema = Yup.object().shape({
         name: Yup.string()
-            .required('Name is required'),
+            .required('Name is required')
+            .min(3, 'Name must be at least 3 characters')
+            .max(50, 'Name must be less than 50 characters'),
+
+
+
         age: Yup.number()
-            .required('Age is required'),
+            .required('Age is required')
+            .min(0, 'Age must be at least 0')
+            .max(120, 'Age must be less than 120')
+            .typeError('Age must be a number')
+            .integer('Age must be an integer')
+            .positive('Age must be positive')
+            .test('mobile', 'Mobile number must be positive', value => {
+                return value > 0;
+            })
+            .test('age', 'Age must be positive', value => {
+                return value > 0;
+            })
+            .test('age', 'Age must be less than 120', value => {
+                return value < 120;
+            })
+            .test('age', 'Age must be at least 0', value => {
+                return value > 0;
+            }),
+
+        mobile: Yup.number()
+            .required('Mobile is required')
+            .min(10, 'Mobile must be at least 10 characters')
+            .typeError('Mobile must be a number')
+            .positive('Mobile must be positive')
+            .integer('Mobile must be an integer')
+            .test('mobile', 'Mobile number must be positive', value => {
+                return value > 0;
+            })
+            .test('mobile', 'Mobile number must be an integer', value => {
+                return value % 1 === 0;
+            })
+
+
     })
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
         { label: 'Male', value: 'Male' },
-        { label: 'female', value: 'Female' }
+        { label: 'Female', value: 'Female' },
+        { label: 'Transgender', value: 'Transgender' }
     ]);
 
-
-    const [data, setData] = useState({
-        name: '',
-        age: '',
-        phone: '',
-        check_textInputChange: false,
-        secureTextEntry: true,
-
-        isValidUser: true,
-
-    });
-
-
     const { colors } = useTheme();
-    const nameRef = useRef();
-    const ageRef = useRef();
-
-
-    const textInputChange = (val) => {
-        if (val.trim().length >= 4) {
-
-            setData({
-                ...data,
-                name: val,
-                check_textInputChange: true,
-                isValidUser: true
-
-            });
-        } else {
-            setData({
-                ...data,
-                name: val,
-                check_textInputChange: false,
-                isValidUser: false
-            });
-        }
-    }
-
-    const handleAgeChange = (val) => {
-        if (val.trim().length >= 2) {
-            setData({
-                ...data,
-                age: val,
-                check_textInputChange: true,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                age: val,
-                check_textInputChange: false,
-                isValidUser: false
-
-            });
-        }
-
-    }
-
-
-    const handleValidUser = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                isValidUser: false
-            });
-        }
-    }
-
-    const handleSubmit = (data) => {
-        if (data.name.length == 0 || data.age.length == 0 || data.value == '') {
-            Alert.alert('Wrong Input!', 'Username or password or Gender field cannot be empty.', [
-                { text: 'Okay' }
-            ]);
-            return;
-        }
-        if (data.name.length < 4) {
-            Alert.alert('Wrong Input!', 'Username must be at least 4 characters long.', [
-                { text: 'Okay' }
-            ]);
-
-            return;
-        }
-        if (data.age.length < 1) {
-            Alert.alert('Wrong Input!', 'Password must be at least 2 characters long.', [
-                { text: 'Okay' }
-            ]);
-            return;
-        }
-        navigation.navigate('Doctors', {
-            name: data.name,
-            age: data.age,
-            items: items,
-        });
-
-
-
-    }
 
     return (
         <>
@@ -154,167 +94,137 @@ const PatientDetails = ({ navigation }) => {
                     <View style={styles.header}>
                         <Text style={styles.text_header}>Welcome!</Text>
                     </View>
-                    <Animatable.View
-                        animation="fadeInUpBig"
-                        style={[styles.footer, {
-                            backgroundColor: colors.background
-                        }]}
+                    <Formik
+                        initialValues={{ name: '', age: '', mobile: '' }}
+                        onSubmit={(values, actions) => {
+                            console.log(values);
+                            navigation.navigate('Doctors', { name: values.name, age: values.age, mobile: values.mobile });
+                            actions.resetForm();
+                        }}
+                        validationSchema={validationSchema}
                     >
-                        <Text style={[styles.text_footer, {
-                            color: colors.text
-                        }]}>Username</Text>
-                        <View style={styles.action}>
-                            <FontAwesome
-                                name="user-o"
-                                color={colors.text}
-                                size={20}
-                            />
-                            <TextInput
-                                placeholder="Username"
-                                placeholderTextColor="#666666"
-                                style={[styles.textInput, {
-                                    color: colors.text
+                        {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }) => (
+                            <Animatable.View
+                                animation="fadeInUpBig"
+                                style={[styles.footer, {
+                                    backgroundColor: colors.background
                                 }]}
-                                placeholderStyle={{ color: "#666666", fontSize: 20 }}
+                            >
 
-
-                                autoCapitalize="none"
-                                onChangeText={(val) => textInputChange(val)}
-                                onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                                ref={nameRef}
-                            />
-                            {data.check_textInputChange ?
-                                <Animatable.View
-                                    animation="bounceIn"
-                                >
-                                    <Feather
-                                        name="check-circle"
-                                        color="green"
+                                <Text style={[styles.text_footer, {
+                                    color: colors.text
+                                }]}>Username</Text>
+                                <View style={styles.action}>
+                                    <FontAwesome
+                                        name="user-o"
+                                        color={colors.text}
                                         size={20}
                                     />
-                                </Animatable.View>
-                                : null}
-                        </View>
-                        {data.isValidUser ? null :
-                            <Animatable.View animation="fadeInLeft" duration={500}>
-                                <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+                                    <TextInput
+                                        placeholder="Your Username"
+                                        style={[styles.textInput, {
+                                            color: colors.text
+                                        }]}
+                                        placeholderStyle={{ color: "#666666", fontSize: 20 }}
+                                        onChangeText={handleChange('name')}
+                                        onBlur={handleBlur('name')}
+                                        value={values.name}
+                                    />
+                                    <Text style={styles.errorMsg}>
+                                        {touched.name && errors.name}
+                                    </Text>
+
+                                </View>
+
+
+                                <Text style={[styles.text_footer, {
+                                    color: colors.text,
+                                    marginTop: 35
+                                }]}>Age</Text>
+                                <View style={styles.action}>
+                                    <Feather
+                                        name="user"
+                                        color={colors.text}
+                                        size={20}
+                                    />
+                                    <TextInput
+                                        placeholder="Your Age"
+                                        placeholderTextColor="#666666"
+                                        placeholderStyle={{ color: "#666666", fontSize: 20 }}
+                                        style={[styles.textInput, {
+                                            color: colors.text
+                                        }]}
+                                        onChangeText={handleChange('age')}
+                                        onBlur={handleBlur('age')}
+                                        value={values.age}
+                                        keyboardType='numeric'
+                                        maxLength={3}
+
+                                    />
+                                    <Text style={styles.errorMsg}>
+                                        {touched.age && errors.age}
+                                    </Text>
+
+                                </View>
+
+
+                                <View style={styles.dropdown}>
+                                    <DropDownPicker
+                                        open={open}
+                                        value={value}
+                                        items={items}
+                                        setOpen={setOpen}
+                                        setValue={setValue}
+                                        setItems={setItems}
+                                    />
+
+                                </View>
+                                <Text style={[styles.text_footer, {
+                                    color: colors.text,
+                                    marginTop: 35
+                                }]}>Mobile</Text>
+                                <View style={styles.action}>
+                                    <Feather
+                                        name="user"
+                                        color={colors.text}
+                                        size={20}
+                                    />
+                                    <TextInput
+                                        placeholder="Mobile"
+                                        placeholderTextColor="#666666"
+                                        placeholderStyle={{ color: "#666666", fontSize: 20 }}
+                                        style={[styles.textInput, {
+                                            color: colors.text
+                                        }]}
+                                        onChangeText={handleChange('mobile')}
+                                        onBlur={handleBlur('mobile')}
+                                        value={values.mobile}
+                                        keyboardType='numeric'
+                                        maxLength={10}
+                                        />
+                                    <Text style={styles.errorMsg}>
+                                        {touched.mobile && errors.mobile}
+                                    </Text>
+                                </View>
+
+                                <TouchableOpacity
+                                    style={[styles.signIn, {
+                                        borderColor: '#009387',
+                                        borderWidth: 1,
+                                        marginTop: 30
+                                    }]}
+                                    onPress={handleSubmit}
+                                >
+                                    <Text style={[styles.textSign, {
+                                        color: '#009387'
+                                    }]}>Submit</Text>
+                                </TouchableOpacity>
                             </Animatable.View>
-                        }
+                        )}
 
 
-                        <Text style={[styles.text_footer, {
-                            color: colors.text,
-                            marginTop: 35
-                        }]}>Age</Text>
-                        <View style={styles.action}>
-                            <Feather
-                                name="user"
-                                color={colors.text}
-                                size={20}
-                            />
-                            <TextInput
-                                placeholder="Your Age"
-                                placeholderTextColor="#666666"
-                                placeholderStyle={{ color: "#666666", fontSize: 20 }}
-                                style={[styles.textInput, {
-                                    color: colors.text
-                                }]}
-                                autoCapitalize="none"
-                                onChangeText={(val) => handleAgeChange(val)}
-                                onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                                ref={ageRef}
-                                keyboardType="decimal-pad"
-                                maxLength={2}
+                    </Formik>
 
-
-
-                            />
-
-                        </View>
-                        {data.check_textInputChange ?
-                            <Animatable.View animation="bounceIn" duration={500}>
-                                <Feather
-                                    name="check-circle"
-                                    color="green"
-                                    size={20}
-                                />
-                            </Animatable.View>
-                            : null}
-                        {data.isValidUser ? null :
-                            <Animatable.View animation="fadeInLeft" duration={500}>
-                                <Text style={styles.errorMsg}>Age must be valid</Text>
-                            </Animatable.View>
-                        }
-
-                      
-                        <View style={styles.dropdown}>
-                            <DropDownPicker
-                                open={open}
-                                value={value}
-                                items={items}
-                                setOpen={setOpen}
-                                setValue={setValue}
-                                setItems={setItems}
-                            />
-
-                        </View>
-                        <Text style={[styles.text_footer, {
-                            color: colors.text,
-                            marginTop: 35
-                        }]}>Mobile</Text>
-                        <View style={styles.action}>
-                            <Feather
-                                name="user"
-                                color={colors.text}
-                                size={20}
-                            />
-                            <TextInput
-                                placeholder="Mobile"
-                                placeholderTextColor="#666666"
-                                placeholderStyle={{ color: "#666666", fontSize: 20 }}
-                                style={[styles.textInput, {
-                                    color: colors.text
-                                }]}
-                                autoCapitalize="none"
-                                onChangeText={(val) => handleAgeChange(val)}
-                                onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-                                ref={ageRef}
-                                keyboardType="decimal-pad"
-                                maxLength={10}
-
-
-
-                            />
-
-                        </View>
-                        {data.check_textInputChange ?
-                            <Animatable.View animation="bounceIn" duration={500}>
-                                <Feather
-                                    name="check-circle"
-                                    color="green"
-                                    size={20}
-                                />
-                            </Animatable.View>
-                            : null}
-                        {data.isValidUser ? null :
-                            <Animatable.View animation="fadeInLeft" duration={500}>
-                                <Text style={styles.errorMsg}>Number Must be valid.</Text>
-                            </Animatable.View>
-                        }
-                    
-                        <TouchableOpacity
-                            onPress={() => handleSubmit(data)}
-                            style={[styles.signIn, {
-                                borderColor: '#009387',
-                                borderWidth: 1,
-                                marginTop: 30
-                            }]}
-                        >
-                            <Text style={[styles.textSign, {
-                                color: '#009387'
-                            }]}>Submit</Text>
-                        </TouchableOpacity>
-                    </Animatable.View>
                 </View>
             </KeyboardAvoidingView>
         </>
@@ -372,7 +282,7 @@ const styles = StyleSheet.create({
     },
     errorMsg: {
         color: '#FF0000',
-        fontSize: 14,
+        fontSize: 16,
     },
     button: {
         alignItems: 'center',
