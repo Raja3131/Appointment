@@ -67,6 +67,7 @@ const animateIn = () => {
                                             id: item.id,
                                          })}
                                         style={styles.button}
+                                        onPressIn={animateIn}
                                        
                                         >
                                         <Text style={styles.text}>View Profile</Text>
@@ -111,20 +112,33 @@ const styles = StyleSheet.create({
         elevation: 2,
         marginTop: -20,
     },
+    doctorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        shadowOffset: { width: 0, height: 10 },
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 10,
+        elevation: 2,
+    },
 
     doctorImage: {
-        width: 80,
-        height: 80,
+        width: 70,
+        height: 70,
         borderRadius: 40,
         marginRight: 20,
-        marginBottom: 20,
+        marginBottom: 30,
     },
     doctorInfo: {
         flex: 1,
         marginLeft: 30,
         flexDirection: 'row',   
-        justifyContent: 'space-between',
         position: 'relative',
+        marginBottom: 30,
     },
     doctorName: {
         fontSize: 20,
@@ -147,22 +161,25 @@ const styles = StyleSheet.create({
         color: '#fff',
 
     },
-    button: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#fff',
-        borderRadius: 4,
-        elevation: 3,
-        position: 'absolute',
-        bottom: 80,
-        right: 0,
-        left: 250,
-      },
-      text: {
-        fontSize: 18,
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+    marginTop: 30,
+    marginBottom: 10,
+    borderRadius: 20,
+    shadowOffset: { width: 0, height: 10 },
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 20,
+    elevation: 5,
+    backgroundColor: '#fff',
+  },
+  text: {
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#009387',
-      },
+  },
 });
 
 export default DoctorsScreen

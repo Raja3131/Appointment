@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
+    color: '#fff'
   }
 });
 export default DoctorDetailsScreen;
