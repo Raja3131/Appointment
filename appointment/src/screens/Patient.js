@@ -111,7 +111,6 @@ const PatientDetails = ({ navigation }) => {
 
                             actions.resetForm();
                         }}
-                        validationSchema={validationSchema}
                     >
                         {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }) => (
                             <Animatable.View
@@ -292,12 +291,16 @@ const styles = StyleSheet.create({
     },
     text_header: {
         color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 30
+        fontSize: 30,
+        fontFamily:'Ubuntu-Italic'
+
+
     },
     text_footer: {
         color: '#05375a',
-        fontSize: 18
+        fontSize: 18,
+        fontFamily:'Ubuntu-Italic'
+
     },
     action: {
         flexDirection: 'row',
@@ -335,8 +338,9 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     textSign: {
-        fontSize: 18,
-        fontWeight: 'bold'
+        fontSize: 20,
+        fontFamily:'Ubuntu-Italic'
+
     },
 
 });
