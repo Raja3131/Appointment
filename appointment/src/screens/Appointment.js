@@ -66,12 +66,12 @@ const Appointment = ({route, navigation}) => {
             testID="dateTimePicker"
             value={date}
             mode={mode}
-            is24Hour={true}
             display="default"
             onChange={(e, selectedDate) => {
               setShow(false);
               setDate(selectedDate || date);
             }}
+            
             minimumDate={new Date()}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
           />
@@ -85,7 +85,7 @@ const Appointment = ({route, navigation}) => {
         {timeSlot.map(slot => {
           return (
             <>
-              <TouchableHighlight key={slot.id} onPress={() => setSelect(slot)}>
+              {/* <TouchableHighlight key={slot.id} onPress={() => setSelect(slot)}>
                 <View
                   style={[
                     styles.timeSlotItem,
@@ -93,19 +93,44 @@ const Appointment = ({route, navigation}) => {
                   ]}>
                   <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableHighlight> */}
+              <Pressable key={slot.id} onPress={() => setSelect(slot)}
+                
+              >
+                <View
+                  style={[
+                    styles.timeSlotItem,
+                    select === slot ? styles.timeSlotItemSelect : null,
+                  ]}>
+                  <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
+                </View>
+              </Pressable>
+
             </>
           );
         })}
       </View>
 
       <View>
-        <Button
-          title="Book"
-          onPress={() =>
-            navigation.navigate('Booking', {doctorId,select,date})
-          }
-        />
+      <Pressable
+          onPress={() =>{
+            //if slot time not selected
+            if(select === true){
+              alert('Please select time slot')
+            }
+            else{
+              navigation.navigate('Booking',{
+                doctorId,
+               date,
+               select
+             })
+             
+            }
+
+          }}
+          style={styles.bookButton}>
+          <Text style={styles.bookButtonText}>Book</Text>
+        </Pressable>
       </View>
     </>
   );
@@ -194,8 +219,36 @@ const styles = StyleSheet.create({
   },
   timeSlotItemSelect: {
     backgroundColor: '#333',
-    borderColor: '#009387',
   },
+  bookButton: {
+    margin:40,
+    backgroundColor: '#009387',
+    borderRadius: 10,
+    width: '80%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+},
+bookButtonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
+},
+datePickerText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
+    marginLeft: 20,
+    marginTop: 20,
+    backgroundColor: '#0093',
+    borderRadius: 10,
+    padding: 10,
+    width: '30%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+}
 });
 
 export default Appointment;
