@@ -9,31 +9,21 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import {useState, useEffect} from 'react';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import doctors from '../db/doctors';
 import TimeSlot from '../db/TimeSlot';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 const Appointment = ({route, navigation}) => {
-    const [date, setDate] = useState(new Date())
-  const [open, setOpen] = useState(false);
   const {doctorId} = route.params;
   const [doctorsList, setDoctorsList] = useState([]);
-  const [select, setSelect] = useState(false);
+  const [select, setSelect] = useState(true);
   const [timeSlot, setTimeSlot] = useState([]);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [mode, setMode] = useState('date');
+  
+  
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = date => {
-    console.warn('A date has been picked: ', date);
-    hideDatePicker();
-  };
+ 
 
   useEffect(() => {
     setDoctorsList(doctors);
@@ -41,6 +31,9 @@ const Appointment = ({route, navigation}) => {
   useEffect(() => {
     setTimeSlot(TimeSlot);
   }, []);
+
+
+
 
   return (
     <>
@@ -57,50 +50,64 @@ const Appointment = ({route, navigation}) => {
           {doctors.find(doctor => doctor.id === doctorId).speciality}
         </Text>
       </View>
-      <View style={styles.datePicker}>
-                <Pressable style={styles.datePickerButton}onPress={showDatePicker}>
-                    <Text style={styles.datePickerButtonText}>{date.toDateString()}</Text>
-                </Pressable>
-                {open && <DateTimePickerModal
-                    style={{ width: 200 }}
-                    date={date}
-                    mode="date"
-                    placeholder="select date"
-                    isVisible={isDatePickerVisible}
-                    onConfirm={handleConfirm}
-                    onCancel={hideDatePicker}
-                    maximumDate={new Date(
-                        date.getFullYear(),
-                        date.getMonth() + 1,
-                        date.getDate() + 7
-                        
 
-                    )}
+     
+ <View style={styles.datePicker}>
+        <Text style={styles.datePickerText}>Select Date</Text>
+        <TouchableHighlight
+          onPress={() => setShow(true)}
+          style={styles.datePickerButton}>
+          <Text style={styles.datePickerButtonText}>
+            {new Date(date).toDateString()}
+          </Text>
+        </TouchableHighlight>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={(e, selectedDate) => {
+              setShow(false);
+              setDate(selectedDate || date);
+            }}
+            minimumDate={new Date()}
+            maximumDate={new Date().setDate(new Date().getDate() + 1)}
+          />
+        )}
+      </View>
 
-                    onDateChange={(date) => { setDate(date); setOpen(false) }}
-                />}
-            </View>
-            <View style={styles.timeSlot}>{
-                timeSlot.map(slot => {
-                    return (
-                        <>
-                        <TouchableHighlight key={slot.id} onPress={() => setSelect(slot)}>
-                            <View style={[styles.timeSlotItem, select === slot ? styles.timeSlotItemSelect : null]}>
-                                <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
-                            </View>
-                        </TouchableHighlight>
-                        </>
-                    )
-                })
-            }
+
+     
+
+      <View style={styles.timeSlot}>
+        {timeSlot.map(slot => {
+          return (
+            <>
+              <TouchableHighlight key={slot.id} onPress={() => setSelect(slot)}>
+                <View
+                  style={[
+                    styles.timeSlotItem,
+                    select === slot ? styles.timeSlotItemSelect : null,
+                  ]}>
+                  <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
                 </View>
-                
-                
-                <View>
-            <Button title="Book" onPress={() => navigation.navigate('Booking', { doctorId, date,select })} />
+              </TouchableHighlight>
+            </>
+          );
+        })}
+      </View>
 
-                </View>
-                       </>
+      <View>
+        <Button
+          title="Book"
+          onPress={() =>
+            navigation.navigate('Booking', {doctorId,select,date})
+          }
+        />
+      </View>
+    </>
   );
 };
 
@@ -146,7 +153,7 @@ const styles = StyleSheet.create({
   datePickerButton: {
     paddingVertical: 12,
     paddingHorizontal: 30,
-    backgroundColor: '#00a8ff',
+    backgroundColor: '#009387',
     borderRadius: 10,
     width: '50%',
     height: 50,
@@ -173,7 +180,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#00a8ff',
+    backgroundColor: '#009387',
     borderRadius: 10,
     marginTop: 5,
     marginLeft: 5,
@@ -187,7 +194,7 @@ const styles = StyleSheet.create({
   },
   timeSlotItemSelect: {
     backgroundColor: '#333',
-    borderColor: '#00a8ff',
+    borderColor: '#009387',
   },
 });
 
