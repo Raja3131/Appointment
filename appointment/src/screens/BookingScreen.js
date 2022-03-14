@@ -19,12 +19,13 @@ const Booking = ({ route, navigation }) => {
 
                 <Text style={styles.docName}>{doctors.find(doctor => doctor.id === doctorId).name}</Text>
                 <Text style={styles.docSpeciality}>{doctors.find(doctor => doctor.id === doctorId).speciality}</Text>
-            </View>
-            <View style={styles.datePicker}>
                 <Text style={styles.datePickerButtonText}>{date.toDateString()}</Text>
-            </View>
-            <View>
                 <Text style={styles.timeSlot}>{select.startTime}</Text>
+
+            </View>
+            <View style={styles.payment}>
+                <Text style={styles.paymentText}>Payment</Text>
+                <Text style={styles.paymentText}>Rs. 500</Text>
 
             </View>
         </>
@@ -35,52 +36,92 @@ const Booking = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     docInfo: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
         marginTop: 20,
-        marginHorizontal: 20
+        marginBottom: 20,
+        marginLeft: 20,
+        marginRight: 20,
+        borderWidth: 2,
+        borderColor: '#66beb7',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 2, height: 6 },
+        shadowOpacity: 20,
+        shadowRadius: 5,
+        elevation: 10,
+        backgroundColor: '#ddd',
     },
     docImage: {
         width: 100,
         height: 100,
-        borderRadius: 50
+        borderRadius: 50,
+        marginBottom: 10,
+
     },
     docName: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginTop: 10
+        marginBottom: 10,
     },
     docSpeciality: {
+        fontSize: 22,
+        marginTop: 10,
+        color: '#888',
+        position: 'absolute',
+        right: 20,
+        top: 20,
+        fontWeight: 'bold',
+
+
+
+    },
+    docAbout: {
+        marginTop: 10,
         fontSize: 16,
-        color: '#8E8E93'
-    },
-    datePicker: {
-        marginTop: 20,
-        marginHorizontal: 20
-    },
-    datePickerButton: {
-        backgroundColor: '#F0F0F0',
-        padding: 10,
-        borderRadius: 5
+        color: '#888',
+        width: '80%',
+        lineHeight: 25,
     },
     datePickerButtonText: {
-        fontSize: 16,
-        color: '#8E8E93'
+
+        fontSize: 18,
+        color: '#888',
+        fontWeight: 'bold',
+
+
     },
     timeSlot: {
-        marginTop: 20,
-        marginHorizontal: 20
-    },
-    timeSlotItem: {
-        backgroundColor: '#F0F0F0',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 5
-    },
-    timeSlotItemSelect: {
-        backgroundColor: '#DCDCDC'
-    },
-    timeSlotItemText: {
+        marginTop: 10,
         fontSize: 16,
-        color: '#8E8E93'
-    }
+        color: '#888',
+        width: '80%',
+        lineHeight: 25,
+        fontWeight: 'bold',
+        right: -120,
+
+
+    },
+    payment: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 20,
+        marginLeft: 20,
+        marginRight: 20,
+        borderWidth: 2,
+        borderColor: '#66beb7',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 2, height: 6 },
+        shadowOpacity: 20,
+        shadowRadius: 5,
+        elevation: 10,
+        backgroundColor: '#ddd',
+    },
+  
+   
+    
 })
 export default Booking
