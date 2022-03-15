@@ -11,6 +11,8 @@ import {useState, useEffect} from 'react';
 import doctors from '../db/doctors';
 import TimeSlot from '../db/TimeSlot';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather'
 const Appointment = ({route, navigation}) => {
   const {doctorId} = route.params;
   const [doctorsList, setDoctorsList] = useState([]);
@@ -45,9 +47,16 @@ const Appointment = ({route, navigation}) => {
       </View>
 
       <View style={styles.datePicker}>
+        <FontAwesome
+          name="calendar"
+          size={20}
+          color="#009387"
+          style={{marginRight: -10}}
+        />
         <TouchableHighlight
           onPress={() => setShow(true)}
           style={styles.datePickerButton}>
+
           <Text style={styles.datePickerButtonText}>
             {date === 'Select Date'
               ? 'Select Date'
@@ -69,6 +78,8 @@ const Appointment = ({route, navigation}) => {
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
           />
         )}
+       
+      
       </View>
 
       {date === 'Select Date' ? null : (
@@ -87,10 +98,19 @@ const Appointment = ({route, navigation}) => {
              </TouchableHighlight> */}
                 <Pressable
                   onPress={() => setSelect(slot)}
+
                   style={[
                     styles.timeSlotItem,
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
+                    <View>
+                    <FontAwesome
+          name="clock-o"
+          size={20}
+          color="#009387"
+        />
+                    </View>
+          
                   <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
                 </Pressable>
               </>
@@ -130,10 +150,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'relative',
     marginTop: 30,
+    fontFamily:'Ubuntu-Italic',
+
   },
   docName: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily:'Ubuntu-Italic',
+
   },
   docSpeciality: {
     fontSize: 18,
@@ -142,6 +165,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 180,
     top: 20,
+    fontFamily:'Ubuntu-Italic',
+
   },
   docAbout: {
     marginTop: 10,
@@ -159,7 +184,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
     flexDirection: 'row',
-    borderWidth: 0.3,
     borderColor: '#888',
   },
   datePickerButton: {
@@ -177,38 +201,42 @@ const styles = StyleSheet.create({
   datePickerButtonText: {
     fontSize: 18,
     color: '#fff',
-    fontWeight: 'bold',
+    fontFamily:'Ubuntu-Italic',
+
   },
 
   timeSlot: {
-    flex: 1,
+    flex: 2,
     marginTop: 20,
     flexDirection: 'row',
-    borderWidth: 0.3,
+    borderWidth: 0.2,
     borderColor: '#888',
     flexWrap: 'wrap',
   },
   timeSlotItem: {
-    width: '28%',
-    height: 35,
+    width: '35%',
+    height: 50,
     borderWidth: 0.3,
     borderColor: '#888',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#009387',
+    backgroundColor: '#E9E6E6',
     borderRadius: 10,
     marginTop: 5,
     marginLeft: 5,
     borderColor: '#fff',
+    color:'#000'
   },
 
   timeSlotItemText: {
     fontSize: 18,
-    color: '#fff',
-    fontWeight: 'bold',
+    color: '#000',
+    fontFamily:'Ubuntu-Italic',
+
   },
   timeSlotItemSelect: {
-    backgroundColor: '#333',
+    backgroundColor: '#009387',
+    
   },
   bookButton: {
     margin: 40,

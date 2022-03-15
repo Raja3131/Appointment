@@ -23,7 +23,7 @@ const App = ()=>{
   return(
     <>
         <AppNavContainer>
-      <StatusBar backgroundColor="blue" barStyle="dark-content" />
+        <StatusBar  backgroundColor={'#ffffff00'} />
 
         </AppNavContainer>
     </>

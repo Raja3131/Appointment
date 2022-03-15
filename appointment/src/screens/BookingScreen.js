@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
     },
     docName: {
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily:'Ubuntu-Italic',
+
         marginBottom: 10,
     },
     docSpeciality: {
@@ -72,7 +73,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 20,
         top: 20,
-        fontWeight: 'bold',
+        fontFamily:'Ubuntu-Italic',
+
 
 
 
@@ -87,19 +89,40 @@ const styles = StyleSheet.create({
     datePickerButtonText: {
 
         fontSize: 18,
-        color: '#888',
-        fontWeight: 'bold',
+        color: '#fff',
+        fontFamily:'Ubuntu-Italic',
+        backgroundColor: '#009387',
+        padding: 10,
+        borderRadius: 10,
+        textAlign: 'center',
+        marginTop: 20,
+        marginLeft: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowOffset: {width: 0, height: 10},
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 20,
+        elevation: 10,
+        
 
 
     },
     timeSlot: {
-        marginTop: 10,
-        fontSize: 16,
-        color: '#888',
-        width: '80%',
-        lineHeight: 25,
-        fontWeight: 'bold',
-        right: -120,
+        fontSize: 18,
+        color: '#fff',
+        fontFamily:'Ubuntu-Italic',
+
+        backgroundColor: '#009387',
+        padding: 10,
+        borderRadius: 10,
+        marginTop: 20,
+        shadowOffset: {width: 0, height: 10},
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowRadius: 20,
+        elevation: 10,
+        
 
 
     },
@@ -120,6 +143,13 @@ const styles = StyleSheet.create({
         elevation: 10,
         backgroundColor: '#ddd',
     },
+    paymentText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 20,
+        marginTop: 10,
+    }
+    
   
    
     

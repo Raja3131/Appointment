@@ -12,9 +12,9 @@ const HomeScreen = () => {
 
     const HomeStack = createNativeStackNavigator();
     return (
-        <HomeStack.Navigator>
+        <HomeStack.Navigator initialRouteName='Patients'>
             <HomeStack.Screen options={{ headerShown: false }} name="Patients" component={PatientDetails} />
-            <HomeStack.Screen name="Doctors" component={DoctorsScreen} />
+            <HomeStack.Screen name="Doctors" component={DoctorsScreen}/>
             <HomeStack.Screen name="DoctorProfile" component={DoctorDetailsScreen} />
             <HomeStack.Screen name="Appointment" component={Appointment} />
             <HomeStack.Screen name="Booking" component={BookingScreen} />
