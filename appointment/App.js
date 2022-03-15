@@ -22,7 +22,10 @@ const App = ()=>{
 
   return(
     <>
-        <AppNavContainer />
+        <AppNavContainer>
+      <StatusBar backgroundColor="blue" barStyle="dark-content" />
+
+        </AppNavContainer>
     </>
   
   )

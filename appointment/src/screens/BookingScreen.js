@@ -8,7 +8,7 @@ const Booking = ({ route, navigation }) => {
 
 
 
-    const { date } = route.params;
+    const { selectedDate } = route.params;
     const { select } = route.params;
     const { doctorId } = route.params;
 
@@ -19,7 +19,7 @@ const Booking = ({ route, navigation }) => {
 
                 <Text style={styles.docName}>{doctors.find(doctor => doctor.id === doctorId).name}</Text>
                 <Text style={styles.docSpeciality}>{doctors.find(doctor => doctor.id === doctorId).speciality}</Text>
-                <Text style={styles.datePickerButtonText}>{date.toDateString()}</Text>
+                <Text style={styles.datePickerButtonText}>{selectedDate.toDateString()}</Text>
                 <Text style={styles.timeSlot}>{select.startTime}</Text>
 
             </View>

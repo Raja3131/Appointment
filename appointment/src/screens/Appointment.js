@@ -17,13 +17,10 @@ const Appointment = ({route, navigation}) => {
   const [doctorsList, setDoctorsList] = useState([]);
   const [select, setSelect] = useState(true);
   const [timeSlot, setTimeSlot] = useState([]);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState('Select Date');
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [mode, setMode] = useState('date');
-  
-  
-
- 
 
   useEffect(() => {
     setDoctorsList(doctors);
@@ -31,9 +28,6 @@ const Appointment = ({route, navigation}) => {
   useEffect(() => {
     setTimeSlot(TimeSlot);
   }, []);
-
-
-
 
   return (
     <>
@@ -51,35 +45,32 @@ const Appointment = ({route, navigation}) => {
         </Text>
       </View>
 
-     
- <View style={styles.datePicker}>
-        <Text style={styles.datePickerText}>Select Date</Text>
+      <View style={styles.datePicker}>
         <TouchableHighlight
           onPress={() => setShow(true)}
           style={styles.datePickerButton}>
           <Text style={styles.datePickerButtonText}>
-            {new Date(date).toDateString()}
+            {date === 'Select Date'
+              ? 'Select Date'
+              : selectedDate.toDateString()}
           </Text>
         </TouchableHighlight>
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
-            value={date}
+            value={selectedDate}
             mode={mode}
             display="default"
-            onChange={(e, selectedDate) => {
+            onChange={(e, newDate) => {
               setShow(false);
-              setDate(selectedDate || date);
+              setSelectedDate(newDate);
+              setDate('New Date')
             }}
-            
             minimumDate={new Date()}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
           />
         )}
       </View>
-
-
-     
 
       <View style={styles.timeSlot}>
         {timeSlot.map(slot => {
@@ -94,39 +85,37 @@ const Appointment = ({route, navigation}) => {
                   <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
                 </View>
               </TouchableHighlight> */}
-              <Pressable key={slot.id} onPress={() => setSelect(slot)}
-                
-              >
-                <View
-                  style={[
-                    styles.timeSlotItem,
-                    select === slot ? styles.timeSlotItemSelect : null,
-                  ]}>
-                  <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
-                </View>
+              <Pressable
+                onPress={() => setSelect(slot)}
+                style={[
+                  styles.timeSlotItem,
+                  select === slot ? styles.timeSlotItemSelect : null,
+                ]}>
+                <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
               </Pressable>
-
             </>
           );
         })}
       </View>
 
       <View>
-      <Pressable
-          onPress={() =>{
+        <Pressable
+          onPress={() => {
             //if slot time not selected
-            if(select === true){
-              alert('Please select time slot')
-            }
-            else{
-              navigation.navigate('Booking',{
-                doctorId,
-               date,
-               select
-             })
-             
-            }
+            if (select === true ) {
+              alert('Please select time slot');
 
+            } 
+            else if (date === 'Select Date') {
+              alert('Please select date');
+            }
+            else {
+              navigation.navigate('Booking', {
+                doctorId,
+                selectedDate,
+                select,
+              });
+            }
           }}
           style={styles.bookButton}>
           <Text style={styles.bookButtonText}>Book</Text>
@@ -194,15 +183,18 @@ const styles = StyleSheet.create({
   },
 
   timeSlot: {
-    flex: 2,
-    justifyContent: 'space-between',
+    flex: 1,
+    marginTop: 20,
     flexDirection: 'row',
+    borderWidth: 0.3,
+    borderColor: '#888',
     flexWrap: 'wrap',
   },
   timeSlotItem: {
-    width: '100%',
-    height: 30,
-    borderWidth: 2,
+    width: '28%',
+    height: 35,
+    borderWidth: 0.3,
+    borderColor: '#888',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#009387',
@@ -221,21 +213,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
   },
   bookButton: {
-    margin:40,
+    margin: 40,
     backgroundColor: '#009387',
     borderRadius: 10,
     width: '80%',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    
-},
-bookButtonText: {
+  },
+  bookButtonText: {
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
-},
-datePickerText: {
+  },
+  datePickerText: {
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
@@ -248,7 +239,7 @@ datePickerText: {
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-}
+  },
 });
 
 export default Appointment;

@@ -1,16 +1,13 @@
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from './HomeNavigator';
-import {Text} from 'react-native'
-const AppNavContainer = () =>{
+import {Text, StatusBar} from 'react-native';
+const AppNavContainer = () => {
+  return (
+    <NavigationContainer>
+      <HomeScreen />
+    </NavigationContainer>
+  );
+};
 
-    return(
-        <NavigationContainer>
-            <HomeScreen />
-
-          
-        </NavigationContainer>
-    )
-}
-
-export default AppNavContainer
+export default AppNavContainer;
