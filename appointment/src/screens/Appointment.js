@@ -3,7 +3,6 @@ import {
   Text,
   View,
   Image,
-  Button,
   StyleSheet,
   Pressable,
   TouchableHighlight,
@@ -64,7 +63,7 @@ const Appointment = ({route, navigation}) => {
             onChange={(e, newDate) => {
               setShow(false);
               setSelectedDate(newDate);
-              setDate('New Date')
+              setDate('New Date');
             }}
             minimumDate={new Date()}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
@@ -72,44 +71,43 @@ const Appointment = ({route, navigation}) => {
         )}
       </View>
 
-      <View style={styles.timeSlot}>
-        {timeSlot.map(slot => {
-          return (
-            <>
-              {/* <TouchableHighlight key={slot.id} onPress={() => setSelect(slot)}>
-                <View
+      {date === 'Select Date' ? null : (
+        <View style={styles.timeSlot}>
+          {timeSlot.map(slot => {
+            return (
+              <>
+                {/* <TouchableHighlight key={slot.id} onPress={() => setSelect(slot)}>
+               <View
+                 style={[
+                   styles.timeSlotItem,
+                   select === slot ? styles.timeSlotItemSelect : null,
+                 ]}>
+                 <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
+               </View>
+             </TouchableHighlight> */}
+                <Pressable
+                  onPress={() => setSelect(slot)}
                   style={[
                     styles.timeSlotItem,
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
                   <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
-                </View>
-              </TouchableHighlight> */}
-              <Pressable
-                onPress={() => setSelect(slot)}
-                style={[
-                  styles.timeSlotItem,
-                  select === slot ? styles.timeSlotItemSelect : null,
-                ]}>
-                <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
-              </Pressable>
-            </>
-          );
-        })}
-      </View>
+                </Pressable>
+              </>
+            );
+          })}
+        </View>
+      )}
 
       <View>
         <Pressable
           onPress={() => {
             //if slot time not selected
-            if (select === true ) {
+            if (select === true) {
               alert('Please select time slot');
-
-            } 
-            else if (date === 'Select Date') {
+            } else if (date === 'Select Date') {
               alert('Please select date');
-            }
-            else {
+            } else {
               navigation.navigate('Booking', {
                 doctorId,
                 selectedDate,
@@ -122,8 +120,8 @@ const Appointment = ({route, navigation}) => {
         </Pressable>
       </View>
     </>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   docInfo: {
