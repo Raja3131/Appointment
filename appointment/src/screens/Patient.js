@@ -243,7 +243,23 @@ const PatientDetails = ({ navigation }) => {
                                     <Text style={styles.errorMsg}>
                                         {touched.mobile && errors.mobile}
                                     </Text>
+                                    
                                 </View>
+                                <RNPickerSelect
+            onValueChange={(value) => {
+                values.gender=value
+                console.log(values.gender)
+            }
+                
+            }
+            items={[
+                { label: 'John', value: 'John' },
+                { label: 'jess', value: 'Jess' },
+                { label: 'Emma', value: 'Emma' },
+            ]}
+            placeholder={{ label: "Select Doctor", value: null }}
+
+        />
 
                                 <TouchableOpacity
                                     style={[styles.signIn, {

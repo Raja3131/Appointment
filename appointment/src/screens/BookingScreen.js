@@ -3,9 +3,33 @@ import { Text, View, Image, Button, StyleSheet, Pressable, TouchableHighlight } 
 import { useState, useEffect } from "react";
 import doctors from '../db/doctors'
 import TimeSlot from '../db/TimeSlot';
+import RazorpayCheckout from 'react-native-razorpay';
 
 const Booking = ({ route, navigation }) => {
+   const makePayment = () => {
+    var options = {
+        description: 'Credits towards consultation',
+        image: '../assets/images/Paintwynk.png',
+        currency: 'INR',
+        key: 'rzp_test_fvX4sVrv4MDESx', // Your api key
+        amount: '500',
+        name: 'WynkEMR',
+        prefill: {
+          email: 'wynkemr@gmail.com',
+          contact: '9790926739',
+          name: 'WynkEMR'
+        },
+        theme: {color: '#009387'}
+      }
+      RazorpayCheckout.open(options).then((data) => {
+        // handle success
+        alert(`Success: ${data.razorpay_payment_id}`);
+      }).catch((error) => {
+        // handle failure
+        alert(`Error: ${error.code} | ${error.description}`);
+      });
 
+   }
 
 
     const { selectedDate } = route.params;
@@ -21,13 +45,15 @@ const Booking = ({ route, navigation }) => {
                 <Text style={styles.docSpeciality}>{doctors.find(doctor => doctor.id === doctorId).speciality}</Text>
                 <Text style={styles.datePickerButtonText}>{selectedDate.toDateString()}</Text>
                 <Text style={styles.timeSlot}>{select.startTime}</Text>
-
+                <TouchableHighlight
+                style={styles.bookButton}
+                onPress={makePayment}
+                >
+                <Text style={styles.bookButtonText}>Book</Text>
+            </TouchableHighlight>
             </View>
-            <View style={styles.payment}>
-                <Text style={styles.paymentText}>Payment</Text>
-                <Text style={styles.paymentText}>Rs. 500</Text>
-
-            </View>
+            
+           
         </>
     )
 
@@ -148,6 +174,31 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 20,
         marginTop: 10,
+    },
+    bookButton: {
+        marginTop: 20,
+        marginLeft: 20,
+        marginRight: 20,
+        borderWidth: 2,
+        borderColor: '#66beb7',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 2, height: 6 },
+        shadowOpacity: 20,
+        shadowRadius: 5,
+        elevation: 10,
+        backgroundColor: '#009387',
+        fontSize: 10,
+        padding: 20,
+    
+    
+    },
+    bookButtonText: {
+        fontSize: 20,
+        color: '#fff',
+        fontFamily:'Ubuntu-Italic',
+        textAlign: 'center',
+        borderRadius: 10,
     }
     
   

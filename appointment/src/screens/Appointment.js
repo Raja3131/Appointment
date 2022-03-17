@@ -47,19 +47,26 @@ const Appointment = ({route, navigation}) => {
       </View>
 
       <View style={styles.datePicker}>
-        <FontAwesome
-          name="calendar"
-          size={20}
-          color="#009387"
-          style={{marginRight: -10}}
-        />
+       <View style={
+         styles.CalendarIconStyle
+       }>
+       
+       </View>
         <TouchableHighlight
           onPress={() => setShow(true)}
           style={styles.datePickerButton}>
+           
 
           <Text style={styles.datePickerButtonText}>
+          <FontAwesome
+          name="calendar"
+          size={20}
+          color="#fff"
+          style={{marginRight: 10,
+          marginLeft: 10}}
+        />
             {date === 'Select Date'
-              ? 'Select Date'
+              ? '    Select Date'
               : selectedDate.toDateString()}
           </Text>
         </TouchableHighlight>
@@ -108,6 +115,7 @@ const Appointment = ({route, navigation}) => {
           name="clock-o"
           size={20}
           color="#009387"
+          
         />
                     </View>
           
@@ -191,8 +199,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     backgroundColor: '#009387',
     borderRadius: 10,
-    width: '50%',
-    height: 50,
+    width: '60%',
+    height: 60,
     marginTop: 20,
     marginLeft: 5,
     justifyContent: 'center',
@@ -202,6 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#fff',
     fontFamily:'Ubuntu-Italic',
+    marginLeft: 10,
 
   },
 
@@ -266,6 +275,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  CalendarIconStyle:{
+    position:'absolute',
+    left:10,
+    top:-10,
+  }
 });
 
 export default Appointment;
