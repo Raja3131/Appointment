@@ -12,7 +12,7 @@ const Booking = ({ route, navigation }) => {
         image: '../assets/images/Paintwynk.png',
         currency: 'INR',
         key: 'rzp_test_fvX4sVrv4MDESx', // Your api key
-        amount: '500',
+        amount: '5000',
         name: 'WynkEMR',
         prefill: {
           email: 'wynkemr@gmail.com',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         borderColor: '#66beb7',
         borderRadius: 10,
         shadowColor: '#000',
-        shadowOffset: { width: 2, height: 6 },
+        shadowOffset: { width: 6, height: 6 },
         shadowOpacity: 20,
         shadowRadius: 5,
         elevation: 10,
@@ -183,13 +183,14 @@ const styles = StyleSheet.create({
         borderColor: '#66beb7',
         borderRadius: 10,
         shadowColor: '#000',
-        shadowOffset: { width: 2, height: 6 },
+        shadowOffset: { width: 6, height: 6 },
         shadowOpacity: 20,
         shadowRadius: 5,
         elevation: 10,
         backgroundColor: '#009387',
         fontSize: 10,
-        padding: 20,
+        height: 30,
+        width: '50%',
     
     
     },
