@@ -31,7 +31,6 @@ const DoctorsScreen = ({navigation}) => {
   const [animatePress, setAnimatePress] = useState(new Animated.Value(1));
   const [doctorsList, setDoctorsList] = useState();
 
-  const filterSearch = text => {};
   useEffect(() => {
     setDoctorsList(doctors);
   }, []);
@@ -67,7 +66,7 @@ const DoctorsScreen = ({navigation}) => {
                   <Pressable
                     onPress={() =>
                       navigation.navigate('DoctorProfile', {
-                        id: item.id,
+                        selectDoctor: item.id,
                       })
                     }
                     style={styles.button}

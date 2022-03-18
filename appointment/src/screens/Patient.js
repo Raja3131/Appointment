@@ -93,15 +93,26 @@ const PatientDetails = ({navigation}) => {
               doctor:''
             }}
             onSubmit={(values, actions) => {
-              navigation.navigate('Doctors', {
+             if(values.doctor){
+              navigation.navigate('DoctorProfile', {
                 name: values.name,
                 age: values.age,
                 mobile: values.mobile,
                 gender: values.gender,
-                doctor:values.doctor
+                selectDoctor:values.doctor
                 
               });
-              console.log(values);
+             }
+             else{
+               navigation.navigate('Doctors',{
+                name: values.name,
+                age: values.age,
+                mobile: values.mobile,
+                gender: values.gender,
+
+               })
+             }
+              console.log(values)
 
               actions.resetForm();
             }}>
@@ -229,12 +240,7 @@ const PatientDetails = ({navigation}) => {
                     {touched.mobile && errors.mobile}
                   </Text>
                 </View>
-               {
-                 doctors.map((item, index) => {
-                    
-                     
-                 })
-               }
+            
                 <View style={styles.dropdown}>
                   <RNPickerSelect
                     onValueChange={value => {
@@ -242,7 +248,7 @@ const PatientDetails = ({navigation}) => {
                       console.log(values.doctor);
                     }}
                     items={Object.values(doctors).map(item => {
-                      return {label: item.name, value: item.name};
+                      return {label: item.name, value: item.id};
                     })}
                   />
                 </View>

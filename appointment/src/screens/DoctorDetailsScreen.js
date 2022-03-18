@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import doctors from '../db/doctors'
 import { color } from "@mui/system";
 const DoctorDetailsScreen = ({ route, navigation }) => {
-  const { id } = route.params;
+  const { selectDoctor } = route.params;
   const [doctorsList, setDoctorsList] = useState([])
 
   useEffect(() => {
@@ -13,11 +13,11 @@ const DoctorDetailsScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={doctors.find(doctor => doctor.id === id).image} />
-      <Text style={styles.name}>{doctors.find(doctor => doctor.id === id).name}</Text>
-      <Text style={styles.speciality}>{doctors.find(doctor => doctor.id === id).speciality}</Text>
-      <Text style={styles.about}>{doctors.find(doctor => doctor.id === id).about}</Text>
-      <Pressable style={styles.button} onPress={() => navigation.navigate('Appointment', { doctorId: id })}>
+      <Image style={styles.image} source={doctors.find(doctor => doctor.id === selectDoctor).image} />
+      <Text style={styles.name}>{doctors.find(doctor => doctor.id === selectDoctor).name}</Text>
+      <Text style={styles.speciality}>{doctors.find(doctor => doctor.id === selectDoctor).speciality}</Text>
+      <Text style={styles.about}>{doctors.find(doctor => doctor.id === selectDoctor).about}</Text>
+      <Pressable style={styles.button} onPress={() => navigation.navigate('Appointment', { doctorId: selectDoctor })}>
         <Text style={styles.buttonText}>Book Appointment</Text>
       </Pressable>
     </View>
