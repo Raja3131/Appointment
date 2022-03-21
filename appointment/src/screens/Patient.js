@@ -123,7 +123,7 @@ const PatientDetails = ({navigation}) => {
               gender: '',
               doctor: '',
             }}
-            validationSchema={validationSchema}
+            // validationSchema={validationSchema}
             onSubmit={signUp}>
             {({
               handleChange,

@@ -22,11 +22,13 @@ import {
   Center,
   NativeBaseProvider,
 } from 'native-base';
+import RazorpayCheckout from 'react-native-razorpay';
+import Api from '../api/Api';
 const Appointment = ({route, navigation}) => {
   const {selectDoctor} = route.params;
   const {name} = route.params;
   const [doctorsList, setDoctorsList] = useState([]);
-  const [select, setSelect] = useState(true);
+  const [select, setSelect] = useState('');
   const [timeSlot, setTimeSlot] = useState([]);
   const [date, setDate] = useState('Select Date');
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -42,6 +44,38 @@ const Appointment = ({route, navigation}) => {
   useEffect(() => {
     setTimeSlot(TimeSlot);
   }, []);
+  
+    const makePayment = () => {
+     var options = {
+         description: 'Credits towards consultation',
+         image: '../assets/images/Paintwynk.png',
+         currency: 'INR',
+         key: 'rzp_test_fvX4sVrv4MDESx', // Your api key
+         amount: '500',
+         name: 'WynkEMR',
+         prefill: {
+           email: 'wynkemr@gmail.com',
+           contact: '8825534922',
+           name: 'WynkEMR'
+         },
+         theme: {color: '#009387'}
+       }
+       RazorpayCheckout.open(options).then((data) => {
+         // handle success
+         alert(`Success: ${data.razorpay_payment_id}`);
+         if(data.razorpay_payment_id){
+           Api.post('/appoints',{
+             name:name
+           })
+         }
+         
+        
+       }).catch((error) => {
+         // handle failure
+         alert(`Error: ${error.code} | ${error.description}`);
+       });
+ 
+    }
 
   return (
     <>
@@ -135,7 +169,11 @@ const Appointment = ({route, navigation}) => {
 
       <View>
       <Center>
-      <Button onPress={() => setShowModal(true)}>Button</Button>
+     <Pressable
+          onPress={() => setShowModal(true)}
+          style={styles.bookButton}>
+            <Text style={styles.bookButtonText}>Proceed</Text>
+          </Pressable>
       <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="lg">
         <Modal.Content maxWidth="350">
           <Modal.CloseButton />
@@ -143,27 +181,29 @@ const Appointment = ({route, navigation}) => {
           <Modal.Body>
             <VStack space={3}>
               <HStack alignItems="center" justifyContent="space-between">
-                <Text fontWeight="medium">Sub Total</Text>
-                <Text color="blueGray.400">$298.77</Text>
+                <Text fontWeight="medium">Time</Text>
+                <Text color="blueGray.400">{
+                 select.startTime
+                }</Text>
               </HStack>
               <HStack alignItems="center" justifyContent="space-between">
-                <Text fontWeight="medium">Tax</Text>
-                <Text color="blueGray.400">$38.84</Text>
+                <Text fontWeight="medium">Date</Text>
+                <Text color="blueGray.400">{
+                  selectedDate.toDateString()
+                }</Text>
               </HStack>
               <HStack alignItems="center" justifyContent="space-between">
-                <Text fontWeight="medium">Total Amount</Text>
+                <Text fontWeight="medium">Amount</Text>
                 <Text color="green.500">$337.61</Text>
               </HStack>
             </VStack>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              flex="1"
-              onPress={() => {
-                setShowModal2(true);
-              }}>
-              Continue
-            </Button>
+           <Pressable
+          onPress={() => setShowModal2(true)}
+          style={styles.continueButton}>
+            <Text style={styles.continueButtonText}>Proceed</Text>
+          </Pressable>
           </Modal.Footer>
         </Modal.Content>
       </Modal>
@@ -199,13 +239,20 @@ const Appointment = ({route, navigation}) => {
             </Radio.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button
+            {/* <Button
               flex="1"
               onPress={() => {
                 setShowModal3(true);
               }}>
               Continue
-            </Button>
+            </Button> */}
+            <Pressable
+              onPress={() => {
+                setShowModal3(true);
+              }}
+              style={styles.continueButton}>
+                <Text style={styles.continueButtonText}>Continue</Text>
+              </Pressable>
           </Modal.Footer>
         </Modal.Content>
       </Modal>
@@ -254,9 +301,13 @@ const Appointment = ({route, navigation}) => {
             <Button
               flex="1"
               onPress={() => {
-                setShowModal(false);
+                makePayment();
+                setShowModal3(false);
                 setShowModal2(false);
                 setShowModal3(false);
+
+
+
               }}>
               Checkout
             </Button>
@@ -398,7 +449,26 @@ const styles = StyleSheet.create({
     position:'absolute',
     left:10,
     top:-10,
-  }
+  },
+  continueButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 30,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    width: '50%',
+    height: 40,
+    marginTop: 20,
+    marginLeft: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#009387',
+  },
+  continueButtonText: {
+    fontSize: 14,
+    color: '#009387',
+    fontWeight: 'bold',
+  },
 });
 
 export default Appointment;

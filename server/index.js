@@ -1,9 +1,9 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import DoctorRouter from './src/routes/DoctorRoutes.js'
 import PatientRouter from './src/routes/PatientRoutes.js'
 import UserRouter from './src/routes/UserRoutes.js'
+import AppointsRouter from './src/routes/AppointsRoutes.js'
 const app = express()
 
 app.use(cors())
@@ -21,6 +21,6 @@ mongoose.connect(DB, { useNewUrlParser: true }).then(() => {
     console.log(err)
 })
 
-app.use('/', DoctorRouter)
 app.use('/', PatientRouter)
 app.use('/', UserRouter)
+app.use('/', AppointsRouter)

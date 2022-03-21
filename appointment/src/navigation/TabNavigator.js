@@ -5,6 +5,7 @@ import HomeScreen from './HomeNavigator';
 import DoctorScreen from './../screens/DoctorsScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
+import MyAppoints from './../screens/MyAppoints';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,8 +36,20 @@ const MyTabs = ()=> {
             <Text style={{color: focused ? 'black' : color}}>Doctors</Text>
           ),
         })} />
+      <Tab.Screen name="MyAppoints" component={MyAppoints}  options={({route}) => ({
+          tabBarStyle: {
+            backgroundColor: '#009387',
+          },
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Feather name="calendar" color={'#fff'} size={size}  />
+          ),
+          tabBarLabel: ({focused, color, size}) => (
+            <Text style={{color: focused ? 'black' : color}}>My Appointments</Text>
+          ),
+        })} />
     </Tab.Navigator>
-  );
+  )
 }
 
 
