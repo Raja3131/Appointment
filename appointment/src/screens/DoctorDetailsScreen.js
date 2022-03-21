@@ -5,11 +5,21 @@ import doctors from '../db/doctors'
 import { color } from "@mui/system";
 const DoctorDetailsScreen = ({ route, navigation }) => {
   const { selectDoctor } = route.params;
+  const { name} = route.params;
   const [doctorsList, setDoctorsList] = useState([])
 
   useEffect(() => {
     setDoctorsList(doctors)
   }, [])
+
+const onPress = () => {
+  if (name && selectDoctor) {
+    navigation.navigate('Appointment', { name: name, selectDoctor: selectDoctor })
+  }
+  else {
+    navigation.navigate('Patients', { selectDoctor: selectDoctor })
+  }
+}
 
   return (
     <View style={styles.container}>
@@ -17,7 +27,7 @@ const DoctorDetailsScreen = ({ route, navigation }) => {
       <Text style={styles.name}>{doctors.find(doctor => doctor.id === selectDoctor).name}</Text>
       <Text style={styles.speciality}>{doctors.find(doctor => doctor.id === selectDoctor).speciality}</Text>
       <Text style={styles.about}>{doctors.find(doctor => doctor.id === selectDoctor).about}</Text>
-      <Pressable style={styles.button} onPress={() => navigation.navigate('Appointment', { doctorId: selectDoctor })}>
+      <Pressable style={styles.button} onPress={() => onPress()}>
         <Text style={styles.buttonText}>Book Appointment</Text>
       </Pressable>
     </View>
