@@ -2,12 +2,15 @@ import AppointsModel from './../models/AppointsModel.js';
 
 export const CreateAppoint = async (req, res) => {
     try {
-        const appoint = new AppointsModel({
+       //create a new appointment for react native app
+        const newAppoint = new AppointsModel({
             name: req.body.name,
-        })
-        await appoint.save();
-        res.status(200).send({ message: 'Appointment created successfully' });
-            
+            doctor: req.body.doctor,
+            date: req.body.date,
+            time: req.body.time,
+        });
+        await newAppoint.save();
+       
     } catch (e) {
         res.status(400).json({
             success: false,

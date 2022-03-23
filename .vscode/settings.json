@@ -4,6 +4,9 @@
         "Docto",
         "Formik",
         "Ionicons",
-        "Pressable"
+        "prefill",
+        "Pressable",
+        "razorpay",
+        "Wynk"
     ]
 }
