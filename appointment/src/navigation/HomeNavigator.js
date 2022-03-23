@@ -6,6 +6,7 @@ import DoctorDetailsScreen from './../screens/DoctorDetailsScreen';
 import Appointment from './../screens/Appointment';
 // import BookingScreen from './../screens/BookingScreen';
 import PatientDetails from '../screens/Patient';
+import RescheduleScreen from '../screens/RescheduleScreen';
 
 
 const HomeScreen = () => {
@@ -18,6 +19,7 @@ const HomeScreen = () => {
             <HomeStack.Screen name="DoctorProfile" component={DoctorDetailsScreen} />
             <HomeStack.Screen name="Appointment" component={Appointment} />
             {/* <HomeStack.Screen name="Booking" component={BookingScreen} /> */}
+            <HomeStack.Screen name="Reschedule" component={RescheduleScreen} />
 
         </HomeStack.Navigator>
     );

@@ -6,10 +6,35 @@ import DoctorScreen from './../screens/DoctorsScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import MyAppoints from './../screens/MyAppoints';
+import {useState,useEffect} from 'react';
+import Api from '../api/Api';
 
 const Tab = createBottomTabNavigator();
 
 const MyTabs = ()=> {
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [appointments,setAppointments] = useState([]);
+    useEffect(()=>{
+        Api.get('/appoints')
+        .then(res=>{
+            setAppointments([...res.data.appoints]);
+            setIsLoading(false);
+            console.log(res.data);
+        }
+        )
+        .catch(err=>{
+            console.log(err);
+        }
+        )
+    },[
+        setAppointments,
+        setIsLoading,
+    ]
+    )
+
+
+        
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeScreen}  options={({route}) => ({
@@ -37,6 +62,9 @@ const MyTabs = ()=> {
           ),
         })} />
       <Tab.Screen name="MyAppoints" component={MyAppoints}  options={({route}) => ({
+        
+
+
           tabBarStyle: {
             backgroundColor: '#009387',
           },
@@ -47,7 +75,10 @@ const MyTabs = ()=> {
           tabBarLabel: ({focused, color, size}) => (
             <Text style={{color: focused ? 'black' : color}}>My Appointments</Text>
           ),
-        })} />
+        })}
+        
+
+         />
     </Tab.Navigator>
   )
 }

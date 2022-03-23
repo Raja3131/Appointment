@@ -25,6 +25,7 @@ import {
 import RazorpayCheckout from 'react-native-razorpay';
 import Api from '../api/Api';
 const Appointment = ({route, navigation}) => {
+  
   const {selectDoctor} = route.params;
   const {name} = route.params;
   const [doctorsList, setDoctorsList] = useState([]);

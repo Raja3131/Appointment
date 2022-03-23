@@ -41,3 +41,15 @@ export const DeleteAppoint = async (req, res) => {
         });
     }
 }
+
+export const UpdateAppoint = async (req, res) => {
+    try {
+        const appoint = await AppointsModel.findByIdAndUpdate(req.params.id, req.body);
+        res.status(200).send({ message: 'Appointment updated successfully' });
+    } catch (e) {
+        res.status(400).json({
+            success: false,
+            error: e
+        });
+    }
+}
