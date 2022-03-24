@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState,useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,11 +10,12 @@ import {
   TouchableHighlight,
   Pressable,
 } from 'react-native';
-import Api from '../api/Api';
-import TimeSlot from '../db/TimeSlot';
+import Api from '../../api/Api';
+import TimeSlot from '../../db/TimeSlot';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import {styles} from './styles';
 
 const RescheduleScreen = ({route, navigation}) => {
   const {id: id} = route.params;
@@ -21,21 +23,20 @@ const RescheduleScreen = ({route, navigation}) => {
   const {date: appointmentDate} = route.params;
   const {time: appointmentTime} = route.params;
 
-  const [appointments, setAppointments] = React.useState([]);
-  // const [id, setId] = React.useState([]);
+  const [appointments, setAppointments] = useState([]);
 
-  const [name1, setName] = React.useState(`${appointmentName}`);
-  const [date, setDate] = React.useState('Select Date');
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [show, setShow] = React.useState(false);
-  const [time1, setTime] = React.useState(`${appointmentTime}`);
-  const [mode, setMode] = React.useState('date');
-  const [timeSlot, setTimeSlot] = React.useState([]);
-  const [select, setSelect] = React.useState('');
+  const [name1, setName] = useState(`${appointmentName}`);
+  const [date, setDate] = useState('Select Date');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [time1, setTime] = useState(`${appointmentTime}`);
+  const [mode, setMode] = useState('date');
+  const [timeSlot, setTimeSlot] = useState([]);
+  const [select, setSelect] = useState('');
 
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeSlot(TimeSlot);
   });
 
@@ -43,13 +44,14 @@ const RescheduleScreen = ({route, navigation}) => {
     Api.put(`/appoints/${id}`, {
       name: name1,
       date: selectedDate.toDateString(),
-      time: time1,
+      time: select.startTime,
     }).then(res => {
       console.log(res);
       setName('');
       navigation.navigate('MyAppoints', appointments);
     });
   };
+  
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Reschedule Appointment</Text>
@@ -118,37 +120,14 @@ const RescheduleScreen = ({route, navigation}) => {
         </View>
       )}
 
-      <Button title="Reschedule" onPress={reschedule} />
+      <Pressable
+        onPress={() => reschedule()}
+        style={styles.button}>
+        <Text style={styles.buttonText}>Reschedule</Text>
+      </Pressable>
+
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 18,
-    marginBottom: 5,
-  },
-  input: {
-    borderColor: '#009387',
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    width: '100%',
-    marginBottom: 20,
-    backgroundColor: '#888',
-  },
-});
 
 export default RescheduleScreen;

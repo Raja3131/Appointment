@@ -22,7 +22,8 @@ import {SearchBar} from 'react-native-elements';
 import {StackNavigator} from 'react-navigation';
 
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import doctors from '../db/doctors';
+import doctors from '../../db/doctors';
+import {styles} from './styles';
 
 const DoctorsScreen = ({navigation}) => {
   const {setOptions, toggleDrawer} = useNavigation();
@@ -83,92 +84,5 @@ const DoctorsScreen = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-
-  body: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    padding: 10,
-    shadowOffset: {width: 0, height: 10},
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
-    elevation: 2,
-    marginTop: -20,
-  },
-  doctorContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: '#E9E6E6',
-    shadowOffset: {width: 10, height: 10},
-    shadowColor: '#000',
-    shadowOpacity: 2,
-    shadowRadius: 20,
-    elevation: 5,
-  },
-
-  doctorImage: {
-    width: 70,
-    height: 70,
-    borderRadius: 40,
-    marginRight: 20,
-    marginBottom: 30,
-  },
-  doctorInfo: {
-    flex: 1,
-    marginLeft: 30,
-    flexDirection: 'row',
-    position: 'relative',
-    marginBottom: 30,
-  },
-  doctorName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  doctorSpeciality: {
-    fontSize: 15,
-    color: '#aaa',
-  },
-  // button: {
-  //     alignItems: 'center',
-  //     backgroundColor: '#009387',
-  //     padding: 20,
-  //     margin: 20,
-  //     borderRadius: 20,
-  // },
-  doctorButtonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 10,
-    marginTop: 30,
-    marginBottom: 10,
-    borderRadius: 20,
-    shadowOffset: {width: 0, height: 10},
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 20,
-    elevation: 5,
-    backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#009387',
-  },
-});
 
 export default DoctorsScreen;
