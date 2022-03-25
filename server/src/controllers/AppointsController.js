@@ -26,7 +26,7 @@ export const GetAppoints = async (req, res) => {
 
         })
         const patient = appoints.map(appoint => appoint.PatientName);
-        console.log(patient);
+        console.log(patient.appoints);
     }
     catch(error){
         res.status(500).send(error);

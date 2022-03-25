@@ -3,12 +3,10 @@ import {useState, useEffect} from 'react';
 import {
   StatusBar,
   FlatList,
-  Button,
   Pressable,
   ScrollView,
   Image,
   Animated,
-  Text,
   View,
   Dimensions,
   StyleSheet,
@@ -18,8 +16,10 @@ import {
   SafeAreaView,
 } from 'react-native';
 const {width, height} = Dimensions.get('screen');
-import {SearchBar} from 'react-native-elements';
 import {StackNavigator} from 'react-navigation';
+import { VStack, Input, Button, IconButton, Icon, NativeBaseProvider,Text, Center, Box, Divider, Heading } from "native-base";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import doctors from '../../db/doctors';
@@ -31,6 +31,8 @@ const DoctorsScreen = ({navigation}) => {
   const [selectedId, setSelectedId] = useState(null);
   const [animatePress, setAnimatePress] = useState(new Animated.Value(1));
   const [doctorsList, setDoctorsList] = useState();
+  const [searchTerm,setSearchTerm] = useState('')
+  const [searchValue,setSearchValue] = useState([])
 
   useEffect(() => {
     setDoctorsList(doctors);
@@ -43,14 +45,58 @@ const DoctorsScreen = ({navigation}) => {
     }).start();
   };
 
+  const search = (text) => {
+    setSearchTerm(text)
+    const newData = doctors.filter(item => {
+      const itemData = `${item.name.toUpperCase()}`;
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1;
+    });
+    setSearchValue(newData)
+  }
+  
   return (
+
     <SafeAreaView style={styles.container}>
+      <NativeBaseProvider>
       <View style={styles.body}>
+        <Center>
+        <VStack my="4" space={5} w="100%" maxW="300px" divider={<Box px="2">
+          <Divider />
+        </Box>}>
+      <VStack w="100%" space={5} alignSelf="center">
+        <Heading fontSize="lg">Search</Heading>
+        <Input
+          placeholder="Search"
+          value={searchTerm}
+          onChangeText={(text) => search(text)}
+
+          style={{borderRadius:10,
+          borderWidth:5,
+          borderColor:'#ccc',
+          padding:10,
+          margin:10,
+
+        }}
+        InputLeftElement={<Icon ml="2" size="4" color="gray.400" as={
+          <FontAwesome name="search" />
+        } />}
+        />
+      </VStack>
+
+     
+    </VStack>;
+          </Center>
+    
+      
+   
+        
         <Animated.FlatList
-          data={doctors}
+          data={searchValue.length === 0 ? doctorsList : searchValue}
           keyExtractor={item => item.id.toString()}
           renderItem={({item, index}) => {
             return (
+              
               <TouchableOpacity
                 onPress={() => animateIn}
                 // style={styles.doctor}
@@ -60,10 +106,13 @@ const DoctorsScreen = ({navigation}) => {
                     ? styles.doctorContainerSelected
                     : null,
                 ]}>
+                  
                 <Image source={item.image} style={styles.doctorImage} />
                 <View style={styles.doctorInfo}>
+                 
+
                   <Text style={styles.doctorName}>{item.name}</Text>
-                  {/* <Text style={styles.doctorSpeciality}>{item.speciality}</Text> */}
+                  <View style={styles.doctorInfoRow}>
                   <Pressable
                     onPress={() =>
                       navigation.navigate('DoctorProfile', {
@@ -74,12 +123,16 @@ const DoctorsScreen = ({navigation}) => {
                     onPressIn={animateIn}>
                     <Text style={styles.text}>View Profile</Text>
                   </Pressable>
+
+                  
+                </View>
                 </View>
               </TouchableOpacity>
             );
           }}
         />
       </View>
+      </NativeBaseProvider>
     </SafeAreaView>
   );
 };

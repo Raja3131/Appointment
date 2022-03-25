@@ -29,7 +29,7 @@ import doctors from '../../db/doctors';
 import {useEffect} from 'react';
 import {styles} from './styles';
 
-const PatientDetails = ({navigation}) => {
+const PatientDetails = ({navigation, route}) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(/^[a-zA-Z ]+$/, 'Name is not valid')
@@ -82,26 +82,23 @@ const PatientDetails = ({navigation}) => {
       mobile,
     });
     if (response.status === 201) {
-      if(values.doctor){
+      if (values.doctor) {
         navigation.navigate('DoctorProfile', {
           name: values.name,
           age: values.age,
           mobile: values.mobile,
           gender: values.gender,
-          selectDoctor:values.doctor
-          
+          selectDoctor: values.doctor,
         });
-       }
-       else{
-         navigation.navigate('Doctors',{
+      } else {
+        navigation.navigate('Doctors', {
           name: values.name,
           age: values.age,
           mobile: values.mobile,
           gender: values.gender,
- 
-         })
-       }
-        console.log(values)
+        });
+      }
+      console.log(values);
       actions.resetForm();
     } else {
       Alert.alert('Error', 'Something went wrong');
@@ -291,6 +288,5 @@ const PatientDetails = ({navigation}) => {
     </>
   );
 };
-
 
 export default PatientDetails;

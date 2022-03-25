@@ -79,5 +79,16 @@ export const styles = StyleSheet.create({
       fontWeight: 'bold',
       color: '#009387',
     },
+    doctorInfoRow: {
+      flexDirection: 'row',
+      marginBottom: 10,
+      alignSelf: 'flex-end',
+      position:'absolute',
+      top:10,
+      right:10,
+
+      
+
+    }
   });
   

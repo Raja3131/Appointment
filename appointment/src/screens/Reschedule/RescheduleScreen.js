@@ -46,21 +46,28 @@ const RescheduleScreen = ({route, navigation}) => {
       date: selectedDate.toDateString(),
       time: select.startTime,
     }).then(res => {
-      console.log(res);
+      if(!name1 || !date || !select.startTime) {
+        Alert.alert('Please fill all the fields');
+      } else {
+        console.log(res);
       setName('');
       navigation.navigate('MyAppoints', appointments);
+      }
+      
+
+      
     });
   };
   
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Reschedule Appointment</Text>
-      <Text style={styles.label}>{name1}</Text>
+      {/* <Text style={styles.label}>{name1}</Text>
       <TextInput
         style={styles.input}
         value={name1}
         onChangeText={text => setName(text)}
-      />
+      /> */}
       <Text style={styles.label}>Date</Text>
 
       <View style={styles.datePicker}>
@@ -91,8 +98,12 @@ const RescheduleScreen = ({route, navigation}) => {
               setSelectedDate(newDate);
               setDate('New Date');
             }}
+            
             minimumDate={new Date()}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
+            default = {
+              new Date().setDate(new Date().getDate() + 1)
+            }
           />
         )}
       </View>
@@ -109,7 +120,7 @@ const RescheduleScreen = ({route, navigation}) => {
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
                   <View>
-                    <FontAwesome name="clock-o" size={20} color="#009387" />
+                    <FontAwesome name="clock-o" size={20} color="#00a680" />
                   </View>
 
                   <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>

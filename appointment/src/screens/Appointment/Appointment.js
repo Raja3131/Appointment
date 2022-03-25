@@ -275,7 +275,7 @@ const Appointment = ({route, navigation}) => {
                           fontSize: 'sm',
                         }}
                         value="payment1">
-                        Cash on delivery
+                        Cash on Visit
                       </Radio>
                       <Radio
                         alignItems="flex-start"

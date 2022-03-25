@@ -18,7 +18,7 @@ const onPress = () => {
     navigation.navigate('Appointment', { name: name, selectDoctor: selectDoctor })
   }
   else {
-    navigation.navigate('Patients', { selectDoctor: selectDoctor })
+    navigation.navigate('Patients', { selectedDoctor: selectDoctor })
   }
 }
 
@@ -28,7 +28,9 @@ const onPress = () => {
       <Text style={styles.name}>{doctors.find(doctor => doctor.id === selectDoctor).name}</Text>
       <Text style={styles.speciality}>{doctors.find(doctor => doctor.id === selectDoctor).speciality}</Text>
       <Text style={styles.about}>{doctors.find(doctor => doctor.id === selectDoctor).about}</Text>
-      <Pressable style={styles.button} onPress={() => onPress()}>
+      <Pressable style={styles.button} onPress={() => onPress(
+        { name: name, selectDoctor: selectDoctor }
+      )}>
         <Text style={styles.buttonText}>Book Appointment</Text>
       </Pressable>
     </View>

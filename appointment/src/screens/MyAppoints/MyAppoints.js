@@ -8,7 +8,7 @@ import { AlertDialog, Button, Center, NativeBaseProvider } from "native-base";
 const MyAppoints = ({navigation}) => {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const cancelRef = React.useRef(null);
 
@@ -57,6 +57,7 @@ const MyAppoints = ({navigation}) => {
       <NativeBaseProvider>
     <View style={styles.container}>
       <Text style={styles.header}>My Appointments</Text>
+     
 
       {appointments.map(appointment => (
         <View style={styles.appointment}>
@@ -64,8 +65,10 @@ const MyAppoints = ({navigation}) => {
           <Text style={styles.nameText}>{appointment.name}</Text>
           <Text style={styles.dateText}>{appointment.date}</Text>
           <Text style={styles.timeText}>{appointment.time}</Text>
+   
           
           </View>
+          <View style={styles.buttonContainer}>
           <Pressable
             onPress={() =>
               OnReschedule(
@@ -79,37 +82,28 @@ const MyAppoints = ({navigation}) => {
             style={styles.reschedule}>
             <Text style={styles.rescheduleText}>Reschedule</Text>
           </Pressable>
-
-          <Pressable
-            style={styles.delete}
-            onPress={() => OnDelete(appointment._id)}>
-            <Text style={styles.cancelText}>Cancel</Text>
-          </Pressable>
-          <Pressable
-            style={styles.alert}
-            onPress={() => setShowAlert(true)}>
-           
-            <Text style={styles.cancelText}>Cancel</Text>
-          </Pressable>
-        
-        </View>
-      ))}
-    </View>
-    
+          </View>
       {
         appointments.map(appointment => (
           <View style={styles.alertBox}>
+             <Button 
+             style={styles.alertButton}
+      
+      colorScheme="danger" onPress={() => setIsOpen(!isOpen)}>
+       Cancel Appoint
+     </Button>
 
          {
             showAlert && (
-              <Center>
-      <Button colorScheme="danger" onPress={() => setIsOpen(!isOpen)}>
-        Delete Customer
-      </Button>
+              <Center 
+              >
+           
+                
+    
       <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
         <AlertDialog.Content>
           <AlertDialog.CloseButton />
-          <AlertDialog.Header>Delete Customer</AlertDialog.Header>
+          <AlertDialog.Header>Cancel Appoint</AlertDialog.Header>
           <AlertDialog.Body>
             This will remove all data relating to Alex. This action cannot be
             reversed. Deleted data can not be recovered.
@@ -136,7 +130,14 @@ const MyAppoints = ({navigation}) => {
           </View>
         ))
       }
-      
+      </View>
+
+        
+          
+        
+      ))}
+    </View>
+    
           </NativeBaseProvider>
   
     </>
