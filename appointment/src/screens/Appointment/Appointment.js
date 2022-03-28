@@ -46,7 +46,9 @@ const Appointment = ({route, navigation}) => {
     setTimeSlot(TimeSlot);
   }, []);
 
-  const makePayment = (
+  const makePayment = ({
+    navigation
+  }
 
   ) => {
     
@@ -79,6 +81,11 @@ const Appointment = ({route, navigation}) => {
             time: select.startTime
            
           });
+          navigation.navigate('MyAppoints');
+
+        }
+        else if(data.status === 400){
+          alert("Appointment already exists");
         }
       })
       .catch(error => {

@@ -12,6 +12,7 @@ const appointments = new mongoose.Schema({
   },
   time: {
     type: String,
+    unique: false
   },
 });
 const AppointsModel = mongoose.model("appointments", appointments);

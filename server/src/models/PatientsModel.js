@@ -10,10 +10,7 @@ const patientSchema = new mongoose.Schema({
   mobile: {
     type: String,
   },
-  // address: {
-  //   type: String,
-  // },
- 
+
  
 })
 
