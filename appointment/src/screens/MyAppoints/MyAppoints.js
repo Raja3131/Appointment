@@ -4,9 +4,11 @@ import {useState, useEffect} from 'react';
 import Api from '../../api/Api';
 import {styles} from './styles';
 import { AlertDialog, Button, Center, NativeBaseProvider } from "native-base";
+import Message from '../../components/Common/Message/Message'
+
 
 const MyAppoints = ({navigation}) => {
-
+  const [availableAppointments, setAvailableAppointments] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
@@ -57,9 +59,28 @@ const MyAppoints = ({navigation}) => {
       <NativeBaseProvider>
     <View style={styles.container}>
       <Text style={styles.header}>My Appointments</Text>
+      
+      
      
 
-      {appointments.map(appointment => (
+      {
+        appointments.length === 0 ? (
+         <Message
+          message="You have no appointments"
+          onDismiss={onClose}
+          retry={false}
+          retryFn={() => {
+            setIsOpen(false);
+          }
+          }
+          primary={true}
+          info={true}
+        />
+        ) : (
+      appointments.map(appointment => (
+          
+
+
         <View style={styles.appointment}>
           <View style={styles.textContainer}>
           <Text style={styles.nameText}>{appointment.name}</Text>
@@ -135,7 +156,7 @@ const MyAppoints = ({navigation}) => {
         
           
         
-      ))}
+      )))}
     </View>
     
           </NativeBaseProvider>

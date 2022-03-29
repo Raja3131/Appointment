@@ -102,7 +102,13 @@ export const styles = StyleSheet.create({
 
       },
       shadowOpacity: 0.25,
-    }
+    },
+    noAppointments: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#555',
+      marginTop: 20,
+    },
     
 
 
