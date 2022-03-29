@@ -5,6 +5,7 @@ import Api from '../../api/Api';
 import {styles} from './styles';
 import { AlertDialog, Button, Center, NativeBaseProvider } from "native-base";
 import Message from '../../components/Common/Message/Message'
+import { ActivityIndicator } from "react-native";
 
 
 const MyAppoints = ({navigation}) => {
@@ -12,6 +13,7 @@ const MyAppoints = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  
   const cancelRef = React.useRef(null);
 
 
@@ -64,6 +66,11 @@ const MyAppoints = ({navigation}) => {
      
 
       {
+        isLoading ? (
+          <Center>
+            <ActivityIndicator size="large" color="#0000ff"  />
+          </Center>
+        ) : (
         appointments.length === 0 ? (
          <Message
           message="You have no appointments"
@@ -156,7 +163,7 @@ const MyAppoints = ({navigation}) => {
         
           
         
-      )))}
+      ))))}
     </View>
     
           </NativeBaseProvider>

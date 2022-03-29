@@ -28,8 +28,10 @@ import RNPickerSelect from 'react-native-picker-select';
 import doctors from '../../db/doctors';
 import {useEffect} from 'react';
 import {styles} from './styles';
+import Message from '../../components/Common/Message/Message';
 
 const PatientDetails = ({navigation, route}) => {
+  const [message,setMessage] = useState(false)
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(/^[a-zA-Z ]+$/, 'Name is not valid')
@@ -76,6 +78,7 @@ const PatientDetails = ({navigation, route}) => {
 
   const signUp = async (values, actions) => {
     const {name, age, mobile} = values;
+   try{
     const response = await Api.post('/patient', {
       name,
       age,
@@ -90,7 +93,12 @@ const PatientDetails = ({navigation, route}) => {
           gender: values.gender,
           selectDoctor: values.doctor,
         });
-      } else {
+        if(response.status!==201){
+          setMessage(true)
+        }
+      
+      } 
+      else {
         navigation.navigate('Doctors', {
           name: values.name,
           age: values.age,
@@ -103,7 +111,15 @@ const PatientDetails = ({navigation, route}) => {
     } else {
       Alert.alert('Error', 'Something went wrong');
     }
+    
+   }
+    catch(err){
+      console.log(err);
+    }
+    setMessage(true)
   };
+
+
 
   return (
     <>
@@ -112,6 +128,11 @@ const PatientDetails = ({navigation, route}) => {
           <StatusBar backgroundColor="#009387" barStyle="light-content" />
           <View style={styles.header}>
             <Text style={styles.text_header}>Welcome!</Text>
+            {
+              message?<Message message="Patient Already Existed"
+              
+               />:null
+            }
           </View>
           <Formik
             initialValues={{
