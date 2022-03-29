@@ -122,6 +122,7 @@ const Appointment = ({route, navigation}) => {
                 size={20}
                 color="#fff"
                 style={{marginRight: 10, marginLeft: 10}}
+                
               />
               {date === 'Select Date'
                 ? '    Select Date'
