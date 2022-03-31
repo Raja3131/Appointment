@@ -1,17 +1,13 @@
-import { GET_APPOINTS } from "../../../constants/actionTypes";
-import API from "../../../api";
-
-
-export default () => (dispatch) => {
-    API.get("/appoints")
-        .then((response) => {
-            dispatch({
-                type: GET_APPOINTS,
-                payload: response.data
-
-            })
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-}
+export const getAppointsStart = (stateStart) =>({
+    type: "GET_APPOINTS_START",
+    payload: stateStart
+    
+})
+export const getAppointsSuccess = (AppointsState) =>({
+    type: "GET_APPOINTS_SUCCESS",
+    payload: AppointsState
+})
+export const getAppointsError = (error) =>({
+    type: "GET_APPOINTS_ERROR",
+    payload: error
+})

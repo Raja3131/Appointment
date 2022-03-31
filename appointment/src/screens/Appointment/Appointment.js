@@ -38,6 +38,7 @@ const Appointment = ({route, navigation}) => {
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
+  const [paymentMode, setPaymentMode] = useState('');
 
   useEffect(() => {
     setDoctorsList(doctors);
@@ -46,9 +47,11 @@ const Appointment = ({route, navigation}) => {
     setTimeSlot(TimeSlot);
   }, []);
 
+
   const makePayment = ({
     navigation
   }
+
 
   ) => {
     
@@ -93,6 +96,17 @@ const Appointment = ({route, navigation}) => {
         alert(`Error: ${error.code} | ${error.description}`);
       });
   };
+  const makePaymentOnCash = () => {
+    navigation.navigate('Cash',{
+      name: name,
+      doctor: selectDoctor,
+      date: selectedDate.toLocaleDateString(),
+      time: select.startTime
+      
+    })
+    
+
+  }
 
   return (
     <>
@@ -184,7 +198,7 @@ const Appointment = ({route, navigation}) => {
               size="lg">
               <Modal.Content maxWidth="350">
                 <Modal.CloseButton />
-                <Modal.Header>Order</Modal.Header>
+                <Modal.Header>Appoint</Modal.Header>
                 <Modal.Body>
                   <VStack space={3}>
                     <HStack alignItems="center" justifyContent="space-between">
@@ -282,7 +296,10 @@ const Appointment = ({route, navigation}) => {
                           ml: '2',
                           fontSize: 'sm',
                         }}
-                        value="payment1">
+                        value="cash"
+                        onPress={() => setPaymentMode('cash')}
+
+                        >
                         Cash on Visit
                       </Radio>
                       <Radio
@@ -292,8 +309,10 @@ const Appointment = ({route, navigation}) => {
                           ml: '2',
                           fontSize: 'sm',
                         }}
-                        value="payment2">
-                        Credit/ Debit/ ATM Card
+                        value="card"
+                        onPress={() => setPaymentMode('card')}
+                        >
+                        Credit/ Debit
                       </Radio>
                       <Radio
                         alignItems="flex-start"
@@ -309,20 +328,43 @@ const Appointment = ({route, navigation}) => {
                   </Radio.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button
-                    flex="1"
-                    onPress={() => {
-                      makePayment(
-                        select,
-                        selectedDate.toDateString(),
-                        
-                      );
-                      setShowModal3(false);
-                      setShowModal2(false);
-                      setShowModal3(false);
-                    }}>
-                    Checkout
-                  </Button>
+                  {
+                    paymentMode==='card' ? (<Button
+                      flex="1"
+                      onPress={() => {
+                        makePayment(
+                          select,
+                          selectedDate.toDateString(),
+                          
+                        );
+                        setShowModal3(false);
+                        setShowModal2(false);
+                        setShowModal3(false);
+                      }}>
+                      Checkout
+                    </Button>
+                    ) : ( <Button
+                      flex="1"
+                      onPress={() => {
+                        makePaymentOnCash(
+                          select,
+                          selectedDate.toDateString(),
+
+
+                          
+                          
+                          
+                        );
+                        setShowModal3(false);
+                        setShowModal2(false);
+                        setShowModal3(false);
+                      }}>
+                      Cash
+                    </Button>
+                    )
+
+
+                  }
                 </Modal.Footer>
               </Modal.Content>
             </Modal>
