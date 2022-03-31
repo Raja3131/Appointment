@@ -1,10 +1,23 @@
-import React , { createContext, useReducer } from 'react';
+import React from 'react';
+import { createContext, useReducer,  } from 'react';
+import appointsInitialState from './initialStates/appointsInitialState';
+import appointsReducer from './reducers/appointsReducer';
 
-const GlobalStateContext = createContext();
+export const AppointsContext = createContext(appointsInitialState)
 
-const GlobalProvider = ({ children }) => {
-    return <GlobalStateContext.Provider value={useReducer(reducer, initialState)}>{children}
-    
-    </GlobalStateContext.Provider>;
-    
+
+export const AppointsContextProvider = ({children}) =>{
+    const [AppointsState,AppointsDispatch] =useReducer(appointsReducer,appointsInitialState)
+
+
+    return(
+        <AppointsContext.Provider value={{
+            AppointsState,
+            AppointsDispatch
+
+
+        }}>
+            {children}
+        </AppointsContext.Provider>
+    )
 }

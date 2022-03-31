@@ -17,15 +17,18 @@ import {
   View
 } from 'react-native';
 import AppNavContainer from './src/navigation/index';
+import {AppointsContextProvider} from './src/context/Provider';
 
 const App = ()=>{
 
   return(
     <>
+      <AppointsContextProvider>
         <AppNavContainer>
-        <StatusBar  backgroundColor={'#ffffff00'} />
+       
 
         </AppNavContainer>
+      </AppointsContextProvider>
     </>
   
   )

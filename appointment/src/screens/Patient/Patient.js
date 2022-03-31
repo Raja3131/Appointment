@@ -29,6 +29,7 @@ import doctors from '../../db/doctors';
 import {useEffect} from 'react';
 import {styles} from './styles';
 import Message from '../../components/Common/Message/Message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PatientDetails = ({navigation, route}) => {
   const [message,setMessage] = useState(false)
@@ -76,6 +77,10 @@ const PatientDetails = ({navigation, route}) => {
 
   const {colors} = useTheme();
 
+;
+
+  
+
   const signUp = async (values, actions) => {
     const {name, age, mobile} = values;
    try{
@@ -84,6 +89,7 @@ const PatientDetails = ({navigation, route}) => {
       age,
       mobile,
     });
+    await AsyncStorage.setItem('patient', JSON.stringify(response.data));
     if (response.status === 201) {
       if (values.doctor) {
         navigation.navigate('DoctorProfile', {
@@ -115,8 +121,9 @@ const PatientDetails = ({navigation, route}) => {
    }
     catch(err){
       console.log(err);
+      setMessage(true)
+
     }
-    setMessage(true)
   };
 
 
@@ -130,6 +137,7 @@ const PatientDetails = ({navigation, route}) => {
             <Text style={styles.text_header}>Welcome!</Text>
             {
               message?<Message message="Patient Already Existed"
+             danger={true}
               
                />:null
             }
@@ -290,7 +298,10 @@ const PatientDetails = ({navigation, route}) => {
                       marginTop: 30,
                     },
                   ]}
-                  onPress={handleSubmit}>
+                  onPress={handleSubmit}
+                  disabled={!(values.name && values.age && values.mobile)} 
+                  testID="loginButton">
+                    
                   <Text
                     style={[
                       styles.textSign,

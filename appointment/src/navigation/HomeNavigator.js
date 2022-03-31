@@ -6,6 +6,7 @@ import DoctorDetailsScreen from '../screens/DoctorDetails/DoctorDetailsScreen';
 import Appointment from '../screens/Appointment/Appointment';
 import PatientDetails from '../screens/Patient/Patient';
 import RescheduleScreen from '../screens/Reschedule/RescheduleScreen';
+import CashScreen from '../screens/Cash/CashScreen';
 
 
 const HomeScreen = () => {
@@ -17,7 +18,9 @@ const HomeScreen = () => {
             <HomeStack.Screen options={{ headerShown: false }} name="Doctors" component={DoctorsScreen}/>
             <HomeStack.Screen name="DoctorProfile" component={DoctorDetailsScreen} />
             <HomeStack.Screen name="Appointment" component={Appointment} />
-            <HomeStack.Screen name="Reschedule" component={RescheduleScreen} />
+            <HomeStack.Screen name="Reschedule" component={RescheduleScreen}/>
+            <HomeStack.Screen name="Cash" component={CashScreen} />
+            
 
         </HomeStack.Navigator>
     );
