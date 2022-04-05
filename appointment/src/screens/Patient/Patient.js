@@ -29,7 +29,6 @@ import doctors from '../../db/doctors';
 import {useEffect} from 'react';
 import {styles} from './styles';
 import Message from '../../components/Common/Message/Message';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PatientDetails = ({navigation, route}) => {
   const [message,setMessage] = useState(false)
@@ -89,7 +88,6 @@ const PatientDetails = ({navigation, route}) => {
       age,
       mobile,
     });
-    await AsyncStorage.setItem('patient', JSON.stringify(response.data));
     if (response.status === 201) {
       if (values.doctor) {
         navigation.navigate('DoctorProfile', {
@@ -150,7 +148,7 @@ const PatientDetails = ({navigation, route}) => {
               gender: '',
               doctor: '',
             }}
-            // validationSchema={validationSchema}
+            validationSchema={validationSchema}
             onSubmit={signUp}>
             {({
               handleChange,

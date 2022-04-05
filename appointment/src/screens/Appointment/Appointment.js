@@ -25,6 +25,8 @@ import {
 import RazorpayCheckout from 'react-native-razorpay';
 import Api from '../../api/Api';
 import {styles} from './styles';
+import moment from 'moment';
+
 const Appointment = ({route, navigation}) => {
   const {selectDoctor} = route.params;
   const {name} = route.params;
@@ -39,6 +41,8 @@ const Appointment = ({route, navigation}) => {
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const [paymentMode, setPaymentMode] = useState('');
+  let currentDate = new Date()
+  let currentHour = currentDate.getHours()
 
   useEffect(() => {
     setDoctorsList(doctors);
@@ -163,6 +167,9 @@ const Appointment = ({route, navigation}) => {
         {date === 'Select Date' ? null : (
           <View style={styles.timeSlot}>
             {timeSlot.map(slot => {
+               let myMoment = moment(`${slot.startTime}`, 'HH:mm');
+               let myMoment2 = moment(`${slot.endTime}`, 'HH:mm');
+               if(currentHour < myMoment.hour() ) {
               return (
                 <>
                   <Pressable
@@ -181,6 +188,7 @@ const Appointment = ({route, navigation}) => {
                   </Pressable>
                 </>
               );
+                  }
             })}
           </View>
         )}

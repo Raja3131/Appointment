@@ -16,6 +16,8 @@ const Message = ({
   danger,
   info,
   success,
+
+  ...props
 }) => {
   const [userDismissed, setDismissed] = React.useState(false);
 
@@ -46,9 +48,8 @@ const Message = ({
               alignItems: 'center',
             }}>
             <Text
-              style={{
-                color: colors.white,
-              }}>
+              style={styles.text}
+            >
               {message}
             </Text>
 
