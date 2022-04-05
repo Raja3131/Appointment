@@ -48,11 +48,11 @@ const RescheduleScreen = ({route, navigation}) => {
 
   const reschedule = () => {
     Api.put(`/appoints/${id}`, {
-      name: name1,
+     
       date: selectedDate.toDateString(),
       time: select.startTime,
     }).then(res => {
-      if(!name1 || !date || !select.startTime) {
+      if(!date || !select.startTime) {
         Alert.alert('Please fill all the fields');
       } else {
         console.log(res);
@@ -130,7 +130,10 @@ const RescheduleScreen = ({route, navigation}) => {
                     setSelect(slot);
                     setTime(`${slot.startTime} - ${slot.endTime}`);
                   }}
-                  style={styles.timeSlotButton}>
+                  style={[
+                    styles.timeSlotItem,
+                    select === slot ? styles.timeSlotItemSelect : null,
+                  ]}>
                   <Text style={styles.timeSlotButtonText}>
                     {slot.startTime} - {slot.endTime}
                   </Text>
@@ -146,28 +149,25 @@ const RescheduleScreen = ({route, navigation}) => {
                     setSelect(slot);
                     setTime(`${slot.startTime} - ${slot.endTime}`);
                   }}
-                  style={styles.timeSlotButton}>
-                  <Text style={styles.timeSlotButtonText}>
-                    {slot.startTime} - {slot.endTime}
+                  style={[
+                    styles.timeSlotItem,
+                    select === slot ? styles.timeSlotItemSelect : null,
+                  ]}>
+                  <Text style={styles.timeButtonText}>
+                    {slot.startTime}
                   </Text>
                 </Pressable>
               );
             }
-            
-
-            
-            
-          
-
-           
           })}
         </View>
       )}
 
       <Pressable
         onPress={() => reschedule(
-          name1,
+         
           selectedDate.toDateString(),
+          select.startTime,
           
         )}
         style={styles.button}>

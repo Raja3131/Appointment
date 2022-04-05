@@ -166,30 +166,55 @@ const Appointment = ({route, navigation}) => {
 
         {date === 'Select Date' ? null : (
           <View style={styles.timeSlot}>
-            {timeSlot.map(slot => {
-               let myMoment = moment(`${slot.startTime}`, 'HH:mm');
-               let myMoment2 = moment(`${slot.endTime}`, 'HH:mm');
-               if(currentHour < myMoment.hour() ) {
+           {timeSlot.map(slot => {
+            let myMoment = moment(`${slot.startTime}`, 'HH:mm');
+            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm');
+            
+            if(currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString())
+            {
+               
               return (
-                <>
-                  <Pressable
-                    onPress={() => setSelect(slot)}
-                    style={[
-                      styles.timeSlotItem,
-                      select === slot ? styles.timeSlotItemSelect : null,
-                    ]}>
-                    <View>
-                      <FontAwesome name="clock-o" size={20} color="#009387" />
-                    </View>
-
-                    <Text style={styles.timeSlotItemText}>
-                      {slot.startTime}
-                    </Text>
-                  </Pressable>
-                </>
+                <Pressable
+                  key={slot.id}
+                  onPress={() => {
+                    setSelect(slot);
+                  }}
+                  style={[
+                    styles.timeSlotItem,
+                    select === slot ? styles.timeSlotItemSelect : null,
+                  ]}>
+                  <Text style={styles.timeSlotButtonText}>
+                    {slot.startTime} - {slot.endTime}
+                  </Text>
+                </Pressable>
               );
-                  }
-            })}
+            }
+            else if(currentDate.toDateString() !== selectedDate.toDateString())
+            {
+              return (
+                <Pressable
+                  key={slot.id}
+                  onPress={() => {
+                    setSelect(slot);
+                  }}
+                  style={[
+                    styles.timeSlotItem,
+                    select === slot ? styles.timeSlotItemSelect : null,
+                  ]}>
+                  <Text style={styles.timeButtonText}>
+                    {slot.startTime}
+                  </Text>
+                </Pressable>
+              );
+            }
+            
+
+            
+            
+          
+
+           
+          })}
           </View>
         )}
 
