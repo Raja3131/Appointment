@@ -16,8 +16,12 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import {styles} from './styles';
+import moment from 'moment';
 
 const RescheduleScreen = ({route, navigation}) => {
+  let currentDate = new Date();
+  let currentHour = currentDate.getHours();
+
   const {id: id} = route.params;
   const {name: appointmentName} = route.params;
   const {date: appointmentDate} = route.params;
@@ -38,6 +42,8 @@ const RescheduleScreen = ({route, navigation}) => {
 
   useEffect(() => {
     setTimeSlot(TimeSlot);
+
+
   });
 
   const reschedule = () => {
@@ -111,28 +117,39 @@ const RescheduleScreen = ({route, navigation}) => {
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
-            return (
-              <>
+            let myMoment = moment(`${slot.startTime}`, 'HH:mm');
+            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm');
+            
+            if(currentHour < myMoment.hour() ) {
+              return (
                 <Pressable
-                  onPress={() => setSelect(slot)}
-                  style={[
-                    styles.timeSlotItem,
-                    select === slot ? styles.timeSlotItemSelect : null,
-                  ]}>
-                  <View>
-                    <FontAwesome name="clock-o" size={20} color="#00a680" />
-                  </View>
-
-                  <Text style={styles.timeSlotItemText}>{slot.startTime}</Text>
+                  key={slot.id}
+                  onPress={() => {
+                    setSelect(slot);
+                    setTime(`${slot.startTime} - ${slot.endTime}`);
+                  }}
+                  style={styles.timeSlotButton}>
+                  <Text style={styles.timeSlotButtonText}>
+                    {slot.startTime} - {slot.endTime}
+                  </Text>
                 </Pressable>
-              </>
-            );
+              );
+            }
+            
+            
+          
+
+           
           })}
         </View>
       )}
 
       <Pressable
-        onPress={() => reschedule()}
+        onPress={() => reschedule(
+          name1,
+          selectedDate.toDateString(),
+          
+        )}
         style={styles.button}>
         <Text style={styles.buttonText}>Reschedule</Text>
       </Pressable>

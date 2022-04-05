@@ -14,7 +14,7 @@ export default StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'space-evenly',
   },
-
+  
   loaderSection: {
     flexDirection: 'row',
   },
