@@ -120,7 +120,9 @@ const RescheduleScreen = ({route, navigation}) => {
             let myMoment = moment(`${slot.startTime}`, 'HH:mm');
             let myMoment2 = moment(`${slot.endTime}`, 'HH:mm');
             
-            if(currentHour < myMoment.hour() ) {
+            if(currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString())
+            {
+               
               return (
                 <Pressable
                   key={slot.id}
@@ -135,6 +137,24 @@ const RescheduleScreen = ({route, navigation}) => {
                 </Pressable>
               );
             }
+            else if(currentDate.toDateString() !== selectedDate.toDateString())
+            {
+              return (
+                <Pressable
+                  key={slot.id}
+                  onPress={() => {
+                    setSelect(slot);
+                    setTime(`${slot.startTime} - ${slot.endTime}`);
+                  }}
+                  style={styles.timeSlotButton}>
+                  <Text style={styles.timeSlotButtonText}>
+                    {slot.startTime} - {slot.endTime}
+                  </Text>
+                </Pressable>
+              );
+            }
+            
+
             
             
           
