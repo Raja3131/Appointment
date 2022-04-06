@@ -1,7 +1,7 @@
 const TimeSlot= [
     {
         id: 1,
-        startTime: '10:00 AM',
+        startTime: '10:00',
         endTime: '11:00',
         isAvailable: true
     },

@@ -117,8 +117,11 @@ const RescheduleScreen = ({route, navigation}) => {
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
-            let myMoment = moment(`${slot.startTime}`, 'HH:mm');
-            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm');
+            let myMoment = moment(`${slot.startTime}`, 'HH:mm A')
+            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
+            slot.startTime = myMoment.format('hA');
+            slot.endTime = myMoment2.format('hA');
+            ;
             
             if(currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString())
             {

@@ -7,6 +7,7 @@ import { AlertDialog, Button, Center, NativeBaseProvider } from "native-base";
 import Message from '../../components/Common/Message/Message'
 import { ActivityIndicator } from "react-native";
 import { useFocusEffect } from '@react-navigation/native' 
+import useAppoints from '../../services/QueryCalls';
 
 
 const MyAppoints = ({navigation}) => {
@@ -18,22 +19,20 @@ const MyAppoints = ({navigation}) => {
   const cancelRef = React.useRef(null);
 
 
+
   const [appointments, setAppointments] = useState([]);
   const onClose = () => setIsOpen(false);
+  const {data} = useAppoints();
 
     useFocusEffect(
         React.useCallback(() => {
             setIsLoading(true);
-            Api.get('/appoints')
-            .then(res => {
-                setAppointments([...res.data.appoints]);
-                setIsLoading(false);
-            })
-            .catch(err => {
-                setIsLoading(false);
-            })
-        }, [])
-    )
+            setAppointments([...data.appoints]);
+            setIsLoading(false);
+        }, [data.appoints])
+    );
+
+    
   const OnDelete = id => {
   
     
@@ -41,7 +40,7 @@ const MyAppoints = ({navigation}) => {
       .then(res => {
         console.log(res);
         setAppointments(
-        appointments.filter(appointment => appointment._id === id)
+        appointments.filter(appointment => appointment._id !== id)
         );
         setIsOpen(false);
 

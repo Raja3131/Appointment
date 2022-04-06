@@ -21,10 +21,14 @@ import {AppointsContextProvider} from './src/context/Provider';
 
 const App = ()=>{
 
+
   return(
     <>
+      
+
       <AppointsContextProvider>
         <AppNavContainer>
+
        
 
         </AppNavContainer>

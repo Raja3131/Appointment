@@ -41,6 +41,7 @@ const Appointment = ({route, navigation}) => {
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
   const [paymentMode, setPaymentMode] = useState('');
+  const [time, setTime] = useState('');
   let currentDate = new Date()
   let currentHour = currentDate.getHours()
 
@@ -165,10 +166,13 @@ const Appointment = ({route, navigation}) => {
         </View>
 
         {date === 'Select Date' ? null : (
-          <View style={styles.timeSlot}>
-           {timeSlot.map(slot => {
-            let myMoment = moment(`${slot.startTime}`, 'HH:mm');
-            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm');
+        <View style={styles.timeSlot}>
+          {timeSlot.map(slot => {
+            let myMoment = moment(`${slot.startTime}`, 'HH:mm A')
+            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
+            slot.startTime = myMoment.format('hA');
+            slot.endTime = myMoment2.format('hA');
+            ;
             
             if(currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString())
             {
@@ -178,6 +182,7 @@ const Appointment = ({route, navigation}) => {
                   key={slot.id}
                   onPress={() => {
                     setSelect(slot);
+                    setTime(`${slot.startTime} - ${slot.endTime}`);
                   }}
                   style={[
                     styles.timeSlotItem,
@@ -196,6 +201,7 @@ const Appointment = ({route, navigation}) => {
                   key={slot.id}
                   onPress={() => {
                     setSelect(slot);
+                    setTime(`${slot.startTime} - ${slot.endTime}`);
                   }}
                   style={[
                     styles.timeSlotItem,
@@ -207,16 +213,10 @@ const Appointment = ({route, navigation}) => {
                 </Pressable>
               );
             }
-            
-
-            
-            
-          
-
-           
           })}
-          </View>
-        )}
+        </View>
+      )}
+
 
         <View>
           <Center>

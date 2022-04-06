@@ -29,9 +29,12 @@ import doctors from '../../db/doctors';
 import {useEffect} from 'react';
 import {styles} from './styles';
 import Message from '../../components/Common/Message/Message';
+import useAppoints from '../../services/QueryCalls';
 
 const PatientDetails = ({navigation, route}) => {
-  const [message,setMessage] = useState(false)
+  const {data} = useAppoints();
+  const [message, setMessage] = useState(false);
+  const [appoints, setAppoints] = useState([]);
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(/^[a-zA-Z ]+$/, 'Name is not valid')
@@ -76,55 +79,44 @@ const PatientDetails = ({navigation, route}) => {
 
   const {colors} = useTheme();
 
-;
-
   
-
   const signUp = async (values, actions) => {
     const {name, age, mobile} = values;
-   try{
-    const response = await Api.post('/patient', {
-      name,
-      age,
-      mobile,
-    });
-    if (response.status === 201) {
-      if (values.doctor) {
-        navigation.navigate('DoctorProfile', {
-          name: values.name,
-          age: values.age,
-          mobile: values.mobile,
-          gender: values.gender,
-          selectDoctor: values.doctor,
-        });
-        if(response.status!==201){
-          setMessage(true)
+    try {
+      const response = await Api.post('/patient', {
+        name,
+        age,
+        mobile,
+      });
+      if (response.status === 201) {
+        if (values.doctor) {
+          navigation.navigate('DoctorProfile', {
+            name: values.name,
+            age: values.age,
+            mobile: values.mobile,
+            gender: values.gender,
+            selectDoctor: values.doctor,
+          });
+          if (response.status !== 201) {
+            setMessage(true);
+          }
+        } else {
+          navigation.navigate('Doctors', {
+            name: values.name,
+            age: values.age,
+            mobile: values.mobile,
+            gender: values.gender,
+          });
         }
-      
-      } 
-      else {
-        navigation.navigate('Doctors', {
-          name: values.name,
-          age: values.age,
-          mobile: values.mobile,
-          gender: values.gender,
-        });
+        actions.resetForm();
+      } else {
+        Alert.alert('Error', 'Something went wrong');
       }
-      console.log(values);
-      actions.resetForm();
-    } else {
-      Alert.alert('Error', 'Something went wrong');
-    }
-    
-   }
-    catch(err){
+    } catch (err) {
       console.log(err);
-      setMessage(true)
-
+      setMessage(true);
     }
   };
-
-
 
   return (
     <>
@@ -133,12 +125,9 @@ const PatientDetails = ({navigation, route}) => {
           <StatusBar backgroundColor="#009387" barStyle="light-content" />
           <View style={styles.header}>
             <Text style={styles.text_header}>Welcome!</Text>
-            {
-              message?<Message message="Patient Already Existed"
-             danger={true}
-              
-               />:null
-            }
+            {message ? (
+              <Message message="Patient Already Existed" danger={true} />
+            ) : null}
           </View>
           <Formik
             initialValues={{
@@ -297,9 +286,8 @@ const PatientDetails = ({navigation, route}) => {
                     },
                   ]}
                   onPress={handleSubmit}
-                  disabled={!(values.name && values.age && values.mobile)} 
+                  disabled={!(values.name && values.age && values.mobile)}
                   testID="loginButton">
-                    
                   <Text
                     style={[
                       styles.textSign,

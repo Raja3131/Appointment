@@ -4,7 +4,10 @@ import HomeScreen from './HomeNavigator';
 import {Text, StatusBar} from 'react-native';
 import DrawerNavigator from './DrawerNavigator';
 import MyTabs from './TabNavigator';
+import {QueryClientProvider,QueryClient} from 'react-query'
+
 const AppNavContainer = () => {
+  const queryClient = new QueryClient();
 
 
   
@@ -13,7 +16,11 @@ const AppNavContainer = () => {
     <NavigationContainer>
       {/* <HomeScreen /> */}
       {/* <DrawerNavigator /> */}
+      <QueryClientProvider client={queryClient}>
       <MyTabs />
+
+
+                </QueryClientProvider>
     </NavigationContainer>
   );
 };
