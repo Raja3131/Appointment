@@ -29,4 +29,9 @@ export default StyleSheet.create({
     paddingTop: 4,
     fontSize: 12,
   },
+  text: {
+    fontSize: 14,
+    color: '#fff',
+    
+  }
 });

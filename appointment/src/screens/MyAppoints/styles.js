@@ -1,118 +1,54 @@
-
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
-    
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      padding: 20,
-      paddingTop: 30,
-      paddingBottom: 30,
-      
+  container: {
+    flex: 1,
+    backgroundColor: '#555',
 
-    },
-    header: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: '#555',
-      marginTop: 20,
-      marginLeft: 20,
-    },
-    appointment: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      margin:20,
-      height: 100,
-      width: '110%',
-      backgroundColor: '#fff',
-      elevation: 10,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 10,
-        height: 5,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
+  },
+  appointment: {
+    backgroundColor: '#fff',
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    elevation: 5,
 
-    },
-    textContainer: {
-      padding: 20,
-      
-    } ,
+  },
+ pressableView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
 
-    nameText: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: '#555',
+ },
+ appointmentButton: {
+    backgroundColor: '#555',
+    padding: 10,
+    borderRadius: 10,
+    elevation: 5,
+ },
 
-    },
-    dateText: {
-      fontSize: 15,
-      color: '#555',
-    },
-    timeText: {
-      fontSize: 15,
-      color: '#555',
-    },
-    buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      height: 100,
-      backgroundColor: '#fff',
-      elevation: 10,
-      shadowColor: '#000',
-      padding: -30,
-
-      
-    },
-    reschedule: {
-      backgroundColor: '#00a680',
-      padding: 10,
-      borderRadius: 10,
-      margin: 20,
-      elevation: 10,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 10,
-        height: 5,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-    },
-    rescheduleText: {
-      fontSize: 14,
-      fontWeight: 'bold',
-      color: '#fff',
-    },
-
-    alertBox: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      height: 100,
-      width: '110%',
-      backgroundColor: '#fff',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 10,
-        height: 5,
-
-      },
-      shadowOpacity: 0.25,
-    },
-    noAppointments: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: '#555',
-      marginTop: 20,
-    },
+  appointmentText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  title: {
+    fontSize: 24,
+    color: '#555',
+    margin: 20,
+  },
+  addButton: {
+    backgroundColor: '#009387',
+    padding: 10,
+    borderRadius: 10,
+    elevation: 5,
+    width: '50%',
+    alignItems: 'center',
+    marginTop: 20,
     
 
-
- 
- 
-    
-  });
+  },
+  addText: {
+    fontSize: 16,
+    color: '#fff',
+  
+  }
+});
