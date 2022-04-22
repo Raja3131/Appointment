@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -13,28 +13,36 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import {useForm, Controller} from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import Api from '../../api/Api';
-import {useTheme} from '@react-navigation/native';
-import {ButtonGroup} from 'react-native-elements';
+import { useTheme } from '@react-navigation/native';
+import { ButtonGroup } from 'react-native-elements';
 import * as Yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 // import { Picker } from '@react-native-picker/picker';
 import RNPickerSelect from 'react-native-picker-select';
 import doctors from '../../db/doctors';
-import {useEffect} from 'react';
-import {styles} from './styles';
+import { useEffect } from 'react';
+import { styles } from './styles';
 import Message from '../../components/Common/Message/Message';
 import useAppoints from '../../services/QueryCalls';
+import PhoneInput from 'react-native-phone-number-input';
 
-const PatientDetails = ({navigation, route}) => {
-  const {data} = useAppoints();
+const PatientDetails = ({ navigation, route }) => {
+  const { data } = useAppoints();
   const [message, setMessage] = useState(false);
   const [appoints, setAppoints] = useState([]);
+  const [value, setValue] = useState('');
+  const [formattedValue, setFormattedValue] = useState('');
+  const [valid, setValid] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+
+  let phoneInput = useRef(null);
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(/^[a-zA-Z ]+$/, 'Name is not valid')
@@ -77,11 +85,10 @@ const PatientDetails = ({navigation, route}) => {
       }),
   });
 
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
-  
   const signUp = async (values, actions) => {
-    const {name, age, mobile} = values;
+    const { name, age, mobile } = values;
     try {
       const response = await Api.post('/patient', {
         name,
@@ -120,7 +127,7 @@ const PatientDetails = ({navigation, route}) => {
 
   return (
     <>
-      <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <View style={styles.container}>
           <StatusBar backgroundColor="#009387" barStyle="light-content" />
           <View style={styles.header}>
@@ -175,7 +182,7 @@ const PatientDetails = ({navigation, route}) => {
                         color: colors.text,
                       },
                     ]}
-                    placeholderStyle={{color: '#666666', fontSize: 20}}
+                    placeholderStyle={{ color: '#666666', fontSize: 20 }}
                     onChangeText={handleChange('name')}
                     onBlur={handleBlur('name')}
                     value={values.name}
@@ -200,7 +207,7 @@ const PatientDetails = ({navigation, route}) => {
                   <TextInput
                     placeholder="Your Age"
                     placeholderTextColor="#666666"
-                    placeholderStyle={{color: '#666666', fontSize: 20}}
+                    placeholderStyle={{ color: '#666666', fontSize: 20 }}
                     style={[
                       styles.textInput,
                       {
@@ -225,9 +232,9 @@ const PatientDetails = ({navigation, route}) => {
                       console.log(values.gender);
                     }}
                     items={[
-                      {label: 'Male', value: 'Male'},
-                      {label: 'Female', value: 'Female'},
-                      {label: 'Transgender', value: 'Transgender'},
+                      { label: 'Male', value: 'Male' },
+                      { label: 'Female', value: 'Female' },
+                      { label: 'Transgender', value: 'Transgender' },
                     ]}
                   />
                 </View>
@@ -241,27 +248,41 @@ const PatientDetails = ({navigation, route}) => {
                   ]}>
                   Mobile
                 </Text>
-                <View style={styles.action}>
-                  <Feather name="user" color={colors.text} size={20} />
-                  <TextInput
-                    placeholder="Mobile"
-                    placeholderTextColor="#666666"
-                    placeholderStyle={{color: '#666666', fontSize: 20}}
-                    style={[
-                      styles.textInput,
-                      {
-                        color: colors.text,
-                      },
-                    ]}
-                    onChangeText={handleChange('mobile')}
-                    onBlur={handleBlur('mobile')}
-                    value={values.mobile}
-                    keyboardType="numeric"
-                    maxLength={10}
-                  />
-                  <Text style={styles.errorMsg}>
-                    {touched.mobile && errors.mobile}
-                  </Text>
+                <View style={styles.container}>
+
+                    {showMessage && (
+                      <View style={styles.message}>
+                        <Text>Value : {value}</Text>
+                        <Text>Formatted Value : {formattedValue}</Text>
+                        <Text>Valid : {valid ? 'true' : 'false'}</Text>
+                      </View>
+                    )}
+                    <PhoneInput
+                      ref={phoneInput}
+                      defaultValue={value}
+                      defaultCode="DM"
+                      layout="first"
+                      onChangeText={text => {
+                        setValue(text);
+                      }}
+                      onChangeFormattedText={text => {
+                        setFormattedValue(text);
+                      }}
+                      withDarkTheme
+                      withShadow
+                      autoFocus
+                    />
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => {
+                        const checkValid =
+                          phoneInput.current?.isValidNumber(value);
+                        setShowMessage(true);
+                        setValid(checkValid ? checkValid : false);
+                      }}>
+                      <Text>Check</Text>
+                    </TouchableOpacity>
+                  
                 </View>
 
                 <View style={styles.dropdown}>
@@ -271,7 +292,7 @@ const PatientDetails = ({navigation, route}) => {
                       console.log(values.doctor);
                     }}
                     items={Object.values(doctors).map(item => {
-                      return {label: item.name, value: item.id};
+                      return { label: item.name, value: item.id };
                     })}
                   />
                 </View>
