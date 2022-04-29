@@ -24,7 +24,7 @@ export const CreatePatient = async (req, res) => {
         });
         }
     } catch (e) {
-        res.status(400).json({
+        res.status(401).json({
             success: false,
             error: e
         });

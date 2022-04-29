@@ -32,6 +32,7 @@ import Message from '../../components/Common/Message/Message';
 import useAppoints from '../../services/QueryCalls';
 
 const PatientDetails = ({navigation, route}) => {
+  const [existed,setExisted] = useState('');
   const formikRef = useRef();
   const {data} = useAppoints();
   const [message, setMessage] = useState(false);
@@ -82,6 +83,7 @@ const PatientDetails = ({navigation, route}) => {
 
   
   const signUp = async (values, actions) => {
+
     const {name, age, mobile} = values;
     try {
       const response = await Api.post('/patient', {
@@ -101,6 +103,9 @@ const PatientDetails = ({navigation, route}) => {
           if (response.status !== 201) {
             setMessage(true);
           }
+          if(response.status===400){
+            setExisted('Patient Already Existed');
+          }
         } else {
           navigation.navigate('Doctors', {
             name: values.name,
@@ -111,11 +116,12 @@ const PatientDetails = ({navigation, route}) => {
         }
         actions.resetForm();
       } else {
-        Alert.alert('Error', 'Something went wrong');
+        setExisted('Patient Already Existed')
       }
     } catch (err) {
       console.log(err);
       setMessage(true);
+      setExisted('Patient Already Existed')
     }
   };
 
@@ -348,13 +354,14 @@ const onAgeChange = (value) => {
           </Formik>
         </View>
       </KeyboardAvoidingView>
-      {message && (
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>
-            Something went wrong. Please try again.
+           {
+             existed
+
+           }
           </Text>
         </View>
-      )}
     </>
   );
 }

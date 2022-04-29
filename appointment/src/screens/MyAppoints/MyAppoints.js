@@ -1,19 +1,22 @@
 import React from 'react';
 import {View, Text, StyleSheet, Pressable, Alert} from 'react-native';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import Api from '../../api/Api';
 import {styles} from './styles';
 import Message from '../../components/Common/Message/Message';
 import {ActivityIndicator} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
-
+import {AppointsContext} from '../../context/Provider';
+import getAppoints from '../../context/actions/appoints/getAppoints';
 const MyAppoints = ({navigation}) => {
   const [appointments, setAppointments] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [loading1, setLoading] = useState(true);
+  const [error1, setError] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log('useFocusEffect');
+
       getAppointments();
     }, []),
   );
@@ -67,7 +70,7 @@ const MyAppoints = ({navigation}) => {
   };
 
   const renderAppointments = () => {
-    if (loading) {
+    if (loading1) {
       return <ActivityIndicator size="large" color="#0000ff" />;
     }
 
@@ -88,6 +91,7 @@ const MyAppoints = ({navigation}) => {
         <Text style={styles.appointmentText}>
           {appointment.date} - {appointment.time}
         </Text>
+        <Text>{appointment.name}</Text>
         <View style={styles.pressableView}>
           <Pressable
             onPress={() =>

@@ -1,44 +1,40 @@
 
-const appointsReducer = (state, action) => {
-    switch (action.type) {
-        case "GET_APPOINTS_START":
-            return {
-                ...state,
-                loading: true,
-                error: null
-            };
-        case "GET_APPOINTS_SUCCESS":
-            return {
-                ...state,
-                loading: false,
-                data: action.payload
-            };
-        case "GET_APPOINTS_ERROR":
-            return {
-                ...state,
-                loading: false,
-                error: action.payload
-            };
-        case "DELETE_APPOINT_START":
-            return {
-                ...state,
-                loading: true,
-                error: null
-            };
-        case "DELETE_APPOINT_SUCCESS":
-            return {
-                ...state,
-                loading: false,
-                data: state.data.filter(appointment => appointment._id !== action.payload)
-            };
-        case "DELETE_APPOINT_ERROR":
-            return {
-                ...state,
-                loading: false,
-                error: action.payload
-            };
-        default:
-            return state;
+const appointsReducer = (state, {type, payload}) => {
+    switch (type) {
+    case 'GET_CONTACTS_LOADING':
+        return {
+          ...state,
+          getAppoints: {
+            ...state.getAppoints,
+            loading: true,
+            error: null,
+          },
+        };
+  
+      case 'GET_CONTACTS_SUCCESS':
+        return {
+          ...state,
+          getAppoints: {
+            ...state.getAppoints,
+            loading: false,
+            data: payload,
+            error: null,
+          },
+        };
+  
+      case 'GET_CONTACTS_FAIL':
+        return {
+          ...state,
+          getAppoints: {
+            ...state.getAppoints,
+            loading: false,
+            error: payload,
+          },
+        };
+  
+      default:
+        return state;
     }
-}
+};
+
 export default appointsReducer;

@@ -1,13 +1,12 @@
-export const getAppointsStart = (stateStart) =>({
-    type: "GET_APPOINTS_START",
-    payload: stateStart
-    
-})
-export const getAppointsSuccess = (AppointsState) =>({
-    type: "GET_APPOINTS_SUCCESS",
-    payload: AppointsState
-})
-export const getAppointsError = (error) =>({
-    type: "GET_APPOINTS_ERROR",
-    payload: error
-})
+import Api from "../../../api/Api";
+
+export default () => (dispatch) => {
+    dispatch({ type: "GET_APPOINTS_START" });
+    Api.get('/appoints')
+        .then((response) => {
+        dispatch({ type: "GET_APPOINTS_SUCCESS", payload: response.data });
+        })
+        .catch((error) => {
+        dispatch({ type: "GET_APPOINTS_FAILURE", payload: error });
+        });
+    }
