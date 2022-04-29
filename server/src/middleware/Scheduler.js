@@ -29,6 +29,7 @@ const Scheduler = () => {
               await AppointsModel.findByIdAndDelete(appoint._id);
             }
           }
+          await AppointsModel.findByIdAndDelete(appoint._id);
           console.log("Appointment date expired");
         });
       }

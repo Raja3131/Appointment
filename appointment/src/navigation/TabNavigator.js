@@ -8,6 +8,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import MyAppoints from '../screens/MyAppoints/MyAppoints';
 import {useState, useEffect} from 'react';
 import Api from '../api/Api';
+import axios from 'axios'
 
 const Tab = createBottomTabNavigator();
 
@@ -15,15 +16,13 @@ const MyTabs = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [appointments, setAppointments] = useState([]);
   useEffect(() => {
-    Api.get('/appoints')
-      .then(res => {
-        setAppointments([...res.data.appoints]);
-        setIsLoading(false);
-        console.log(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    axios.get('http://testingapi.wynkemr.com/DoctorMaster/Getalldoctorssearch/1062')
+    .then(res => {
+      console.log(res.data.Doctorsearchpatients)
+      setAppointments(res.data);
+      setIsLoading(false);
+
+    })
   }, [setAppointments, setIsLoading]);
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, Alert} from 'react-native';
 import {useState, useEffect} from 'react';
 import Api from '../../api/Api';
 import {styles} from './styles';
@@ -30,61 +30,84 @@ const MyAppoints = ({navigation}) => {
   };
 
   const deleteAppointment = id => {
-    
-       Api.delete(`/appoints/${id}`)
-      .then(res => {
-        setAppointments(appointments.filter(appointment => appointment._id !== id));
-      }
-      )
-   
-  }
+    if (id) {
+      setLoading(true);
+      Alert.alert(
+        'Delete Appointment',
+        'Are you sure you want to delete this appointment?',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {
+              setLoading(false);
+              getAppointments();
+            },
+            style: 'cancel',
+          },
+          {
+            text: 'OK',
+            onPress: () => {
+              Api.delete(`/appoints/${id}`)
+                .then(() => {
+                  getAppointments();
+                })
+                .catch(() => {
+                  setLoading(false);
+                });
+            },
+          },
+        ],
+        {cancelable: false},
+      );
+    }
+  };
 
   const rescheduleAppointment = async (id, date) => {
     navigation.navigate('Reschedule', {id, date});
-  }
+  };
 
   const renderAppointments = () => {
     if (loading) {
       return <ActivityIndicator size="large" color="#0000ff" />;
     }
-  
+
     if (appointments.length === 0) {
       return (
         <>
-        <Message message="No Appointments" primary />
-      <Pressable
-        style={styles.addButton}
-        onPress={() => navigation.navigate('Patients')}>
-        <Text style={styles.addText}>Create Appointment</Text>
-      </Pressable>
-      </>
-      )
-
-      
+          <Message message="No Appointments" primary />
+          <Pressable
+            style={styles.addButton}
+            onPress={() => navigation.navigate('Patients')}>
+            <Text style={styles.addText}>Create Appointment</Text>
+          </Pressable>
+        </>
+      );
     }
-    return appointments.map((appointment) => (
+    return appointments.map(appointment => (
       <View key={appointment.id} style={styles.appointment}>
-        
         <Text style={styles.appointmentText}>
           {appointment.date} - {appointment.time}
         </Text>
         <View style={styles.pressableView}>
-        <Pressable
-          onPress={() => rescheduleAppointment( appointment._id,
-            appointment.name,
-            appointment.date,
-            appointment.time,)}
-          style={styles.appointmentButton}>
-          <Text style={styles.appointmentButtonText}>Reschedule</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => deleteAppointment(appointment._id)}
-          style={styles.appointmentButton}>
-          <Text style={styles.appointmentButtonText}>Delete</Text>
-        </Pressable>
+          <Pressable
+            onPress={() =>
+              rescheduleAppointment(
+                appointment._id,
+                appointment.name,
+                appointment.date,
+                appointment.time,
+              )
+            }
+            style={styles.appointmentButton}>
+            <Text style={styles.appointmentButtonText}>Reschedule</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => deleteAppointment(appointment._id)}
+            style={styles.appointmentButton}>
+            <Text style={styles.appointmentButtonText}>Delete</Text>
+          </Pressable>
         </View>
       </View>
-
     ));
   };
 
@@ -94,8 +117,6 @@ const MyAppoints = ({navigation}) => {
       {renderAppointments()}
     </View>
   );
- 
 };
-
 
 export default MyAppoints;

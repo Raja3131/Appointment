@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     },
     footer: {
       flex: 3,
-      backgroundColor: '#fff',
+      backgroundColor: '#009387',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       paddingHorizontal: 20,
@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
       color: '#fff',
       fontSize: 30,
       fontFamily: 'Ubuntu-Italic',
+      backgroundColor: '#009387',
     },
     text_footer: {
       color: '#05375a',
@@ -33,7 +34,7 @@ export const styles = StyleSheet.create({
       flexDirection: 'row',
       marginTop: 10,
       borderBottomWidth: 1,
-      borderBottomColor: '#f2f2f2',
+      borderBottomColor: '#808080',
       paddingBottom: 5,
     },
     actionError: {
@@ -53,19 +54,23 @@ export const styles = StyleSheet.create({
       color: '#FF0000',
       fontSize: 16,
     },
-    button: {
-      alignItems: 'center',
-      marginTop: 50,
-    },
+ 
     signIn: {
-      width: '100%',
-      height: 50,
-      justifyContent: 'center',
+      width: '50%',
+      height: 20,
+      justifyContent: 'space-between',
       alignItems: 'center',
       borderRadius: 10,
     },
     textSign: {
-      fontSize: 20,
+      fontSize: 16,
       fontFamily: 'Ubuntu-Italic',
     },
+    buttons:{
+      flex:1,
+      flexDirection:'row',
+
+
+
+    }
   });
