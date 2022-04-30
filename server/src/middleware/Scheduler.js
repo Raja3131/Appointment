@@ -10,7 +10,7 @@ const Scheduler = () => {
     ":" +
     currentDate.getSeconds();
     //run node schedule every hour
-  nodeSchedule.scheduleJob("0 * * * *", async () => {
+  nodeSchedule.scheduleJob("0,30 * * * *", async () => {
     try {
       const appoints = await AppointsModel.find({});
       if (appoints.length > 0) {

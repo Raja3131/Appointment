@@ -320,7 +320,9 @@ const Appointment = ({route, navigation}) => {
                 <Modal.CloseButton />
                 <Modal.Header>Payment Options</Modal.Header>
                 <Modal.Body>
-                  <Radio.Group name="payment" size="sm">
+                  <Radio.Group name="payment" size="sm"
+                  defaultValue='cash'
+                   >
                     <VStack space={3}>
                       <Radio
                         alignItems="flex-start"
@@ -331,8 +333,9 @@ const Appointment = ({route, navigation}) => {
                         }}
                         value="cash"
                         onPress={() => setPaymentMode('cash')}
+                        defaultValue="cash">
 
-                        >
+                        
                         Cash on Visit
                       </Radio>
                       <Radio

@@ -29,12 +29,10 @@ import doctors from '../../db/doctors';
 import {useEffect} from 'react';
 import {styles} from './styles';
 import Message from '../../components/Common/Message/Message';
-import useAppoints from '../../services/QueryCalls';
 
 const PatientDetails = ({navigation, route}) => {
   const [existed,setExisted] = useState('');
   const formikRef = useRef();
-  const {data} = useAppoints();
   const [message, setMessage] = useState(false);
   const [appoints, setAppoints] = useState([]);
   const validationSchema = Yup.object().shape({
@@ -122,6 +120,12 @@ const PatientDetails = ({navigation, route}) => {
       console.log(err);
       setMessage(true);
       setExisted('Patient Already Existed')
+
+      setTimeout(() => {
+        setExisted('');
+        setMessage(false);
+      }, 3000);
+
     }
   };
 

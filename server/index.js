@@ -25,7 +25,7 @@ const connectDBandStartServer = async () => {
         console.log('MongoDB Connected')
         app.listen(PORT, () => {
         console.log(`Server started on port ${PORT}`)
-        // Scheduler()
+        Scheduler()
         })
     } catch (err) {
         console.error(err.message)

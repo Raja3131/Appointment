@@ -99,6 +99,7 @@ const DoctorsScreen = ({navigation}) => {
                   <Text style={styles.cardContentHeaderText}>
                     {item.DoctorName}
                   </Text>
+                  <Image>{item.Photopath}</Image>
                 </View>
                 <View style={styles.cardContentBody}>
                   <Text style={styles.cardContentBodyText}>

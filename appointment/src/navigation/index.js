@@ -4,24 +4,25 @@ import HomeScreen from './HomeNavigator';
 import {Text, StatusBar} from 'react-native';
 import DrawerNavigator from './DrawerNavigator';
 import MyTabs from './TabNavigator';
-import {QueryClientProvider,QueryClient} from 'react-query'
+import {Provider} from 'react-redux'
+import store from '../features/appoints/store';
 
 const AppNavContainer = () => {
-  const queryClient = new QueryClient();
 
 
   
 
   return (
+    <Provider store={store}>
+
     <NavigationContainer>
       {/* <HomeScreen /> */}
       {/* <DrawerNavigator /> */}
-      <QueryClientProvider client={queryClient}>
       <MyTabs />
 
 
-                </QueryClientProvider>
     </NavigationContainer>
+    </Provider>
   );
 };
 

@@ -8,7 +8,9 @@ export const fetchAppoints = createAsyncThunk('/appoints', async () => {
 
 
 
-export const appointsSlice = createSlice({
+
+
+const appointsSlice = createSlice({
     name: "appoints",
     initialState: {
         loading: false,
@@ -18,7 +20,8 @@ export const appointsSlice = createSlice({
     reducers: {
         setLoading: (state, action) => {
             state.loading = action.payload;
-        }
+        },
+        
     },
     extraReducers: {
         [fetchAppoints.pending]: (state, action) => {
@@ -38,3 +41,5 @@ export const appointsSlice = createSlice({
 });
 
 export default appointsSlice.reducer;
+
+
