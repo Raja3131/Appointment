@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import colors from '../../../assets/theme/colors';
+import colors from '../../../styles/theme/colors';
 
 export default StyleSheet.create({
   wrapper: {
@@ -11,10 +11,9 @@ export default StyleSheet.create({
 
     marginVertical: 5,
     borderRadius: 4,
-    // alignItems: 'center',
-    // justifyContent: 'space-evenly',
+    backgroundColor: colors.primary,
   },
-  
+
   loaderSection: {
     flexDirection: 'row',
   },
@@ -32,6 +31,5 @@ export default StyleSheet.create({
   text: {
     fontSize: 14,
     color: '#fff',
-    
-  }
+  },
 });

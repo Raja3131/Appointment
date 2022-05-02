@@ -5,6 +5,7 @@ import PatientRouter from './src/routes/PatientRoutes.js'
 import UserRouter from './src/routes/UserRoutes.js'
 import AppointsRouter from './src/routes/AppointsRoutes.js'
 import Scheduler from './src/middleware/Scheduler.js'
+import DoctorRoutes from './src/routes/DoctorRoutes.js'
 const app = express()
 
 app.use(cors())
@@ -40,4 +41,5 @@ connectDBandStartServer()
 app.use('/', PatientRouter)
 app.use('/', UserRouter)
 app.use('/', AppointsRouter)
+app.use('/', DoctorRoutes)
 
