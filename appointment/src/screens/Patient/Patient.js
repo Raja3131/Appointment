@@ -127,7 +127,6 @@ const onAgeChange = (value) => {
 
   return (
     <>
-      <Text style={styles.text_header}>WYNK!</Text>
 
       <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
 
@@ -292,6 +291,10 @@ const onAgeChange = (value) => {
                     items={Object.values(doctors).map(item => {
                       return {label: item.name, value: item.id};
                     })}
+                    placeholder={{
+                      label: 'Select a Doctor',
+                      value: null,
+                  }}
                   />
                 </View>
                 <View style={

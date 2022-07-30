@@ -24,28 +24,19 @@ import Feather from 'react-native-vector-icons/Feather';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import doctors from '../../db/doctors';
 import {styles} from './styles';
-import axios from 'axios'
 
 const DoctorsScreen = ({navigation}) => {
   const {setOptions, toggleDrawer} = useNavigation();
 
   const [selectedId, setSelectedId] = useState(null);
   const [animatePress, setAnimatePress] = useState(new Animated.Value(1));
-  const [doctorsList, setDoctorsList] = useState([]);
+  const [doctorsList, setDoctorsList] = useState();
   const [searchTerm,setSearchTerm] = useState('')
   const [searchValue,setSearchValue] = useState([])
 
   useEffect(() => {
-    axios.get('http://testingapi.wynkemr.com/DoctorMaster/Getalldoctorssearch/1062')
-    .then(res => {
-      setDoctorsList(res.data.Doctorsearchpatients);
-      setSearchValue(res.data.Doctorsearchpatients)
-     
-    })
-  }, [])
-
-    
-
+    setDoctorsList(doctors);
+  }, []);
   const animateIn = () => {
     Animated.timing(animatePress, {
       toValue: 0.5,
@@ -57,7 +48,7 @@ const DoctorsScreen = ({navigation}) => {
   const search = (text) => {
     setSearchTerm(text)
     const newData = doctors.filter(item => {
-      const itemData = `${item.DoctorName}`;
+      const itemData = `${item.name.toUpperCase()}`;
       const textData = text.toUpperCase();
       return itemData.indexOf(textData) > -1;
     });
@@ -68,51 +59,81 @@ const DoctorsScreen = ({navigation}) => {
 
     <SafeAreaView style={styles.container}>
       <NativeBaseProvider>
-      <StatusBar backgroundColor="#009387" barStyle="light-content" />
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Feather name="arrow-left" size={25} color="#fff" />
-          </TouchableOpacity>
-          <Text style={styles.headerText}>Doctors</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-            <Feather name="search" size={25} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={styles.searchBar}>
+      <View style={styles.body}>
+        <Center>
+        <VStack my="4" space={5} w="100%" maxW="300px" divider={<Box px="2">
+          <Divider />
+        </Box>}>
+      <VStack w="100%" space={5} alignSelf="center">
+        <Heading fontSize="lg">Search</Heading>
         <Input
           placeholder="Search"
-          onChangeText={text => search(text)}
           value={searchTerm}
-          style={styles.searchInput}
+          onChangeText={(text) => search(text)}
+
+          style={{borderRadius:10,
+          borderWidth:5,
+          borderColor:'#ccc',
+          padding:10,
+          margin:10,
+
+        }}
+        InputLeftElement={<Icon ml="2" size="4" color="gray.400" as={
+          <FontAwesome name="search" />
+        } />}
         />
-      </View>
-      <View style={styles.body}>
-        <FlatList
-          data={searchValue}
-          keyExtractor={item => item.DoctorId}
-          renderItem={({item}) => (
-            <View style={styles.card}>
-              <View style={styles.cardContent}>
-                <View style={styles.cardContentHeader}>
-                  <Text style={styles.cardContentHeaderText}>
-                    {item.DoctorName}
-                  </Text>
+      </VStack>
+
+     
+    </VStack>;
+          </Center>
+    
+      
+   
+        
+        <Animated.FlatList
+          data={searchValue.length === 0 ? doctorsList : searchValue}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item, index}) => {
+            return (
+              
+              <TouchableOpacity
+                onPress={() => animateIn}
+                // style={styles.doctor}
+                style={[
+                  styles.doctorContainer,
+                  selectedId === item.id
+                    ? styles.doctorContainerSelected
+                    : null,
+                ]}>
+                  
+                <Image source={item.image} style={styles.doctorImage} />
+                <View style={styles.doctorInfo}>
+                 
+
+                  <Text style={styles.doctorName}>{item.name}</Text>
+                  <View style={styles.doctorInfoRow}>
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate('DoctorProfile', {
+                        selectDoctor: item.id,
+                      })
+                    }
+                    style={styles.button}
+                    onPressIn={animateIn}>
+                    <Text style={styles.text}>View Profile</Text>
+                  </Pressable>
+
+                  
                 </View>
-                <View style={styles.cardContentBody}>
-                  <Text style={styles.cardContentBodyText}>
-                    {item.Specialization}
-                  </Text>
                 </View>
-              </View>
-            </View>
-          )}
+              </TouchableOpacity>
+            );
+          }}
         />
       </View>
       </NativeBaseProvider>
     </SafeAreaView>
-
   );
 };
 
