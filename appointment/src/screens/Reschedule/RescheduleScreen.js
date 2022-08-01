@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,17 +15,17 @@ import TimeSlot from '../../db/TimeSlot';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import {styles} from './styles';
+import { styles } from './styles';
 import moment from 'moment';
 
-const RescheduleScreen = ({route, navigation}) => {
+const RescheduleScreen = ({ route, navigation }) => {
   let currentDate = new Date();
   let currentHour = currentDate.getHours();
 
-  const {id: id} = route.params;
-  const {name: appointmentName} = route.params;
-  const {date: appointmentDate} = route.params;
-  const {time: appointmentTime} = route.params;
+  const { id: id } = route.params;
+  const { name: appointmentName } = route.params;
+  const { date: appointmentDate } = route.params;
+  const { time: appointmentTime } = route.params;
 
   const [appointments, setAppointments] = useState([]);
 
@@ -42,29 +42,27 @@ const RescheduleScreen = ({route, navigation}) => {
 
   useEffect(() => {
     setTimeSlot(TimeSlot);
-
-
   });
 
   const reschedule = () => {
     Api.put(`/appoints/${id}`, {
-     
+
       date: selectedDate.toDateString(),
       time: select.startTime,
     }).then(res => {
-      if(!date || !select.startTime) {
+      if (!date || !select.startTime) {
         Alert.alert('Please fill all the fields');
       } else {
         console.log(res);
-      setName('');
-      navigation.navigate('MyAppoints', appointments);
+        setName('');
+        navigation.navigate('MyAppoints', appointments);
       }
-      
 
-      
+
+
     });
   };
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Reschedule Appointment</Text>
@@ -86,7 +84,7 @@ const RescheduleScreen = ({route, navigation}) => {
               name="calendar"
               size={20}
               color="#fff"
-              style={{marginRight: 10, marginLeft: 10}}
+              style={{ marginRight: 10, marginLeft: 10 }}
             />
             {date === 'Select Date'
               ? '    Select Date'
@@ -104,10 +102,10 @@ const RescheduleScreen = ({route, navigation}) => {
               setSelectedDate(newDate);
               setDate('New Date');
             }}
-            
+
             minimumDate={new Date()}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
-            default = {
+            default={
               new Date().setDate(new Date().getDate() + 1)
             }
           />
@@ -122,10 +120,9 @@ const RescheduleScreen = ({route, navigation}) => {
             slot.startTime = myMoment.format('hA');
             slot.endTime = myMoment2.format('hA');
             ;
-            
-            if(currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString())
-            {
-               
+
+            if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString()) {
+
               return (
                 <Pressable
                   key={slot.id}
@@ -143,8 +140,7 @@ const RescheduleScreen = ({route, navigation}) => {
                 </Pressable>
               );
             }
-            else if(currentDate.toDateString() !== selectedDate.toDateString())
-            {
+            else if (currentDate.toDateString() !== selectedDate.toDateString()) {
               return (
                 <Pressable
                   key={slot.id}
@@ -168,10 +164,10 @@ const RescheduleScreen = ({route, navigation}) => {
 
       <Pressable
         onPress={() => reschedule(
-         
+
           selectedDate.toDateString(),
           select.startTime,
-          
+
         )}
         style={styles.button}>
         <Text style={styles.buttonText}>Reschedule</Text>

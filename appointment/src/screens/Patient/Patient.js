@@ -210,7 +210,7 @@ const onAgeChange = (value) => {
                       formikRef.current.setFieldValue('age', values.age + '.')
                     }
                   }}
-                    placeholder="Age/Gender(M/F/T)"
+                    placeholder="Age"
                     placeholderTextColor="#666666"
                     placeholderStyle={{color: '#666666', fontSize: 20}}
                     style={[
@@ -219,6 +219,8 @@ const onAgeChange = (value) => {
                         color: colors.text,
                       },
                     ]}
+                    keyboardType="numeric"
+
                     onChangeText={handleChange('age')}
                     onBlur={handleBlur('age')}
                     value={values.age}
@@ -333,7 +335,10 @@ const onAgeChange = (value) => {
                     },
                    
                   ]}
-                  onPress={() => formikRef.current?.resetForm()}
+                  onPress={() => {
+                    formikRef.current?.resetForm();
+
+                  }}
                   testID="clearFieldsButton">
                   <Text
                     style={[

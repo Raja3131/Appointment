@@ -50,5 +50,9 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
   
-  }
+  },
+  appointmentButtonText: {
+    fontSize: 16,
+    color: '#fff',
+  },
 });
