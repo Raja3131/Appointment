@@ -34,7 +34,7 @@ const MyAppoints = ({navigation}) => {
       setLoading(true);
       Alert.alert(
         'Delete Appointment',
-        'Are you sure you want to delete this appointment?',
+        'Are you sure you want to cancel this appointment?',
         [
           {
             text: 'Cancel',
@@ -88,6 +88,9 @@ const MyAppoints = ({navigation}) => {
         <Text style={styles.appointmentText}>
           {appointment.date} - {appointment.time}
         </Text>
+        <Text style={styles.appointmentText}>
+          {appointment.name}
+        </Text>
         <View style={styles.pressableView}>
           <Pressable
             onPress={() =>
@@ -104,7 +107,7 @@ const MyAppoints = ({navigation}) => {
           <Pressable
             onPress={() => deleteAppointment(appointment._id)}
             style={styles.appointmentButton}>
-            <Text style={styles.appointmentButtonText}>Delete</Text>
+            <Text style={styles.appointmentButtonText}>Cancel</Text>
           </Pressable>
         </View>
       </View>
