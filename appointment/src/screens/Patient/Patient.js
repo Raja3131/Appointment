@@ -38,7 +38,7 @@ const PatientDetails = ({navigation, route}) => {
   const [appoints, setAppoints] = useState([]);
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .matches(/^[a-zA-Z ]+$/, 'Name is not valid')
+      .matches(/^[a-zA-Z]+$/, 'Name is not valid')
       .required('Name is required')
       .min(3, 'Name must be at least 3 characters')
       .max(50, 'Name must be less than 50 characters')
@@ -65,7 +65,7 @@ const PatientDetails = ({navigation, route}) => {
       }),
 
     mobile: Yup.string()
-      .matches(/^[0-9]+$/, 'Mobile number is not valid')
+      .matches(/^[0-9]+$/, 'Invali Mobile Number')
       .required('Mobile is required')
       .min(10, 'Mobile must be at least 10 characters')
       .typeError('Mobile must be a number')
@@ -100,6 +100,8 @@ const PatientDetails = ({navigation, route}) => {
           });
           if (response.status !== 201) {
             setMessage(true);
+        Alert.alert('Error', 'Something went wrong');
+
           }
         } else {
           navigation.navigate('Doctors', {
@@ -116,6 +118,8 @@ const PatientDetails = ({navigation, route}) => {
     } catch (err) {
       console.log(err);
       setMessage(true);
+      Alert.alert('Error', 'Something went wrong');
+
     }
   };
 
@@ -240,14 +244,13 @@ const onAgeChange = (value) => {
                       console.log(values.gender);
                     }}
                     placeholder={{
-                      label: 'Select a Gender',
+                      label: 'Select Gender',
                       value: null,
                   }}
                   placeholderTextColor="red"
                     items={[
                       {label: 'Male', value: 'Male'},
                       {label: 'Female', value: 'Female'},
-                      {label: 'Transgender', value: 'Transgender'},
                     ]}
                   />
                 </View>
@@ -294,7 +297,7 @@ const onAgeChange = (value) => {
                       return {label: item.name, value: item.id};
                     })}
                     placeholder={{
-                      label: 'Select a Doctor',
+                      label: 'Select Doctor',
                       value: null,
                   }}
                   />
@@ -347,7 +350,7 @@ const onAgeChange = (value) => {
                         color: '#009387',
                       },
                     ]}>
-                    Clear Fields
+                    Clear
                   </Text>
                 </TouchableOpacity>
                 </View>
