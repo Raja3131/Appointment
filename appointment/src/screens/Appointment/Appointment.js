@@ -7,7 +7,7 @@ import {
   Pressable,
   TouchableHighlight,
 } from 'react-native';
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import doctors from '../../db/doctors';
 import TimeSlot from '../../db/TimeSlot';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -24,12 +24,12 @@ import {
 } from 'native-base';
 import RazorpayCheckout from 'react-native-razorpay';
 import Api from '../../api/Api';
-import {styles} from './styles';
+import { styles } from './styles';
 import moment from 'moment';
 
-const Appointment = ({route, navigation}) => {
-  const {selectDoctor} = route.params;
-  const {name} = route.params;
+const Appointment = ({ route, navigation }) => {
+  const { selectDoctor } = route.params;
+  const { name } = route.params;
   const [doctorsList, setDoctorsList] = useState([]);
   const [select, setSelect] = useState('');
   const [timeSlot, setTimeSlot] = useState([]);
@@ -59,10 +59,10 @@ const Appointment = ({route, navigation}) => {
 
 
   ) => {
-    
-  
-    
-    
+
+
+
+
     var options = {
       description: 'Credits towards consultation',
       image: '../assets/images/Paintwynk.png',
@@ -75,7 +75,7 @@ const Appointment = ({route, navigation}) => {
         contact: '8825534922',
         name: 'WynkEMR',
       },
-      theme: {color: '#009387'},
+      theme: { color: '#009387' },
     };
     RazorpayCheckout.open(options)
       .then(data => {
@@ -87,12 +87,12 @@ const Appointment = ({route, navigation}) => {
             doctor: selectDoctor,
             date: selectedDate.toLocaleDateString(),
             time: select.startTime
-           
+
           });
           navigation.navigate('MyAppoints');
 
         }
-        else if(data.status === 400){
+        else if (data.status === 400) {
           alert("Appointment already exists");
         }
       })
@@ -102,14 +102,14 @@ const Appointment = ({route, navigation}) => {
       });
   };
   const makePaymentOnCash = () => {
-    navigation.navigate('Cash',{
+    navigation.navigate('Cash', {
       name: name,
       doctor: selectDoctor,
       date: selectedDate.toLocaleDateString(),
       time: select.startTime
-      
+
     })
-    
+
 
   }
 
@@ -140,8 +140,8 @@ const Appointment = ({route, navigation}) => {
                 name="calendar"
                 size={20}
                 color="#fff"
-                style={{marginRight: 10, marginLeft: 10}}
-                
+                style={{ marginRight: 10, marginLeft: 10 }}
+
               />
               {date === 'Select Date'
                 ? '    Select Date'
@@ -166,56 +166,54 @@ const Appointment = ({route, navigation}) => {
         </View>
 
         {date === 'Select Date' ? null : (
-        <View style={styles.timeSlot}>
-          {timeSlot.map(slot => {
-            let myMoment = moment(`${slot.startTime}`, 'HH:mm A')
-            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
-            slot.startTime = myMoment.format('hA');
-            slot.endTime = myMoment2.format('hA');
-            ;
-            
-            if(currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString())
-            {
-               
-              return (
-                <Pressable
-                  key={slot.id}
-                  onPress={() => {
-                    setSelect(slot);
-                    setTime(`${slot.startTime} - ${slot.endTime}`);
-                  }}
-                  style={[
-                    styles.timeSlotItem,
-                    select === slot ? styles.timeSlotItemSelect : null,
-                  ]}>
-                  <Text style={styles.timeSlotButtonText}>
-                    {slot.startTime} - {slot.endTime}
-                  </Text>
-                </Pressable>
-              );
-            }
-            else if(currentDate.toDateString() !== selectedDate.toDateString())
-            {
-              return (
-                <Pressable
-                  key={slot.id}
-                  onPress={() => {
-                    setSelect(slot);
-                    setTime(`${slot.startTime} - ${slot.endTime}`);
-                  }}
-                  style={[
-                    styles.timeSlotItem,
-                    select === slot ? styles.timeSlotItemSelect : null,
-                  ]}>
-                  <Text style={styles.timeButtonText}>
-                    {slot.startTime}
-                  </Text>
-                </Pressable>
-              );
-            }
-          })}
-        </View>
-      )}
+          <View style={styles.timeSlot}>
+            {timeSlot.map(slot => {
+              let myMoment = moment(`${slot.startTime}`, 'HH:mm A')
+              let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
+              slot.startTime = myMoment.format('hA');
+              slot.endTime = myMoment2.format('hA');
+              ;
+
+              if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString()) {
+
+                return (
+                  <Pressable
+                    key={slot.id}
+                    onPress={() => {
+                      setSelect(slot);
+                      setTime(`${slot.startTime} - ${slot.endTime}`);
+                    }}
+                    style={[
+                      styles.timeSlotItem,
+                      select === slot ? styles.timeSlotItemSelect : null,
+                    ]}>
+                    <Text style={styles.timeSlotButtonText}>
+                      {slot.startTime} - {slot.endTime}
+                    </Text>
+                  </Pressable>
+                );
+              }
+              else if (currentDate.toDateString() !== selectedDate.toDateString()) {
+                return (
+                  <Pressable
+                    key={slot.id}
+                    onPress={() => {
+                      setSelect(slot);
+                      setTime(`${slot.startTime} - ${slot.endTime}`);
+                    }}
+                    style={[
+                      styles.timeSlotItem,
+                      select === slot ? styles.timeSlotItemSelect : null,
+                    ]}>
+                    <Text style={styles.timeButtonText}>
+                      {slot.startTime}
+                    </Text>
+                  </Pressable>
+                );
+              }
+            })}
+          </View>
+        )}
 
 
         <View>
@@ -251,11 +249,11 @@ const Appointment = ({route, navigation}) => {
                   </VStack>
                 </Modal.Body>
                 <Modal.Footer>
-                  <Pressable
-                    onPress={() => setShowModal2(true)}
-                    style={styles.continueButton}>
-                    <Text style={styles.continueButtonText}>Proceed</Text>
-                  </Pressable>
+                <Button flex="1" onPress={() => {
+            setShowModal2(true);
+          }}>
+              Continue
+            </Button>
                 </Modal.Footer>
               </Modal.Content>
             </Modal>
@@ -263,58 +261,52 @@ const Appointment = ({route, navigation}) => {
             <Modal
               isOpen={showModal2}
               onClose={() => setShowModal2(false)}
-              size="lg">
+              size="sm">
               <Modal.Content maxWidth="350">
                 <Modal.CloseButton />
                 <Modal.Header>Select Address</Modal.Header>
                 <Modal.Body>
-                  <Radio.Group defaultValue="address1" name="address" size="sm">
-                    <VStack space={3}>
-                      <Radio
-                        alignItems="flex-start"
-                        _text={{
-                          mt: '-1',
-                          ml: '2',
-                          fontSize: 'sm',
-                        }}
-                        value="address1">
-                        4140 Parker Rd. Allentown, New Mexico 31134
-                      </Radio>
-                      <Radio
-                        alignItems="flex-start"
-                        _text={{
-                          mt: '-1',
-                          ml: '2',
-                          fontSize: 'sm',
-                        }}
-                        value="address2">
-                        6391 Elign St. Celina, Delaware 10299
-                      </Radio>
-                    </VStack>
-                  </Radio.Group>
+                <Radio.Group defaultValue="address1" name="address" size="sm">
+              <VStack space={3}>
+                <Radio alignItems="flex-start" _text={{
+                mt: "-1",
+                ml: "2",
+                fontSize: "sm"
+              }} value="address1">
+                  4140 Parker Rd. Allentown, New Mexico 31134
+                </Radio>
+                <Radio alignItems="flex-start" _text={{
+                mt: "-1",
+                ml: "2",
+                fontSize: "sm"
+              }} value="address2">
+                  6391 Elign St. Celina, Delaware 10299
+                </Radio>
+              </VStack>
+            </Radio.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                  {/* <Button
+                  <Button
               flex="1"
               onPress={() => {
                 setShowModal3(true);
               }}>
               Continue
-            </Button> */}
-                  <Pressable
+            </Button>
+                  {/* <Pressable
                     onPress={() => {
                       setShowModal3(true);
                     }}
                     style={styles.continueButton}>
                     <Text style={styles.continueButtonText}>Continue</Text>
-                  </Pressable>
+                  </Pressable> */}
                 </Modal.Footer>
               </Modal.Content>
             </Modal>
 
             <Modal
               isOpen={showModal3}
-              size="lg"
+              size="sm"
               onClose={() => setShowModal3(false)}>
               <Modal.Content maxWidth="350">
                 <Modal.CloseButton />
@@ -332,7 +324,7 @@ const Appointment = ({route, navigation}) => {
                         value="cash"
                         onPress={() => setPaymentMode('cash')}
 
-                        >
+                      >
                         Cash on Visit
                       </Radio>
                       <Radio
@@ -344,7 +336,7 @@ const Appointment = ({route, navigation}) => {
                         }}
                         value="card"
                         onPress={() => setPaymentMode('card')}
-                        >
+                      >
                         Credit/ Debit
                       </Radio>
                       <Radio
@@ -362,13 +354,13 @@ const Appointment = ({route, navigation}) => {
                 </Modal.Body>
                 <Modal.Footer>
                   {
-                    paymentMode==='card' ? (<Button
+                    paymentMode === 'card' ? (<Button
                       flex="1"
                       onPress={() => {
                         makePayment(
                           select,
                           selectedDate.toDateString(),
-                          
+
                         );
                         setShowModal3(false);
                         setShowModal2(false);
@@ -376,7 +368,7 @@ const Appointment = ({route, navigation}) => {
                       }}>
                       Checkout
                     </Button>
-                    ) : ( <Button
+                    ) : (<Button
                       flex="1"
                       onPress={() => {
                         makePaymentOnCash(
@@ -384,9 +376,6 @@ const Appointment = ({route, navigation}) => {
                           selectedDate.toDateString(),
 
 
-                          
-                          
-                          
                         );
                         setShowModal3(false);
                         setShowModal2(false);

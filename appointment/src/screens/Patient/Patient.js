@@ -30,6 +30,7 @@ import {useEffect} from 'react';
 import {styles} from './styles';
 import Message from '../../components/Common/Message/Message';
 import useAppoints from '../../services/QueryCalls';
+import ValidatedTextInput from '../../utils/ValidatetextInput';
 
 const PatientDetails = ({navigation, route}) => {
   const formikRef = useRef();
@@ -38,19 +39,15 @@ const PatientDetails = ({navigation, route}) => {
   const [appoints, setAppoints] = useState([]);
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .matches(/^[a-zA-Z]+$/, 'Name is not valid')
+      .matches(/^[a-z0-9_.-\s]+$/i, 'Name is not valid')
       .required('Name is required')
       .min(3, 'Name must be at least 3 characters')
       .max(50, 'Name must be less than 50 characters')
-      .test('is-name', 'Name must be alphabet', value => {
-        return /^[a-zA-Z]+$/.test(value);
-      })
       .trim(),
 
     age: Yup.string()
       .matches(/^[0-9]+$/, 'Age must be number')
       .required('Age is required')
-
       .test('mobile', 'Mobile number must be positive', value => {
         return value > 0;
       })
@@ -65,7 +62,7 @@ const PatientDetails = ({navigation, route}) => {
       }),
 
     mobile: Yup.string()
-      .matches(/^[0-9]+$/, 'Invali Mobile Number')
+      .matches(/^[0-9]+$/, 'Invalid Mobile Number')
       .required('Mobile is required')
       .min(10, 'Mobile must be at least 10 characters')
       .typeError('Mobile must be a number')
@@ -266,7 +263,7 @@ const onAgeChange = (value) => {
                 </Text>
                 <View style={styles.action}>
                   <Feather name="user" color={colors.text} size={20} />
-                  <TextInput
+                  {/* <TextInput
                     placeholder="Mobile"
                     placeholderTextColor="#666666"
                     placeholderStyle={{color: '#666666', fontSize: 20}}
@@ -281,6 +278,23 @@ const onAgeChange = (value) => {
                     value={values.mobile}
                     keyboardType="numeric"
                     maxLength={10}
+                  /> */}
+                  <ValidatedTextInput
+                    placeholder="Phone"
+                    style={[
+                      styles.textInput,
+                      {
+                        color: colors.text,
+                      },
+                    ]}
+                    placeholderStyle={{color: '#666666', fontSize: 20}}
+                    onChangeText={handleChange('mobile')}
+                    onBlur={handleBlur('mobile')}
+                    value={values.mobile}
+                    keyboardType="numeric"
+                    maxLength={10}
+                  placeholderTextColor="#598"
+
                   />
                   <Text style={styles.errorMsg}>
                     {touched.mobile && errors.mobile}
