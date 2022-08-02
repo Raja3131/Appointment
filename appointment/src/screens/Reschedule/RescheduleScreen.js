@@ -16,7 +16,9 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { styles } from './styles';
+import doctors from '../../db/doctors';
 import moment from 'moment';
+import { number } from 'prop-types';
 
 const RescheduleScreen = ({ route, navigation }) => {
   let currentDate = new Date();
@@ -40,11 +42,34 @@ const RescheduleScreen = ({ route, navigation }) => {
   const [timeSlot, setTimeSlot] = useState([]);
   const [select, setSelect] = useState('');
 
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeSlot(TimeSlot);
+    console.log(doctors)
   });
+
+  const fruits =[{
+    id: 1,
+    name: 'Apple',
+    price: '$1.00',
+    color: 'red',
+  },
+    {
+      id: 2,
+      name: 'Orange',
+      price: '$2.00',
+      color: 'orange',
+    } ,
+    {
+      id: 3,
+      name: 'Banana',
+      price: '$3.00',
+      color: 'yellow',
+    } ,
+]
+ 
 
   const reschedule = () => {
     Api.put(`/appoints/${id}`, {
@@ -67,11 +92,39 @@ const RescheduleScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>
+      <View style={styles.appointDetailsContainer}>
+      <Text style={styles.detailsText}>
         {
-          `${appointmentDate}-${appointmentTime} `
+          `${
+            moment(selectedDate).format('MMMM Do YYYY')
+          } `
         }
       </Text>
+      <View>
+        {/* <Text>{
+          fruits.map((fruit)=>{
+            if(fruit.id===1){
+              return fruit.name
+            }
+          })
+
+          }</Text> */}
+          <Text style={styles.detailsText}>
+            DoctorName:
+            {
+              doctors.map((
+                doctor1) => {
+                if (doctor1.id == doctor) {
+                  return doctor1.name;
+                }
+              
+            }
+            )}
+          </Text>
+          </View>
+         
+
+      </View>
       <Text style={styles.header}>Reschedule Appointment</Text>
       {/* <Text style={styles.label}>{name1}</Text>
       <TextInput
@@ -118,9 +171,7 @@ const RescheduleScreen = ({ route, navigation }) => {
           />
         )}
       </View>
-      <View>
-        <Text style={styles.label}>{doctor}</Text>
-      </View>
+     
 
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>

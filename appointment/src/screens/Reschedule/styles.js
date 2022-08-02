@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      width: '100%',
+      width: '70%',
       marginBottom: 20,
 
 
@@ -99,7 +99,7 @@ export const styles = StyleSheet.create({
       borderRadius: 10,
       padding: 10,
       margin: 20,
-      width: '50%',
+      width: '40%',
       alignItems: 'center',
       
     },
@@ -115,7 +115,28 @@ export const styles = StyleSheet.create({
       fontWeight: 'bold',
       textAlign: 'center',
       
-    }
+    },
+    appointDetailsContainer: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      marginBottom: 20,
+      margin: 40,
+      backgroundColor: '#00a680',
+      borderRadius: 10,
+      padding: 10,
+      color: '#fff',
+
+
+
+
+    },
+    detailsText: {
+      fontSize: 18,
+      textAlign: 'center',
+      color: '#fff',
+    },
     
     
   });

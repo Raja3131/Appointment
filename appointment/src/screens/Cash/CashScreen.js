@@ -14,7 +14,7 @@ const Cash = ({navigation,route}) => {
         date,
         time
       }).then(res => {
-        Alert.alert('Appointment has been booked successfully')
+        Alert.alert('Appointment booked successfully')
         navigation.navigate('Patients')
         
       })
