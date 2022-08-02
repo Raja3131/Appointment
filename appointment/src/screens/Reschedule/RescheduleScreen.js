@@ -26,6 +26,7 @@ const RescheduleScreen = ({ route, navigation }) => {
   const { name: appointmentName } = route.params;
   const { date: appointmentDate } = route.params;
   const { time: appointmentTime } = route.params;
+  const { doctor: appointmentDoctor } = route.params;
 
   const [appointments, setAppointments] = useState([]);
 
@@ -34,6 +35,7 @@ const RescheduleScreen = ({ route, navigation }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [time1, setTime] = useState(`${appointmentTime}`);
+  const [doctor, setDoctor] = useState(`${appointmentDoctor}`);
   const [mode, setMode] = useState('date');
   const [timeSlot, setTimeSlot] = useState([]);
   const [select, setSelect] = useState('');
@@ -65,6 +67,11 @@ const RescheduleScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text>
+        {
+          `${appointmentDate}-${appointmentTime} `
+        }
+      </Text>
       <Text style={styles.header}>Reschedule Appointment</Text>
       {/* <Text style={styles.label}>{name1}</Text>
       <TextInput
@@ -110,6 +117,9 @@ const RescheduleScreen = ({ route, navigation }) => {
             }
           />
         )}
+      </View>
+      <View>
+        <Text style={styles.label}>{doctor}</Text>
       </View>
 
       {date === 'Select Date' ? null : (

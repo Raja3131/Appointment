@@ -1,19 +1,19 @@
 const doctors=[  {
     id: 1,
-    name: 'Dr. John Doe',
+    name: 'Dr.Ahmed',
     speciality: 'Cardiologist',
     image: require('../assets/images/doctor1.jpg'),
     about:'Dr. Seth is the most renowned cardiologist in India. At present, he has operated more than 50,000 angiograms and 20,000 angioplasties. ',
 },
 {
     id: 2,
-    name: 'Dr. Akshaya',
+    name: 'Dr.Ayisha',
     speciality: 'Cardiologist',
     image: require('../assets/images/doctor2.jpg')
 },
 {
     id: 3,
-    name: 'Dr.Scarlet',
+    name: 'Dr.Asha',
     speciality: 'Cardiologist',
     image: require('../assets/images/doctor3.jpg')
 },
@@ -25,7 +25,7 @@ const doctors=[  {
 },
 {
     id: 5,
-    name: 'Dr. John',
+    name: 'Dr.Ibrahim',
     speciality: 'Cardiologist',
     image: require('../assets/images/doctor5.jpg')
 },

@@ -31,6 +31,7 @@ const Cash = ({navigation,route}) => {
       <Text style={styles.nameText}>{name}</Text>
       <Text style={styles.dateText}>{date}</Text>
       <Text style={styles.timeText}>{time}</Text>
+      <Text style={styles.doctorText}>{doctor}</Text>
       <Pressable style={styles.button} onPress={
         onPress
       }>
@@ -75,6 +76,11 @@ const styles = StyleSheet.create({
   timeText:{
     fontSize:20,
     marginTop:20
+  },
+  doctorText:{
+    fontSize:20,
+    marginTop:20
+    
   }
 
 })

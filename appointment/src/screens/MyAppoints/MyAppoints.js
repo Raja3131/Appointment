@@ -62,8 +62,24 @@ const MyAppoints = ({navigation}) => {
     }
   };
 
-  const rescheduleAppointment = async (id, date) => {
-    navigation.navigate('Reschedule', {id, date});
+  const rescheduleAppointment = async (
+    id,
+    appointmentName,
+    appointmentDate,
+    appointmentTime,
+    appointmentDoctor,
+
+  ) => {
+    navigation.navigate('Reschedule', {
+      id,
+      name: appointmentName,
+      date: appointmentDate,
+      time: appointmentTime,
+      doctor: appointmentDoctor,
+      
+      
+
+    });
   };
 
   const renderAppointments = () => {
@@ -99,6 +115,7 @@ const MyAppoints = ({navigation}) => {
                 appointment.name,
                 appointment.date,
                 appointment.time,
+                appointment.doctor
               )
             }
             style={styles.appointmentButton}>
