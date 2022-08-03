@@ -1,11 +1,18 @@
 import { StyleSheet, Text, View,Pressable,Alert } from 'react-native'
-import React from 'react'
+import React,{useEffect} from 'react'
 import Api from '../../api/Api';
+import doctors from '../../db/doctors';
+import moment from 'moment';
 
 
 const Cash = ({navigation,route}) => {
   const {name,doctor,date,time} = route.params;
-
+  // const selectDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  
+useEffect(() => {
+  console.log(name,doctor,date,time)
+}
+,[])
   const onPress = () => {
     try {
       Api.post('/appoints',{
@@ -29,9 +36,24 @@ const Cash = ({navigation,route}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.nameText}>{name}</Text>
-      <Text style={styles.dateText}>{date}</Text>
+      <Text style={styles.dateText}>  {
+          `${
+           date
+          } `
+        }</Text>
       <Text style={styles.timeText}>{time}</Text>
-      <Text style={styles.doctorText}>{doctor}</Text>
+      <Text style={styles.detailsText}>
+            DoctorName:
+            {
+              doctors.map((
+                doctor1) => {
+                if (doctor1.id == doctor) {
+                  return doctor1.name;
+                }
+              
+            }
+            )}
+          </Text>
       <Pressable style={styles.button} onPress={
         onPress
       }>

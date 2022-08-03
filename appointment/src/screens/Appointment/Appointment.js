@@ -105,7 +105,7 @@ const Appointment = ({ route, navigation }) => {
     navigation.navigate('Cash', {
       name: name,
       doctor: selectDoctor,
-      date: selectedDate.toLocaleDateString(),
+      date: selectedDate.toDateString(),
       time: select.startTime
 
     })
@@ -115,7 +115,6 @@ const Appointment = ({ route, navigation }) => {
 
   return (
     <>
-      <NativeBaseProvider>
         <View style={styles.docInfo}>
           <Image
             style={styles.docImage}
@@ -215,8 +214,8 @@ const Appointment = ({ route, navigation }) => {
           </View>
         )}
 
+<NativeBaseProvider>
 
-        <View>
           <Center>
             <Pressable
               onPress={() => setShowModal(true)}
@@ -227,7 +226,7 @@ const Appointment = ({ route, navigation }) => {
               isOpen={showModal}
               onClose={() => setShowModal(false)}
               size="lg">
-              <Modal.Content maxWidth="350">
+              <Modal.Content maxWidth="350" maxHeight="250">
                 <Modal.CloseButton />
                 <Modal.Header>Appoint</Modal.Header>
                 <Modal.Body>
@@ -258,15 +257,12 @@ const Appointment = ({ route, navigation }) => {
               </Modal.Content>
             </Modal>
 
-            <Modal
-              isOpen={showModal2}
-              onClose={() => setShowModal2(false)}
-              size="sm">
-              <Modal.Content maxWidth="350">
-                <Modal.CloseButton />
-                <Modal.Header>Select Address</Modal.Header>
-                <Modal.Body>
-                <Radio.Group defaultValue="address1" name="address" size="sm">
+            <Modal isOpen={showModal2} onClose={() => setShowModal2(false)} size="lg">
+        <Modal.Content maxWidth="350" maxHeight="250">
+          <Modal.CloseButton />
+          <Modal.Header>Select Address</Modal.Header>
+          <Modal.Body>
+            <Radio.Group defaultValue="address1" name="address" size="sm">
               <VStack space={3}>
                 <Radio alignItems="flex-start" _text={{
                 mt: "-1",
@@ -284,31 +280,23 @@ const Appointment = ({ route, navigation }) => {
                 </Radio>
               </VStack>
             </Radio.Group>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-              flex="1"
-              onPress={() => {
-                setShowModal3(true);
-              }}>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button flex="1" onPress={() => {
+            setShowModal3(true);
+          }}>
               Continue
             </Button>
-                  {/* <Pressable
-                    onPress={() => {
-                      setShowModal3(true);
-                    }}
-                    style={styles.continueButton}>
-                    <Text style={styles.continueButtonText}>Continue</Text>
-                  </Pressable> */}
-                </Modal.Footer>
-              </Modal.Content>
-            </Modal>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
+
 
             <Modal
               isOpen={showModal3}
               size="sm"
               onClose={() => setShowModal3(false)}>
-              <Modal.Content maxWidth="350">
+              <Modal.Content maxWidth="350" maxHeight="250">
                 <Modal.CloseButton />
                 <Modal.Header>Payment Options</Modal.Header>
                 <Modal.Body>
@@ -355,7 +343,7 @@ const Appointment = ({ route, navigation }) => {
                 <Modal.Footer>
                   {
                     paymentMode === 'card' ? (<Button
-                      flex="1"
+                      flex="2"
                       onPress={() => {
                         makePayment(
                           select,
@@ -369,7 +357,7 @@ const Appointment = ({ route, navigation }) => {
                       Checkout
                     </Button>
                     ) : (<Button
-                      flex="1"
+                      flex="2"
                       onPress={() => {
                         makePaymentOnCash(
                           select,
@@ -390,9 +378,10 @@ const Appointment = ({ route, navigation }) => {
                 </Modal.Footer>
               </Modal.Content>
             </Modal>
+
           </Center>
-        </View>
       </NativeBaseProvider>
+
     </>
   );
 };
