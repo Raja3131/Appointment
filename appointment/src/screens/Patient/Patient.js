@@ -37,6 +37,8 @@ const PatientDetails = ({navigation, route}) => {
   const {data} = useAppoints();
   const [message, setMessage] = useState(false);
   const [appoints, setAppoints] = useState([]);
+  const [gender,setGender] = useState('');
+  const [doctorValue,setDoctorValue] = useState('');
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(/^[a-z0-9_.-\s]+$/i, 'Name is not valid')
@@ -109,6 +111,9 @@ const PatientDetails = ({navigation, route}) => {
           });
         }
         actions.resetForm();
+        formikRef.current?.resetForm();
+        setGender('')
+        setDoctorValue('')
       } else {
         Alert.alert('Error', 'Something went wrong');
       }
@@ -238,17 +243,19 @@ const onAgeChange = (value) => {
                   <RNPickerSelect
                     onValueChange={value => {
                       values.gender = value;
+                      setGender(values.gender);
                       console.log(values.gender);
                     }}
                     placeholder={{
                       label: 'Select Gender',
-                      value: null,
+                      
                   }}
                   placeholderTextColor="red"
                     items={[
                       {label: 'Male', value: 'Male'},
                       {label: 'Female', value: 'Female'},
                     ]}
+                    value={gender}
                   />
                 </View>
                 <Text
@@ -306,6 +313,7 @@ const onAgeChange = (value) => {
                     onValueChange={value => {
                       values.doctor = value;
                       console.log(values.doctor);
+                      setDoctorValue(values.doctor);
                     }}
                     items={Object.values(doctors).map(item => {
                       return {label: item.name, value: item.id};
@@ -314,6 +322,7 @@ const onAgeChange = (value) => {
                       label: 'Select Doctor',
                       value: null,
                   }}
+                  value={doctorValue}
                   />
                 </View>
                 <View style={
@@ -354,6 +363,8 @@ const onAgeChange = (value) => {
                   ]}
                   onPress={() => {
                     formikRef.current?.resetForm();
+                    setGender('')
+                    setDoctorValue('')
 
                   }}
                   testID="clearFieldsButton">

@@ -3,6 +3,8 @@ import React,{useEffect} from 'react'
 import Api from '../../api/Api';
 import doctors from '../../db/doctors';
 import moment from 'moment';
+import { styles } from './styles';
+
 
 
 const Cash = ({navigation,route}) => {
@@ -35,8 +37,9 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.nameText}>{name}</Text>
-      <Text style={styles.dateText}>  {
+     <View style={styles.appointmentDetailsContainer}>
+     <Text style={styles.nameText}>Patient Name:{name}</Text>
+      <Text style={styles.dateText}> Date:  {
           `${
            date
           } `
@@ -54,55 +57,14 @@ useEffect(() => {
             }
             )}
           </Text>
+     </View>
       <Pressable style={styles.button} onPress={
         onPress
       }>
-        <Text style={styles.buttonText}>Appoint</Text>
+        <Text style={styles.buttonText}>Confirm Appointment</Text>
       </Pressable>
     </View>
   )
 }
 
 export default Cash
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-  },
-  button:{
-    backgroundColor:'#00bfff',
-    width:200,
-    height:50,
-    alignItems:'center',
-    justifyContent:'center',
-    borderRadius:10,
-    marginTop:20
-  },
-  buttonText:{
-    color:'#f5f5f5',
-    fontSize:20
-  },
-  nameText:{
-    fontSize:20,
-    fontWeight:'bold',
-    marginTop:20
-  },
-  dateText:{
-    fontSize:20,
-    marginTop:20
-  },
-  timeText:{
-    fontSize:20,
-    marginTop:20
-  },
-  doctorText:{
-    fontSize:20,
-    marginTop:20
-    
-  }
-
-})

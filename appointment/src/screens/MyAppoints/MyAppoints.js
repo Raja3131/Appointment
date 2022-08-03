@@ -37,7 +37,7 @@ const MyAppoints = ({navigation}) => {
         'Are you sure you want to cancel this appointment?',
         [
           {
-            text: 'Cancel',
+            text: 'No',
             onPress: () => {
               setLoading(false);
               getAppointments();
@@ -45,7 +45,7 @@ const MyAppoints = ({navigation}) => {
             style: 'cancel',
           },
           {
-            text: 'OK',
+            text: 'Yes',
             onPress: () => {
               Api.delete(`/appoints/${id}`)
                 .then(() => {
