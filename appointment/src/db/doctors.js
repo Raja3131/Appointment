@@ -13,7 +13,7 @@ const doctors=[  {
 },
 {
     id: 3,
-    name: 'Dr.Asha',
+    name: 'Dr.Fairose',
     speciality: 'Cardiologist',
     image: require('../assets/images/doctor3.jpg')
 },
@@ -43,19 +43,19 @@ const doctors=[  {
 },
 {
     id: 8,
-    name: 'Dr. John Doe',
+    name: 'Dr. Asha',
     speciality: 'Cardiologist',
     image: require('../assets/images/doctor3.jpg')
 },
 {
     id: 9,
-    name: 'Dr. John Doe',
+    name: 'Dr.Nisha',
     speciality: 'Cardiologist',
     image: require('../assets/images/doctor4.jpg')
 },
 {
     id: 10,
-    name: 'Dr. John Doe',
+    name: 'Dr. Feroz',
     speciality: 'Cardiologist',
     image: require('../assets/images/doctor5.jpg')
 },

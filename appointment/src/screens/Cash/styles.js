@@ -28,7 +28,7 @@ export const styles =StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f3f6fb',
         alignItems: 'center',
         justifyContent: 'center',
     
@@ -53,7 +53,8 @@ export const styles =StyleSheet.create({
         fontSize:20,
         fontWeight:'bold',
         marginTop:20,
-        fontFamily:'Ubuntu-Italic'
+        fontFamily:'Ubuntu-Italic',
+        
       },
       dateText:{
         fontSize:20,

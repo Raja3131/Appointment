@@ -3,7 +3,7 @@ import colors from '../../../assets/theme/colors';
 
 export default StyleSheet.create({
   wrapper: {
-    height: 42,
+    height: 50,
 
     paddingHorizontal: 5,
 
@@ -30,8 +30,8 @@ export default StyleSheet.create({
     fontSize: 12,
   },
   text: {
-    fontSize: 14,
-    color: '#fff',
+    fontSize: 16,
+    color: '#f3f6fb',
     
   }
 });

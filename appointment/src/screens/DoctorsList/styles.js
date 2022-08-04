@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
       marginBottom: 10,
       padding: 10,
       borderRadius: 10,
-      backgroundColor: '#E9E6E6',
+      backgroundColor: '#f3f6fb',
       shadowOffset: {width: 10, height: 10},
       shadowColor: '#000',
       shadowOpacity: 2,
@@ -58,11 +58,11 @@ export const styles = StyleSheet.create({
     doctorButtonText: {
       fontSize: 20,
       fontWeight: 'bold',
-      color: '#fff',
+      color: '#f3f6fb',
     },
     button: {
       alignItems: 'center',
-      backgroundColor: '#fff',
+      backgroundColor: '#f3f6fb',
       padding: 10,
       marginTop: 30,
       marginBottom: 10,
@@ -72,7 +72,7 @@ export const styles = StyleSheet.create({
       shadowOpacity: 0.2,
       shadowRadius: 20,
       elevation: 5,
-      backgroundColor: '#fff',
+      backgroundColor: '#f3f6fb',
     },
     text: {
       fontSize: 16,

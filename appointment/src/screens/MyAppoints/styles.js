@@ -11,6 +11,8 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     elevation: 5,
+    height:140,
+    width: '96%', 
 
   },
  pressableView: {
@@ -57,12 +59,12 @@ export const styles = StyleSheet.create({
   },
   addText: {
     fontSize: 16,
-    color: '#fff',
+    color: '#f3f6fb',
   
   },
   appointmentButtonText: {
     fontSize: 16,
-    color: '#fff',
+    color: '#f3f6fb',
   },
   cancelButton: {
     backgroundColor: '#a71e51',
@@ -73,10 +75,15 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
     marginLeft: '25%',
+    shadowOffset: {width: 20, height: 20},
+    shadowColor: '#a71e51',
+    shadowOpacity: 20,
+    shadowRadius: 20,
+
   },
   doctorText:{
     fontSize:16,
-    color:'#fff',
+    color:'#f3f6fb',
     fontFamily:'Ubuntu-Italic',
     fontWeight:'bold',
   }

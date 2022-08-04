@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
       paddingVertical: 30,
     },
     text_header: {
-      color: '#fff',
+      color: '#f3f6fb',
       fontSize: 30,
       fontFamily: 'Ubuntu-Italic',
       backgroundColor: '#009387',
@@ -65,12 +65,56 @@ export const styles = StyleSheet.create({
     textSign: {
       fontSize: 16,
       fontFamily: 'Ubuntu-Italic',
+      color: '#f3f6fb',
     },
     buttons:{
       flex:1,
       flexDirection:'row',
       justifyContent:'space-around',
 
+
+
+    },
+    button:{
+      marginTop:40,
+      width: '40%',
+      height: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      backgroundColor: '#009387',
+      elevation: 5,
+      shadowOffset: 5,
+      shadowColor: '#000',
+      shadowOpacity: 2,
+      shadowRadius: 20,
+
+    },
+    buttonDisabled:{
+      width: '40%',
+      height: 30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      backgroundColor: '#fff',
+      elevation: 5,
+      shadowOffset: 5,
+      shadowColor: '#000',
+      shadowOpacity: 2,
+      shadowRadius: 20,
+      marginTop:40,
+      
+    },
+    textDisabled:{
+      color: '#555',
+      fontSize: 16,
+      fontFamily: 'Ubuntu-Italic',
+    },
+    buttonText:{
+      color:'#f3f6fb',
+      fontSize:16,
+      fontFamily:'Ubuntu-Italic',
+      fontWeight:'bold'
 
 
     }

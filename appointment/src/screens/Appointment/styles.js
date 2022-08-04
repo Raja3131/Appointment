@@ -78,8 +78,8 @@ export const styles = StyleSheet.create({
       borderRadius: 10,
       marginTop: 5,
       marginLeft: 5,
-      borderColor: '#fff',
-      color: '#fff',
+      borderColor: '#f3f6fb',
+      color: '#f3f6fb',
     },
   
     timeSlotItemText: {
@@ -89,13 +89,13 @@ export const styles = StyleSheet.create({
     },
     timeButtonText:{
       fontSize: 18,
-      color: '#ffffff',
+      color: '#f3f6fb',
       fontFamily: 'Ubuntu-Italic',
     },
     timeSlotItemSelect: {
       backgroundColor: '#0087',
       fontSize: 18,
-      color: '#fff',
+      color: '#f3f6fb',
       fontWeight: 'bold',
 
     },
@@ -110,12 +110,12 @@ export const styles = StyleSheet.create({
     },
     bookButtonText: {
       fontSize: 18,
-      color: '#fff',
+      color: '#f3f6fb',
       fontWeight: 'bold',
     },
     datePickerText: {
       fontSize: 18,
-      color: '#fff',
+      color: '#f3f6fb',
       fontWeight: 'bold',
       marginLeft: 20,
       marginTop: 20,
@@ -135,7 +135,7 @@ export const styles = StyleSheet.create({
     continueButton: {
       paddingVertical: 6,
       paddingHorizontal: 30,
-      backgroundColor: '#fff',
+      backgroundColor: '#f3f6fb',
       borderRadius: 10,
       width: '50%',
       height: 40,

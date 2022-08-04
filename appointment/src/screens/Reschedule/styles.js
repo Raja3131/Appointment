@@ -41,15 +41,15 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       width: '100%',
       marginBottom: 20,
-      backgroundColor: '#00a680',
+      backgroundColor: '#a71e51',
       borderRadius: 10,
       padding: 10,
-      borderColor: '#00a680',
+      borderColor: '#a71e51',
       borderWidth: 1,
 
     },
     datePickerButtonText: {
-      color: '#000',
+      color: '#f3f6fb',
       fontSize: 18,
       fontWeight: 'bold',
       marginRight: 10,
@@ -80,8 +80,8 @@ export const styles = StyleSheet.create({
 
     },
     timeSlotItemSelect: {
-      backgroundColor: '#00a680',
-      borderColor: '#00a680',
+      backgroundColor: '#009387',
+      borderColor: '#009387',
       borderWidth: 1,
       width: '20%',
       borderRadius: 10,
@@ -95,7 +95,7 @@ export const styles = StyleSheet.create({
       
     },
     button:{
-      backgroundColor: '#00a680',
+      backgroundColor: '#009387',
       borderRadius: 10,
       padding: 10,
       margin: 20,
@@ -125,7 +125,7 @@ export const styles = StyleSheet.create({
       width: '80%',
       padding: 10,
       borderRadius: 10,
-      backgroundColor: '#00a680',
+      backgroundColor: '#009387',
       shadowOffset: {width: 10, height: 10},
       shadowColor: '#000',
       shadowOpacity: 2,
@@ -144,7 +144,7 @@ export const styles = StyleSheet.create({
       color: '#fff',
       marginBottom: 20,
       fontFamily: 'Ubuntu-Italic',
-      
+
     },
     
     
