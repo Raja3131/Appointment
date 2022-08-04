@@ -37,6 +37,7 @@ useEffect(() => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.textContainer}>Appointment Details</Text>
      <View style={styles.appointmentDetailsContainer}>
      <Text style={styles.nameText}>Patient Name:{name}</Text>
       <Text style={styles.dateText}> Date:  {
@@ -45,7 +46,7 @@ useEffect(() => {
           } `
         }</Text>
       <Text style={styles.timeText}>{time}</Text>
-      <Text style={styles.detailsText}>
+      <Text style={styles.doctorText}>
             DoctorName:
             {
               doctors.map((
@@ -61,7 +62,7 @@ useEffect(() => {
       <Pressable style={styles.button} onPress={
         onPress
       }>
-        <Text style={styles.buttonText}>Confirm Appointment</Text>
+        <Text style={styles.buttonText}>Confirm booking</Text>
       </Pressable>
     </View>
   )

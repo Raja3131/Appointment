@@ -186,7 +186,9 @@ const Appointment = ({ route, navigation }) => {
                       styles.timeSlotItem,
                       select === slot ? styles.timeSlotItemSelect : null,
                     ]}>
-                    <Text style={styles.timeSlotButtonText}>
+                    <Text style={
+                      select === slot ? styles.timeSlotItemTextSelect : styles.timeSlotItemText
+                    }>
                       {slot.startTime} - {slot.endTime}
                     </Text>
                   </Pressable>
@@ -243,7 +245,7 @@ const Appointment = ({ route, navigation }) => {
                     </HStack>
                     <HStack alignItems="center" justifyContent="space-between">
                       <Text fontWeight="medium">Amount</Text>
-                      <Text color="green.500">$337.61</Text>
+                      <Text color="green.500">300</Text>
                     </HStack>
                   </VStack>
                 </Modal.Body>

@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
       marginTop: 5,
       marginLeft: 5,
       borderColor: '#fff',
-      color: '#000',
+      color: '#fff',
     },
   
     timeSlotItemText: {
@@ -87,8 +87,17 @@ export const styles = StyleSheet.create({
       color: '#000',
       fontFamily: 'Ubuntu-Italic',
     },
+    timeButtonText:{
+      fontSize: 18,
+      color: '#ffffff',
+      fontFamily: 'Ubuntu-Italic',
+    },
     timeSlotItemSelect: {
-      backgroundColor: '#009387',
+      backgroundColor: '#0087',
+      fontSize: 18,
+      color: '#fff',
+      fontWeight: 'bold',
+
     },
     bookButton: {
       margin: 40,
@@ -142,5 +151,10 @@ export const styles = StyleSheet.create({
       color: '#009387',
       fontWeight: 'bold',
     },
+    timeSlotItemTextSelect:{
+      fontSize: 18,
+      color: '#fff',
+      fontFamily: 'Ubuntu-Italic',
+    }
   });
   

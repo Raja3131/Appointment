@@ -1,19 +1,30 @@
 import { StyleSheet } from 'react-native';
+import { color } from '@mui/system';
 
 export const styles =StyleSheet.create({
     appointmentDetailsContainer:{
-        marginLeft:20,
-        marginRight:20,
-        marginTop:20,
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'#00bfff',
-        borderWidth:1,
-        borderRadius:5,
-        borderColor:'#fff',
-        padding:10,
-        height:180,
+        // flexDirection:'column',
+        // justifyContent:'center',
+        // alignItems:'center',
+        // backgroundColor:'#00bfff',
+        // borderWidth:1,
+        // borderRadius:5,
+        // borderColor:'#fff',
+        // padding:10,
+        // height:180,
+        flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent:'center',
+      height:180,
+      width: '80%',
+      padding: 10,
+      borderRadius: 10,
+      backgroundColor: '#E9E6E6',
+      shadowOffset: {width: 10, height: 10},
+      shadowColor: '#000',
+      shadowOpacity: 2,
+      shadowRadius: 20,
+      elevation: 5,
     },
     container: {
         flex: 1,
@@ -32,13 +43,17 @@ export const styles =StyleSheet.create({
         marginTop:20
       },
       buttonText:{
-        color:'#000',
-        fontSize:20
+        color:'#555',
+        fontSize:20,
+        fontFamily:'Ubuntu-Italic',
+        fontWeight:'bold'
+
       },
       nameText:{
         fontSize:20,
         fontWeight:'bold',
-        marginTop:20
+        marginTop:20,
+        fontFamily:'Ubuntu-Italic'
       },
       dateText:{
         fontSize:20,
@@ -46,11 +61,20 @@ export const styles =StyleSheet.create({
       },
       timeText:{
         fontSize:20,
-        marginTop:20
+        marginTop:20,
+        fontFamily:'Ubuntu-Italic'
+
       },
       doctorText:{
         fontSize:20,
         marginTop:20
         
+      },textContainer:{
+        fontSize:20,
+        // fontWeight:'bold',
+        marginTop:20,
+        fontFamily:'Ubuntu-Italic',
+        color:'#00bfff',
+        marginBottom:20,
       }
 })

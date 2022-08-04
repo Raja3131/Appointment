@@ -6,6 +6,7 @@ import {styles} from './styles';
 import Message from '../../components/Common/Message/Message';
 import {ActivityIndicator} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
+import doctors from '../../db/doctors';
 
 const MyAppoints = ({navigation}) => {
   const [appointments, setAppointments] = useState([]);
@@ -107,6 +108,17 @@ const MyAppoints = ({navigation}) => {
         <Text style={styles.appointmentText}>
           {appointment.name}
         </Text>
+        <Text style={styles.doctorText}>
+        {
+              doctors.map((
+                doctor1) => {
+                if (doctor1.id == appointment.doctor) {
+                  return doctor1.name;
+                }
+              
+            }
+            )}
+        </Text>
         <View style={styles.pressableView}>
           <Pressable
             onPress={() =>
@@ -123,7 +135,7 @@ const MyAppoints = ({navigation}) => {
           </Pressable>
           <Pressable
             onPress={() => deleteAppointment(appointment._id)}
-            style={styles.appointmentButton}>
+            style={styles.cancelButton}>
             <Text style={styles.appointmentButtonText}>Cancel</Text>
           </Pressable>
         </View>
@@ -133,7 +145,7 @@ const MyAppoints = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Appoints</Text>
+      <Text style={styles.title}>Your Appointments</Text>
       {renderAppointments()}
     </View>
   );

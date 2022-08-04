@@ -93,6 +93,7 @@ const RescheduleScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.appointDetailsContainer}>
+        <Text style={styles.detailsText}>{appointmentName}</Text>
       <Text style={styles.detailsText}>
         {
           `${
@@ -125,14 +126,13 @@ const RescheduleScreen = ({ route, navigation }) => {
          
 
       </View>
-      <Text style={styles.header}>Reschedule Appointment</Text>
+      <Text style={styles.header}>Reschedule Your Appointment</Text>
       {/* <Text style={styles.label}>{name1}</Text>
       <TextInput
         style={styles.input}
         value={name1}
         onChangeText={text => setName(text)}
       /> */}
-      <Text style={styles.label}>Date</Text>
 
       <View style={styles.datePicker}>
         <View style={styles.CalendarIconStyle}></View>

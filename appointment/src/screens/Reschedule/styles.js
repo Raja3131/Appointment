@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     header: {
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: 'bold',
       marginBottom: 20,
     },
@@ -117,16 +117,22 @@ export const styles = StyleSheet.create({
       
     },
     appointDetailsContainer: {
+     
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
-      width: '100%',
-      marginBottom: 20,
-      margin: 40,
-      backgroundColor: '#00a680',
-      borderRadius: 10,
+      justifyContent:'center',
+      height:180,
+      width: '80%',
       padding: 10,
-      color: '#fff',
+      borderRadius: 10,
+      backgroundColor: '#00a680',
+      shadowOffset: {width: 10, height: 10},
+      shadowColor: '#000',
+      shadowOpacity: 2,
+      shadowRadius: 20,
+      elevation: 5,
+      marginBottom: 20,
+
 
 
 
@@ -136,6 +142,9 @@ export const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center',
       color: '#fff',
+      marginBottom: 20,
+      fontFamily: 'Ubuntu-Italic',
+      
     },
     
     
