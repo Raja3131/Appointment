@@ -75,7 +75,7 @@ const RescheduleScreen = ({ route, navigation }) => {
     Api.put(`/appoints/${id}`, {
 
       date: selectedDate.toDateString(),
-      time: select.Time,
+      time: select.startTime,
     }).then(res => {
       if (!date || !select.startTime) {
         Alert.alert('Please fill all the fields');
@@ -93,17 +93,12 @@ const RescheduleScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.appointDetailsContainer}>
-        <Text style={styles.detailsText}>Patient Name:{appointmentName}</Text>
+        <Text style={styles.detailsText}>{appointmentName}</Text>
       <Text style={styles.detailsText}>
         {
           `${
             moment(selectedDate).format('MMMM Do YYYY')
           } `
-        }
-      </Text>
-      <Text>
-        {
-          appointmentTime
         }
       </Text>
       <View>
@@ -187,7 +182,7 @@ const RescheduleScreen = ({ route, navigation }) => {
             slot.endTime = myMoment2.format('hA');
             ;
 
-            if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString() && time1!==slot.startTime) {
+            if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString()) {
 
               return (
                 <Pressable
