@@ -191,6 +191,8 @@ const PatientDetails = ({ navigation, route }) => {
                     onChangeText={handleChange('name')}
                     onBlur={handleBlur('name')}
                     value={values.name}
+                    placeholderTextColor="#598"
+
                   />
                   <Text style={styles.errorMsg}>
                     {touched.name && errors.name}
@@ -216,8 +218,9 @@ const PatientDetails = ({ navigation, route }) => {
                       }
                     }}
                     placeholder="Age"
-                    placeholderTextColor="#666666"
+                    placeholderTextColor="#598"
                     placeholderStyle={{ color: '#666666', fontSize: 20 }}
+
                     style={[
                       styles.textInput,
                       {
@@ -230,8 +233,6 @@ const PatientDetails = ({ navigation, route }) => {
                     onBlur={handleBlur('age')}
                     value={values.age}
                     maxLength={3}
-
-
                   />
                   <Text style={styles.errorMsg}>
                     {touched.age && errors.age}
@@ -255,7 +256,18 @@ const PatientDetails = ({ navigation, route }) => {
                       { label: 'Female', value: 'Female' },
                     ]}
                     value={gender}
-                  />
+                    style={{
+                      fontSize: 16,
+                      paddingHorizontal: 10,
+                      paddingVertical: 8,
+                      borderWidth: 0.5,
+                      borderColor: 'purple',
+                      borderRadius: 8,
+                      color: 'black',
+                      paddingRight: 30,
+                      top: 20,
+                      right: 10,
+                    }} />
                 </View>
                 <Text
                   style={[
@@ -322,6 +334,10 @@ const PatientDetails = ({ navigation, route }) => {
                       value: null,
                     }}
                     value={doctorValue}
+                    placeholderStyle={{ color: '#666666', fontSize: 20 }}
+                    placeholderTextColor="#598"
+
+
                   />
                 </View>
                 <View style={
@@ -343,14 +359,14 @@ const PatientDetails = ({ navigation, route }) => {
                           ? styles.textDisabled
                           : styles.buttonText
                       }>
-                      
+
                       Submit
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[
                       styles.button,
-                      
+
 
                     ]}
                     onPress={() => {
@@ -364,7 +380,7 @@ const PatientDetails = ({ navigation, route }) => {
                     <Text
                       style={[
                         styles.textSign,
-                       
+
                       ]}>
                       Clear
                     </Text>
