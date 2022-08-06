@@ -70,7 +70,21 @@ const RescheduleScreen = ({ route, navigation }) => {
     } ,
 ]
  
-
+const confirmReschedule = () => {
+  Alert.alert(
+    'Confirm Reschedule',
+    'Are you sure you want to reschedule this appointment?',
+    [
+      {
+        text: 'No',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      { text: 'Yes', onPress: () => reschedule() },
+    ],
+    { cancelable: false },
+  );
+}
   const reschedule = () => {
     Api.put(`/appoints/${id}`, {
 
@@ -80,6 +94,7 @@ const RescheduleScreen = ({ route, navigation }) => {
       if (!date || !select.startTime) {
         Alert.alert('Please fill all the fields');
       } else {
+       
         console.log(res);
         setName('');
         navigation.navigate('MyAppoints', appointments);
@@ -93,14 +108,17 @@ const RescheduleScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.appointDetailsContainer}>
-        <Text style={styles.detailsText}>{appointmentName}</Text>
-      <Text style={styles.detailsText}>
+        <Text style={styles.detailsText}>PatientName :  {appointmentName}</Text>
+      <Text style={styles.detailsText}>Date :
         {
           `${
             moment(selectedDate).format('MMMM Do YYYY')
           } `
         }
       </Text>
+      <Text>Time:{
+        `${appointmentTime} `
+        }</Text>
       <View>
         {/* <Text>{
           fruits.map((fruit)=>{
@@ -224,7 +242,7 @@ const RescheduleScreen = ({ route, navigation }) => {
       )}
 
       <Pressable
-        onPress={() => reschedule(
+        onPress={() => confirmReschedule(
 
           selectedDate.toDateString(),
           select.startTime,

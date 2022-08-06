@@ -260,11 +260,11 @@ const Appointment = ({ route, navigation }) => {
             </Modal>
 
             <Modal isOpen={showModal2} onClose={() => setShowModal2(false)} size="lg">
-        <Modal.Content maxWidth="350" maxHeight="250">
+        <Modal.Content maxWidth="350">
           <Modal.CloseButton />
           <Modal.Header>Select Address</Modal.Header>
           <Modal.Body>
-            <Radio.Group defaultValue="address1" name="address" size="sm">
+            <Radio.Group defaultValue="address1" name="address">
               <VStack space={3}>
                 <Radio alignItems="flex-start" _text={{
                 mt: "-1",
@@ -296,13 +296,13 @@ const Appointment = ({ route, navigation }) => {
 
             <Modal
               isOpen={showModal3}
-              size="sm"
+              size="lg"
               onClose={() => setShowModal3(false)}>
-              <Modal.Content maxWidth="350" maxHeight="250">
+              <Modal.Content maxWidth="350">
                 <Modal.CloseButton />
                 <Modal.Header>Payment Options</Modal.Header>
                 <Modal.Body>
-                  <Radio.Group name="payment" size="sm">
+                  <Radio.Group name="payment">
                     <VStack space={3}>
                       <Radio
                         alignItems="flex-start"

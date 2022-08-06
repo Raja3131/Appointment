@@ -36,17 +36,16 @@ export const styles = StyleSheet.create({
 
     },
     datePickerButton: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
       width: '100%',
       marginBottom: 20,
+      backgroundColor: '#00a680',
       backgroundColor: '#a71e51',
       borderRadius: 10,
       padding: 10,
+      borderColor: '#00a680',
       borderColor: '#a71e51',
       borderWidth: 1,
-
     },
     datePickerButtonText: {
       color: '#f3f6fb',
@@ -57,7 +56,6 @@ export const styles = StyleSheet.create({
     },
     timeSlot: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
       width: '100%',
       marginBottom: 20,
@@ -68,13 +66,13 @@ export const styles = StyleSheet.create({
     timeSlotItem: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
-      width: '20%',
-      height:45,
-      backgroundColor: '#888',
+      width: '18%',
+      height:40,
+      backgroundColor: '#f3f6fb',
       borderRadius: 10,
       padding: 10,
       borderWidth: 1,
-      borderColor:'#888',
+      borderColor:'#0087',
       padding: 10,
       margin: 5,
 
@@ -89,7 +87,7 @@ export const styles = StyleSheet.create({
     },
     timeSlotItemText: {
       color: '#fff',
-      fontSize: 18,
+      fontSize: 12,
       fontWeight: 'bold',
       textAlign: 'center',
       
@@ -111,7 +109,7 @@ export const styles = StyleSheet.create({
     },
     timeSlotButtonText:{
       color: '#000',
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: 'bold',
       textAlign: 'center',
       
