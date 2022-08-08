@@ -50,41 +50,23 @@ const RescheduleScreen = ({ route, navigation }) => {
     console.log(doctors)
   });
 
-  const fruits =[{
-    id: 1,
-    name: 'Apple',
-    price: '$1.00',
-    color: 'red',
-  },
-    {
-      id: 2,
-      name: 'Orange',
-      price: '$2.00',
-      color: 'orange',
-    } ,
-    {
-      id: 3,
-      name: 'Banana',
-      price: '$3.00',
-      color: 'yellow',
-    } ,
-]
- 
-const confirmReschedule = () => {
-  Alert.alert(
-    'Confirm Reschedule',
-    'Are you sure you want to reschedule this appointment?',
-    [
-      {
-        text: 'No',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      { text: 'Yes', onPress: () => reschedule() },
-    ],
-    { cancelable: false },
-  );
-}
+
+
+  const confirmReschedule = () => {
+    Alert.alert(
+      'Confirm Reschedule',
+      'Are you sure you want to reschedule this appointment?',
+      [
+        {
+          text: 'No',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'Yes', onPress: () => reschedule() },
+      ],
+      { cancelable: false },
+    );
+  }
   const reschedule = () => {
     Api.put(`/appoints/${id}`, {
 
@@ -94,14 +76,11 @@ const confirmReschedule = () => {
       if (!date || !select.startTime) {
         Alert.alert('Please fill all the fields');
       } else {
-       
+
         console.log(res);
         setName('');
         navigation.navigate('MyAppoints', appointments);
       }
-
-
-
     });
   };
 
@@ -109,25 +88,16 @@ const confirmReschedule = () => {
     <View style={styles.container}>
       <View style={styles.appointDetailsContainer}>
         <Text style={styles.detailsText}>PatientName :  {appointmentName}</Text>
-      <Text style={styles.detailsText}>Date :
-        {
-          `${
-            moment(selectedDate).format('MMMM Do YYYY')
-          } `
-        }
-      </Text>
-      <Text>Time:{
-        `${appointmentTime} `
+        <Text style={styles.detailsText}>Date :
+          {
+            `${moment(selectedDate).format('MMMM Do YYYY')
+            } `
+          }
+        </Text>
+        <Text>Time:{
+          `${appointmentTime} `
         }</Text>
-      <View>
-        {/* <Text>{
-          fruits.map((fruit)=>{
-            if(fruit.id===1){
-              return fruit.name
-            }
-          })
-
-          }</Text> */}
+        <View>
           <Text style={styles.detailsText}>
             DoctorName:
             {
@@ -136,22 +106,12 @@ const confirmReschedule = () => {
                 if (doctor1.id == doctor) {
                   return doctor1.name;
                 }
-              
-            }
-            )}
+              }
+              )}
           </Text>
-          </View>
-         
-
+        </View>
       </View>
       <Text style={styles.header}>Reschedule Your Appointment</Text>
-      {/* <Text style={styles.label}>{name1}</Text>
-      <TextInput
-        style={styles.input}
-        value={name1}
-        onChangeText={text => setName(text)}
-      /> */}
-
       <View style={styles.datePicker}>
         <View style={styles.CalendarIconStyle}></View>
         <TouchableHighlight
@@ -189,13 +149,13 @@ const confirmReschedule = () => {
           />
         )}
       </View>
-     
+
 
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
-            let myMoment = moment(`${slot.startTime}`, 'HH:mm A')
-            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
+            let myMoment = moment(`${slot.startTime} - ${slot.endTime}`, 'HH:mm A')
+            let myMoment2 = moment(`${slot.startTime} - ${slot.endTime}`, 'HH:mm A');
             slot.startTime = myMoment.format('hA');
             slot.endTime = myMoment2.format('hA');
             ;
@@ -204,19 +164,19 @@ const confirmReschedule = () => {
 
               return (
                 <Pressable
-                  key={slot.id}
-                  onPress={() => {
-                    setSelect(slot);
-                    setTime(`${slot.startTime} - ${slot.endTime}`);
-                  }}
-                  style={[
-                    styles.timeSlotItem,
-                    select === slot ? styles.timeSlotItemSelect : null,
-                  ]}>
-                  <Text style={styles.timeSlotButtonText}>
-                    {slot.startTime} - {slot.endTime}
-                  </Text>
-                </Pressable>
+                key={slot.id}
+                onPress={() => {
+                  setSelect(slot);
+                  setTime(`${slot.startTime}  ${slot.endTime}`);
+                }}
+                style={[
+                  styles.timeSlotItem,
+                  select === slot ? styles.timeSlotItemSelect : null,
+                ]}>
+                <Text style={styles.timeSlotButtonText}>
+                  {slot.startTime}  {slot.endTime}
+                </Text>
+              </Pressable>
               );
             }
             else if (currentDate.toDateString() !== selectedDate.toDateString()) {

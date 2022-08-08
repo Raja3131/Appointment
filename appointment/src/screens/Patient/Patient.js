@@ -13,11 +13,11 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Alert,
+  TouchableHighlight  
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import { useForm, Controller } from 'react-hook-form';
 import Api from '../../api/Api';
 import { useTheme } from '@react-navigation/native';
 import { ButtonGroup } from 'react-native-elements';
@@ -31,6 +31,9 @@ import { styles } from './styles';
 import Message from '../../components/Common/Message/Message';
 import useAppoints from '../../services/QueryCalls';
 import ValidatedTextInput from '../../utils/ValidatetextInput';
+// import  DateTimePicker  from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 
 const PatientDetails = ({ navigation, route }) => {
   const formikRef = useRef();
@@ -38,7 +41,10 @@ const PatientDetails = ({ navigation, route }) => {
   const [message, setMessage] = useState(false);
   const [appoints, setAppoints] = useState([]);
   const [gender, setGender] = useState('');
-  const [doctorValue, setDoctorValue] = useState('');
+  const [doctorValue, setDoctorValue] = useState('')
+  const [selectedDob, setSelectedDob] = useState(new Date());
+  const [date, setDate] = useState('select dob');
+  
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(/^[a-z0-9_.-\s]+$/i, 'Name is not valid')
@@ -78,6 +84,22 @@ const PatientDetails = ({ navigation, route }) => {
   });
 
   const { colors } = useTheme();
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    setSelectedDob(date);
+    setDate(date.toLocaleDateString());
+    hideDatePicker();
+
+  };
 
 
   const signUp = async (values, actions) => {
@@ -133,7 +155,7 @@ const PatientDetails = ({ navigation, route }) => {
 
   return (
     <>
-
+      <ScrollView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
 
         <View style={styles.container}>
@@ -197,6 +219,28 @@ const PatientDetails = ({ navigation, route }) => {
                   <Text style={styles.errorMsg}>
                     {touched.name && errors.name}
                   </Text>
+                </View>
+                <View>
+                <View style={styles.dobContainer}>
+      {/* <Button title="Show Date Picker" onPress={showDatePicker} />
+       */}
+       <TouchableHighlight
+        onPress={showDatePicker}
+        style={styles.dateButton}>
+        <Text style={styles.buttonText}>{
+          date==='select dob'? 'Select Date': selectedDob.toDateString()
+        }</Text>
+      </TouchableHighlight>
+
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        value={selectedDob}
+        
+      />
+    </View>
                 </View>
 
                 <Text
@@ -398,6 +442,7 @@ const PatientDetails = ({ navigation, route }) => {
           </Text>
         </View>
       )}
+      </ScrollView>
     </>
   );
 }

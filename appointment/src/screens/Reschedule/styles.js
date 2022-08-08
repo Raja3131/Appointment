@@ -109,7 +109,7 @@ export const styles = StyleSheet.create({
     },
     timeSlotButtonText:{
       color: '#000',
-      fontSize: 16,
+      fontSize: 12,
       fontWeight: 'bold',
       textAlign: 'center',
       
