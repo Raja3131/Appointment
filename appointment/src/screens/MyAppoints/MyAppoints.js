@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable, Alert} from 'react-native';
-import {useState, useEffect} from 'react';
+import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
+import { useState, useEffect } from 'react';
 import Api from '../../api/Api';
-import {styles} from './styles';
+import { styles } from './styles';
 import Message from '../../components/Common/Message/Message';
-import {ActivityIndicator} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
+import { ActivityIndicator } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import doctors from '../../db/doctors';
 
-const MyAppoints = ({navigation}) => {
+const MyAppoints = ({ navigation }) => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -21,9 +21,9 @@ const MyAppoints = ({navigation}) => {
 
   const getAppointments = async () => {
     try {
-      const response = await Api.get('/appoints');
-      setAppointments(response.data.appoints);
-      setLoading(false);
+      const response = await Api.get('http://192.168.0.107:45455/Calendar/GetPatientDetails/org1');
+      setAppointments(response.data);
+      setLoading(TextTrackCueList);
     } catch (error) {
       setError(true);
       setLoading(false);
@@ -58,7 +58,7 @@ const MyAppoints = ({navigation}) => {
             },
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     }
   };
@@ -77,8 +77,8 @@ const MyAppoints = ({navigation}) => {
       date: appointmentDate,
       time: appointmentTime,
       doctor: appointmentDoctor,
-      
-      
+
+
 
     });
   };
@@ -106,16 +106,16 @@ const MyAppoints = ({navigation}) => {
           {appointment.date} - {appointment.time}
         </Text>
         <Text style={styles.appointmentText}>
-          {appointment.name}
+          {appointment.title}
         </Text>
         <Text style={styles.doctorText}>
-        {
-              doctors.map((
-                doctor1) => {
-                if (doctor1.id == appointment.doctor) {
-                  return doctor1.name;
-                }
-              
+          {
+            doctors.map((
+              doctor1) => {
+              if (doctor1.id == appointment.doctor) {
+                return doctor1.name;
+              }
+
             }
             )}
         </Text>
@@ -144,6 +144,7 @@ const MyAppoints = ({navigation}) => {
   };
 
   return (
+    
     <View style={styles.container}>
       <Text style={styles.title}>Your Appointments</Text>
       {renderAppointments()}

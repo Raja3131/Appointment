@@ -33,8 +33,6 @@ import useAppoints from '../../services/QueryCalls';
 import ValidatedTextInput from '../../utils/ValidatetextInput';
 // import  DateTimePicker  from '@react-native-community/datetimepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-
-
 const PatientDetails = ({ navigation, route }) => {
   const formikRef = useRef();
   const { data } = useAppoints();
@@ -52,7 +50,6 @@ const PatientDetails = ({ navigation, route }) => {
       .min(3, 'Name must be at least 3 characters')
       .max(50, 'Name must be less than 50 characters')
       .trim(),
-
     age: Yup.string()
       .matches(/^[0-9]+$/, 'Age must be number')
       .required('Age is required')
@@ -68,7 +65,6 @@ const PatientDetails = ({ navigation, route }) => {
       .test('age', 'Age must be at least 0', value => {
         return value > 0;
       }),
-
     mobile: Yup.string()
       .matches(/^[0-9]+$/, 'Invalid Mobile Number')
       .required('Mobile is required')
@@ -100,8 +96,6 @@ const PatientDetails = ({ navigation, route }) => {
     hideDatePicker();
 
   };
-
-
   const signUp = async (values, actions) => {
     const { name, age, mobile } = values;
     try {
@@ -118,6 +112,7 @@ const PatientDetails = ({ navigation, route }) => {
             mobile: values.mobile,
             gender: values.gender,
             selectDoctor: values.doctor,
+            dob:values.dob
           });
           if (response.status !== 201) {
             setMessage(true);

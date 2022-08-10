@@ -7,6 +7,10 @@ import {styles} from './styles'
 const DoctorDetailsScreen = ({ route, navigation }) => {
   const { selectDoctor } = route.params;
   const { name} = route.params;
+  const {age} = route.params;
+  const {dob} = route.params;
+  const {mobile} = route.params;
+
   const [doctorsList, setDoctorsList] = useState([])
 
   useEffect(() => {
@@ -15,7 +19,7 @@ const DoctorDetailsScreen = ({ route, navigation }) => {
 
 const onPress = () => {
   if (name && selectDoctor) {
-    navigation.navigate('Appointment', { name: name, selectDoctor: selectDoctor })
+    navigation.navigate('Appointment', { name: name, selectDoctor: selectDoctor,dob:dob,age:age,mobile:mobile })
   }
   else {
     navigation.navigate('Patients', { selectedDoctor: selectDoctor })

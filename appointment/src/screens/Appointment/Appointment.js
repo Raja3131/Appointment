@@ -30,6 +30,9 @@ import moment from 'moment';
 const Appointment = ({ route, navigation }) => {
   const { selectDoctor } = route.params;
   const { name } = route.params;
+  const { dob } = route.params
+  const { age } = route.params
+  const { mobile } = route.params
   const [doctorsList, setDoctorsList] = useState([]);
   const [select, setSelect] = useState('');
   const [timeSlot, setTimeSlot] = useState([]);
@@ -42,6 +45,8 @@ const Appointment = ({ route, navigation }) => {
   const [showModal3, setShowModal3] = useState(false);
   const [paymentMode, setPaymentMode] = useState('');
   const [time, setTime] = useState('');
+  const [address, setAddress] = useState('Chennai');
+  const [value, setValue] = React.useState('one');
   let currentDate = new Date()
   let currentHour = currentDate.getHours()
 
@@ -51,18 +56,10 @@ const Appointment = ({ route, navigation }) => {
   useEffect(() => {
     setTimeSlot(TimeSlot);
   }, []);
-
-
   const makePayment = ({
     navigation
   }
-
-
   ) => {
-
-
-
-
     var options = {
       description: 'Credits towards consultation',
       image: '../assets/images/Paintwynk.png',
@@ -106,287 +103,303 @@ const Appointment = ({ route, navigation }) => {
       name: name,
       doctor: selectDoctor,
       date: selectedDate.toDateString(),
-      time: select.startTime
-
+      time: select.startTime,
+      age: age,
+      dob: dob,
+      mobile: mobile,
+      address: address,
     })
-
-
   }
-
   return (
     <>
-        <View style={styles.docInfo}>
-          <Image
-            style={styles.docImage}
-            source={doctors.find(doctor => doctor.id === selectDoctor).image}
-          />
+      <View style={styles.docInfo}>
+        <Image
+          style={styles.docImage}
+          source={doctors.find(doctor => doctor.id === selectDoctor).image}
+        />
 
-          <Text style={styles.docName}>
-            {doctors.find(doctor => doctor.id === selectDoctor).name}
-          </Text>
-          <Text style={styles.docSpeciality}>
-            {doctors.find(doctor => doctor.id === selectDoctor).speciality}
-          </Text>
-        </View>
-
-        <View style={styles.datePicker}>
-          <View style={styles.CalendarIconStyle}></View>
-          <TouchableHighlight
-            onPress={() => setShow(true)}
-            style={styles.datePickerButton}>
-            <Text style={styles.datePickerButtonText}>
-              <FontAwesome
-                name="calendar"
-                size={20}
-                color="#fff"
-                style={{ marginRight: 10, marginLeft: 10 }}
-
-              />
-              {date === 'Select Date'
-                ? '    Select Date'
-                : selectedDate.toDateString()}
-            </Text>
-          </TouchableHighlight>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={selectedDate}
-              mode={mode}
-              display="default"
-              onChange={(e, newDate) => {
-                setShow(false);
-                setSelectedDate(newDate);
-                setDate('New Date');
-              }}
-              minimumDate={new Date()}
-              maximumDate={new Date().setDate(new Date().getDate() + 1)}
+        <Text style={styles.docName}>
+          {doctors.find(doctor => doctor.id === selectDoctor).name}
+        </Text>
+        <Text style={styles.docSpeciality}>
+          {doctors.find(doctor => doctor.id === selectDoctor).speciality}
+        </Text>
+      </View>
+      <View style={styles.datePicker}>
+        <View style={styles.CalendarIconStyle}></View>
+        <TouchableHighlight
+          onPress={() => setShow(true)}
+          style={styles.datePickerButton}>
+          <Text style={styles.datePickerButtonText}>
+            <FontAwesome
+              name="calendar"
+              size={20}
+              color="#fff"
+              style={{ marginRight: 10, marginLeft: 10 }}
             />
-          )}
-        </View>
-
-        {date === 'Select Date' ? null : (
-          <View style={styles.timeSlot}>
-            {timeSlot.map(slot => {
-              let myMoment = moment(`${slot.startTime}`, 'HH:mm A')
-              let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
-              slot.startTime = myMoment.format('hA');
-              slot.endTime = myMoment2.format('hA');
-              ;
-
-              if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString()) {
-
-                return (
-                  <Pressable
-                    key={slot.id}
-                    onPress={() => {
-                      setSelect(slot);
-                      setTime(`${slot.startTime} - ${slot.endTime}`);
-                    }}
-                    style={[
-                      styles.timeSlotItem,
-                      select === slot ? styles.timeSlotItemSelect : null,
-                    ]}>
-                    <Text style={
-                      select === slot ? styles.timeSlotItemTextSelect : styles.timeSlotItemText
-                    }>
-                      {slot.startTime} - {slot.endTime}
-                    </Text>
-                  </Pressable>
-                );
-              }
-              else if (currentDate.toDateString() !== selectedDate.toDateString()) {
-                return (
-                  <Pressable
-                    key={slot.id}
-                    onPress={() => {
-                      setSelect(slot);
-                      setTime(`${slot.startTime} - ${slot.endTime}`);
-                    }}
-                    style={[
-                      styles.timeSlotItem,
-                      select === slot ? styles.timeSlotItemSelect : null,
-                    ]}>
-                    <Text style={styles.timeButtonText}>
-                      {slot.startTime}
-                    </Text>
-                  </Pressable>
-                );
-              }
-            })}
-          </View>
+            {date === 'Select Date'
+              ? '    Select Date'
+              : selectedDate.toDateString()}
+          </Text>
+        </TouchableHighlight>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={selectedDate}
+            mode={mode}
+            display="default"
+            onChange={(e, newDate) => {
+              setShow(false);
+              setSelectedDate(newDate);
+              setDate('New Date');
+            }}
+            minimumDate={new Date()}
+            maximumDate={new Date().setDate(new Date().getDate() + 1)}
+          />
         )}
+      </View>
+      {date === 'Select Date' ? null : (
+        <View style={styles.timeSlot}>
+          {timeSlot.map(slot => {
+            let myMoment = moment(`${slot.startTime}`, 'HH:mm A')
+            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
+            slot.startTime = myMoment.format('hA');
+            slot.endTime = myMoment2.format('hA');
+            ;
+            if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString()) {
+              return (
+                <Pressable
+                  key={slot.id}
+                  onPress={() => {
+                    setSelect(slot);
+                    setTime(`${slot.startTime} - ${slot.endTime}`);
+                  }}
+                  style={[
+                    styles.timeSlotItem,
+                    select === slot ? styles.timeSlotItemSelect : null,
+                  ]}>
+                  <Text style={
+                    select === slot ? styles.timeSlotItemTextSelect : styles.timeSlotItemText
+                  }>
+                    {slot.startTime} - {slot.endTime}
+                  </Text>
+                </Pressable>
+              );
+            }
+            else if (currentDate.toDateString() !== selectedDate.toDateString()) {
+              return (
+                <Pressable
+                  key={slot.id}
+                  onPress={() => {
+                    setSelect(slot);
+                    setTime(`${slot.startTime} - ${slot.endTime}`);
+                  }}
+                  style={[
+                    styles.timeSlotItem,
+                    select === slot ? styles.timeSlotItemSelect : null,
+                  ]}>
+                  <Text style={styles.timeButtonText}>
+                    {slot.startTime}
+                  </Text>
+                </Pressable>
+              );
+            }
+          })}
+        </View>
+      )}
 
-<NativeBaseProvider>
+      <NativeBaseProvider>
 
-          <Center>
-            <Pressable
-              onPress={() => setShowModal(true)}
-              style={styles.bookButton}>
-              <Text style={styles.bookButtonText}>Proceed</Text>
-            </Pressable>
-            <Modal
-              isOpen={showModal}
-              onClose={() => setShowModal(false)}
-              size="lg">
-              <Modal.Content maxWidth="350" maxHeight="250">
-                <Modal.CloseButton />
-                <Modal.Header>Appoint</Modal.Header>
-                <Modal.Body>
-                  <VStack space={3}>
-                    <HStack alignItems="center" justifyContent="space-between">
-                      <Text fontWeight="medium">Time</Text>
-                      <Text color="blueGray.400">{select.startTime}</Text>
-                    </HStack>
-                    <HStack alignItems="center" justifyContent="space-between">
-                      <Text fontWeight="medium">Date</Text>
-                      <Text color="blueGray.400">
-                        {selectedDate.toDateString()}
-                      </Text>
-                    </HStack>
-                    <HStack alignItems="center" justifyContent="space-between">
-                      <Text fontWeight="medium">Amount</Text>
-                      <Text color="green.500">300</Text>
-                    </HStack>
-                  </VStack>
-                </Modal.Body>
-                <Modal.Footer>
+        <Center>
+          <Pressable
+            onPress={() => setShowModal(true)}
+            style={styles.bookButton}>
+            <Text style={styles.bookButtonText}>Proceed</Text>
+          </Pressable>
+          <Modal
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+            size="lg">
+            <Modal.Content maxWidth="350" maxHeight="250">
+              <Modal.CloseButton />
+              <Modal.Header>Appoint</Modal.Header>
+              <Modal.Body>
+                <VStack space={3}>
+                  <HStack alignItems="center" justifyContent="space-between">
+                    <Text fontWeight="medium">Time</Text>
+                    <Text color="blueGray.400">{select.startTime}</Text>
+                  </HStack>
+                  <HStack alignItems="center" justifyContent="space-between">
+                    <Text fontWeight="medium">Date</Text>
+                    <Text color="blueGray.400">
+                      {selectedDate.toDateString()}
+                    </Text>
+                  </HStack>
+                  <HStack alignItems="center" justifyContent="space-between">
+                    <Text fontWeight="medium">Amount</Text>
+                    <Text color="green.500">300</Text>
+                  </HStack>
+                </VStack>
+              </Modal.Body>
+              <Modal.Footer>
                 <Button flex="1" onPress={() => {
-            setShowModal2(true);
-          }}>
-              Continue
-            </Button>
-                </Modal.Footer>
-              </Modal.Content>
-            </Modal>
+                  setShowModal2(true);
+                }}>
+                  Continue
+                </Button>
+              </Modal.Footer>
+            </Modal.Content>
+          </Modal>
 
-            <Modal isOpen={showModal2} onClose={() => setShowModal2(false)} size="lg">
-        <Modal.Content maxWidth="350">
-          <Modal.CloseButton />
-          <Modal.Header>Select Address</Modal.Header>
-          <Modal.Body>
-            <Radio.Group defaultValue="address1" name="address">
-              <VStack space={3}>
-                <Radio alignItems="flex-start" _text={{
-                mt: "-1",
-                ml: "2",
-                fontSize: "sm"
-              }} value="address1">
-                  4140 Parker Rd. Allentown, New Mexico 31134
-                </Radio>
-                <Radio alignItems="flex-start" _text={{
-                mt: "-1",
-                ml: "2",
-                fontSize: "sm"
-              }} value="address2">
-                  6391 Elign St. Celina, Delaware 10299
-                </Radio>
-              </VStack>
-            </Radio.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button flex="1" onPress={() => {
-            setShowModal3(true);
-          }}>
-              Continue
-            </Button>
-          </Modal.Footer>
-        </Modal.Content>
-      </Modal>
+          <Modal isOpen={showModal2} onClose={() => setShowModal2(false)} size="lg">
+            <Modal.Content maxWidth="350">
+              <Modal.CloseButton />
+              <Modal.Header>Select Address</Modal.Header>
+              <Modal.Body>
+                {/* <Radio.Group name="address" value={address} accessibilityLabel="Address">
+                  <VStack space={3}>
+                    <Radio alignItems="flex-start" _text={{
+                      mt: "-1",
+                      ml: "2",
+                      fontSize: "sm"
+                    }} value="4140 Parker Rd. Allentown, New Mexico 31134"
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                        console.log(address);
+                      }
+                      }
 
-
-            <Modal
-              isOpen={showModal3}
-              size="lg"
-              onClose={() => setShowModal3(false)}>
-              <Modal.Content maxWidth="350">
-                <Modal.CloseButton />
-                <Modal.Header>Payment Options</Modal.Header>
-                <Modal.Body>
-                  <Radio.Group name="payment">
-                    <VStack space={3}>
-                      <Radio
-                        alignItems="flex-start"
-                        _text={{
-                          mt: '-1',
-                          ml: '2',
-                          fontSize: 'sm',
-                        }}
-                        value="cash"
-                        onPress={() => setPaymentMode('cash')}
-
-                      >
-                        Cash on Visit
-                      </Radio>
-                      <Radio
-                        alignItems="flex-start"
-                        _text={{
-                          mt: '-1',
-                          ml: '2',
-                          fontSize: 'sm',
-                        }}
-                        value="card"
-                        onPress={() => setPaymentMode('card')}
-                      >
-                        Credit/ Debit
-                      </Radio>
-                      <Radio
-                        alignItems="flex-start"
-                        _text={{
-                          mt: '-1',
-                          ml: '2',
-                          fontSize: 'sm',
-                        }}
-                        value="payment3">
-                        UPI
-                      </Radio>
-                    </VStack>
-                  </Radio.Group>
-                </Modal.Body>
-                <Modal.Footer>
-                  {
-                    paymentMode === 'card' ? (<Button
-                      flex="2"
-                      onPress={() => {
-                        makePayment(
-                          select,
-                          selectedDate.toDateString(),
-
-                        );
-                        setShowModal3(false);
-                        setShowModal2(false);
-                        setShowModal3(false);
-                      }}>
-                      Checkout
-                    </Button>
-                    ) : (<Button
-                      flex="2"
-                      onPress={() => {
-                        makePaymentOnCash(
-                          select,
-                          selectedDate.toDateString(),
+                    >
+                      4140 Parker Rd. Allentown, New Mexico 31134
+                    </Radio>
+                    <Radio alignItems="flex-start" _text={{
+                      mt: "-1",
+                      ml: "2",
+                      fontSize: "sm"
+                    }} value="6391 Elign St. Celina, Delaware 10299"
+                    onChange={
+                      (addressValue)=>{
+                        setAddress(addressValue);
+                        console.log(address);
+                      }
+                    }                >
+                      6391 Elign St. Celina, Delaware 10299
+                    </Radio>
+                  </VStack>
+                </Radio.Group> */}
+                 <Radio.Group
+      name="myRadioGroup"
+      value={address}
+      onChange={(nextValue) => {
+        setAddress(nextValue);
+      }}
+    >
+      <Radio value="Chennai" my="1">
+        Chennai
+      </Radio>
+      <Radio value="Tambaram" my="1">
+        Tambaram
+      </Radio>
+    </Radio.Group>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button flex="1" onPress={() => {
+                  setShowModal3(true);
+                  console.log(address)
+                }}>
+                  Continue
+                </Button>
+              </Modal.Footer>
+            </Modal.Content>
+          </Modal>
 
 
-                        );
-                        setShowModal3(false);
-                        setShowModal2(false);
-                        setShowModal3(false);
-                      }}>
-                      Cash
-                    </Button>
-                    )
+          <Modal
+            isOpen={showModal3}
+            size="lg"
+            onClose={() => setShowModal3(false)}>
+            <Modal.Content maxWidth="350">
+              <Modal.CloseButton />
+              <Modal.Header>Payment Options</Modal.Header>
+              <Modal.Body>
+                <Radio.Group name="payment">
+                  <VStack space={3}>
+                    <Radio
+                      alignItems="flex-start"
+                      _text={{
+                        mt: '-1',
+                        ml: '2',
+                        fontSize: 'sm',
+                      }}
+                      value="cash"
+                      onPress={() => setPaymentMode('cash')}
 
+                    >
+                      Cash on Visit
+                    </Radio>
+                    <Radio
+                      alignItems="flex-start"
+                      _text={{
+                        mt: '-1',
+                        ml: '2',
+                        fontSize: 'sm',
+                      }}
+                      value="card"
+                      onPress={() => setPaymentMode('card')}
+                    >
+                      Credit/ Debit
+                    </Radio>
+                    <Radio
+                      alignItems="flex-start"
+                      _text={{
+                        mt: '-1',
+                        ml: '2',
+                        fontSize: 'sm',
+                      }}
+                      value="payment3">
+                      UPI
+                    </Radio>
+                  </VStack>
+                </Radio.Group>
+              </Modal.Body>
+              <Modal.Footer>
+                {
+                  paymentMode === 'card' ? (<Button
+                    flex="2"
+                    onPress={() => {
+                      makePayment(
+                        select,
+                        selectedDate.toDateString(),
 
-                  }
-                </Modal.Footer>
-              </Modal.Content>
-            </Modal>
+                      );
+                      setShowModal3(false);
+                      setShowModal2(false);
+                      setShowModal3(false);
+                    }}>
+                    Checkout
+                  </Button>
+                  ) : (<Button
+                    flex="2"
+                    onPress={() => {
+                      makePaymentOnCash(
+                        select,
+                        selectedDate.toDateString(),
+                      );
+                      setShowModal3(false);
+                      setShowModal2(false);
+                      setShowModal3(false);
+                    }}>
+                    Cash
+                  </Button>
+                  )
+                }
+              </Modal.Footer>
+            </Modal.Content>
+          </Modal>
 
-          </Center>
+        </Center>
       </NativeBaseProvider>
-
     </>
   );
 };
-
-
 export default Appointment;
