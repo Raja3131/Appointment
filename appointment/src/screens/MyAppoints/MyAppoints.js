@@ -1,14 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
-import { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Alert,
+  ScrollView,
+} from 'react-native';
+import {useState, useEffect} from 'react';
 import Api from '../../api/Api';
-import { styles } from './styles';
+import {styles} from './styles';
 import Message from '../../components/Common/Message/Message';
-import { ActivityIndicator } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import {ActivityIndicator} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import doctors from '../../db/doctors';
+import axios from 'axios';
+import moment from 'moment';
 
-const MyAppoints = ({ navigation }) => {
+const MyAppoints = ({navigation}) => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -21,7 +30,9 @@ const MyAppoints = ({ navigation }) => {
 
   const getAppointments = async () => {
     try {
-      const response = await Api.get('http://192.168.0.107:45455/Calendar/GetPatientDetails/org1');
+      const response = await axios.get(
+        'http://192.168.0.112:45455/Calendar/GetPatientDetails/org1',
+      );
       setAppointments(response.data);
       setLoading(TextTrackCueList);
     } catch (error) {
@@ -58,7 +69,7 @@ const MyAppoints = ({ navigation }) => {
             },
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
     }
   };
@@ -69,7 +80,6 @@ const MyAppoints = ({ navigation }) => {
     appointmentDate,
     appointmentTime,
     appointmentDoctor,
-
   ) => {
     navigation.navigate('Reschedule', {
       id,
@@ -77,9 +87,6 @@ const MyAppoints = ({ navigation }) => {
       date: appointmentDate,
       time: appointmentTime,
       doctor: appointmentDoctor,
-
-
-
     });
   };
 
@@ -103,31 +110,27 @@ const MyAppoints = ({ navigation }) => {
     return appointments.map(appointment => (
       <View key={appointment.id} style={styles.appointment}>
         <Text style={styles.appointmentText}>
-          {appointment.date} - {appointment.time}
+          {moment(appointment.app_date).format('MMMM Do YYYY')} -{' '}
+          {appointment.time}
         </Text>
-        <Text style={styles.appointmentText}>
-          {appointment.title}
-        </Text>
+        <Text style={styles.idText}>{appointment.FileNo}</Text>
+        <Text style={styles.appointmentText}>{appointment.title}</Text>
         <Text style={styles.doctorText}>
-          {
-            doctors.map((
-              doctor1) => {
-              if (doctor1.id == appointment.doctor) {
-                return doctor1.name;
-              }
-
+          {doctors.map(doctor1 => {
+            if (doctor1.id == appointment.doctor) {
+              return doctor1.name;
             }
-            )}
+          })}
         </Text>
         <View style={styles.pressableView}>
           <Pressable
             onPress={() =>
               rescheduleAppointment(
-                appointment._id,
-                appointment.name,
+                appointment.FileNo,
+                appointment.title,
                 appointment.date,
                 appointment.time,
-                appointment.doctor
+                appointment.doctor,
               )
             }
             style={styles.appointmentButton}>
@@ -144,11 +147,12 @@ const MyAppoints = ({ navigation }) => {
   };
 
   return (
-    
-    <View style={styles.container}>
-      <Text style={styles.title}>Your Appointments</Text>
-      {renderAppointments()}
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.title}>Your Appointments</Text>
+        {renderAppointments()}
+      </View>
+    </ScrollView>
   );
 };
 

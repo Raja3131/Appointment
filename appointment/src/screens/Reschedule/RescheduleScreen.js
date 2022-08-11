@@ -19,6 +19,7 @@ import { styles } from './styles';
 import doctors from '../../db/doctors';
 import moment from 'moment';
 import { number } from 'prop-types';
+import axios from 'axios';
 
 const RescheduleScreen = ({ route, navigation }) => {
   let currentDate = new Date();
@@ -29,9 +30,7 @@ const RescheduleScreen = ({ route, navigation }) => {
   const { date: appointmentDate } = route.params;
   const { time: appointmentTime } = route.params;
   const { doctor: appointmentDoctor } = route.params;
-
   const [appointments, setAppointments] = useState([]);
-
   const [name1, setName] = useState(`${appointmentName}`);
   const [date, setDate] = useState('Select Date');
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -41,18 +40,15 @@ const RescheduleScreen = ({ route, navigation }) => {
   const [mode, setMode] = useState('date');
   const [timeSlot, setTimeSlot] = useState([]);
   const [select, setSelect] = useState('');
-
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTimeSlot(TimeSlot);
     console.log(doctors)
   });
-
-
-
-  const confirmReschedule = () => {
+  useEffect(() => {
+  }, []);
+const confirmReschedule = () => {
     Alert.alert(
       'Confirm Reschedule',
       'Are you sure you want to reschedule this appointment?',
@@ -67,26 +63,42 @@ const RescheduleScreen = ({ route, navigation }) => {
       { cancelable: false },
     );
   }
-  const reschedule = () => {
-    Api.put(`/appoints/${id}`, {
+  // firstname,
+  // lastname: "",
+  // gender: "Male",
+  // app_date,
+  // appt_Time,
+  // dob: "1995-07-10 05:30:00.000",
+  // phoneNumber,
+  // age,
+  // address,
+  // arabicname: "اجاسي كريس ج",
+  // national_ID_No: "22",
+  // organizationID: "org1",
+  // ActiveSubmitForm: ""
 
-      date: selectedDate.toDateString(),
-      time: select.startTime,
+  const reschedule = () => {
+    Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`, {     
+      FileNo:id,
+      app_date: "2022-08-11T12:19:35.449Z",
+      appt_Time: "2022-08-11T12:19:35.449Z",
     }).then(res => {
-      if (!date || !select.startTime) {
-        Alert.alert('Please fill all the fields');
-      } else {
+      // if (!date || !select.startTime) {
+      //   Alert.alert('Please fill all the fields');
+      // } else {
 
         console.log(res);
         setName('');
         navigation.navigate('MyAppoints', appointments);
-      }
+      // }
     });
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.appointDetailsContainer}>
+      <Text style={styles.idText}>{id}</Text>
+
         <Text style={styles.detailsText}>PatientName :  {appointmentName}</Text>
         <Text style={styles.detailsText}>Date :
           {
@@ -149,8 +161,6 @@ const RescheduleScreen = ({ route, navigation }) => {
           />
         )}
       </View>
-
-
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
