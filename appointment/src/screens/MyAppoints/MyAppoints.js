@@ -26,16 +26,16 @@ const MyAppoints = ({ navigation }) => {
     React.useCallback(() => {
 
       getAppointments();
-      console.log(getAppointsList)
+      // console.log(getAppointsList)
 
     }, []),
   );
-  const getAppointsList = appointments.map((appoint)=>{
-    return{
-      ...appoint,
+  // const getAppointsList = appointments.map((appoint)=>{
+  //   return{
+  //     ...appoint,
 
-    }
-  })
+  //   }
+  // })
 
 
 
@@ -53,7 +53,22 @@ const MyAppoints = ({ navigation }) => {
     }
   };
 
-  const deleteAppointment = FileNo => {
+  const deleteAppointment = async(
+    FileNo,
+    AppointmentTranID,
+    NationalityIDNo,
+    title,
+    FirstName,
+    LastName,
+    ArabicName,
+    Age,
+    DOB,
+    Gender,
+    Address,
+    Apptdate,
+    Appttime,
+    DoctorName,
+  ) => {
     if (FileNo) {
       setLoading(true);
       Alert.alert(
@@ -71,7 +86,54 @@ const MyAppoints = ({ navigation }) => {
           {
             text: 'Yes',
             onPress: () => {
-              Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`,{})
+              Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`,{
+                file_No: FileNo,
+                appointmentTranID: AppointmentTranID,
+                national_ID_No: "22",
+                app_date: Apptdate,
+                appt_Time: Appttime,
+                firstName: FirstName,
+                // middleName: "string",
+                lastName: LastName,
+                nickName: 'string',
+                arabicName: 'قابيل م",',
+                age: 22,
+                dob:  "2019-08-12T09:51:01.26",
+                phoneNumber: "9846123123",
+                gender: "2",
+                address: 'Chennai',
+                // phoneNumber: "string",
+                // email: "string",
+                doctorName: "Ayisha",
+                // appt_Type: "string",
+                // src_Referral: "string",
+                // remarks: "string",
+                // physician_Name: "string",
+                // physician_Contact_No: "string",
+                // confirmedBy: "string",
+                // confirmedDate: "2022-08-16T08:57:51.574Z",
+                // confirmFormActive: true,
+                // appointmentFee: 0,
+                // cancelledBy: "string",
+                // cancelledDateTime: "2022-08-16T08:57:51.574Z",
+                // cancelledReason: "string",
+                // cancelFormActive: true,
+                // rescheduleBy: "string",
+                // rescheduleDate: "2022-08-16T08:57:51.574Z",
+                // userID: "string",
+                // organizationID: "string",
+                activeSubmitForm: 'Cancel',
+                // maritalStatus: "string",
+                // address1: "string",
+                // address2: "string",
+                // emailID2: "string",
+                // district: "string",
+                // zipcode: "string",
+                // country: "string",
+                organizationID: "org1",
+                CancelledBy:"Mobile",
+                CancelledDateTime:"2022-08-16T11:48:30.655Z"
+              })
                 .then(() => {
                   getAppointments();
                 })
@@ -183,7 +245,20 @@ const MyAppoints = ({ navigation }) => {
             <Text style={styles.appointmentButtonText}>Reschedule</Text>
           </Pressable>
           <Pressable
-            onPress={() => deleteAppointment(appointment.FileNo)}
+            onPress={() => deleteAppointment(appointment.FileNo,
+              appointment.AppointmentTranID,
+              appointment.NationalityIDNo,
+              appointment.title,
+              appointment.FirstName,
+              appointment.LastName,
+              appointment.ArabicName,
+              appointment.Age,
+              appointment.DOB,
+              appointment.Gender,
+              appointment.Address,
+              appointment.Apptdate,
+              appointment.Appttime,
+              appointment.DoctorName,)}
             style={styles.cancelButton}>
             <Text style={styles.appointmentButtonText}>Cancel</Text>
           </Pressable>
