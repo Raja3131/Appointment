@@ -40,7 +40,7 @@ export const styles =StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         borderRadius:10,
-        marginTop:20
+        marginTop:40
       },
       buttonText:{
         color:'#555',
@@ -73,7 +73,7 @@ export const styles =StyleSheet.create({
       },textContainer:{
         fontSize:20,
         // fontWeight:'bold',
-        marginTop:20,
+        marginTop:40,
         fontFamily:'Ubuntu-Italic',
         color:'#00bfff',
         marginBottom:20,

@@ -13,7 +13,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Alert,
-  TouchableHighlight  
+  TouchableHighlight
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -42,7 +42,7 @@ const PatientDetails = ({ navigation, route }) => {
   const [doctorValue, setDoctorValue] = useState('')
   const [selectedDob, setSelectedDob] = useState(new Date());
   const [date, setDate] = useState('select dob');
-  
+
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(/^[a-z0-9_.-\s]+$/i, 'Name is not valid')
@@ -112,7 +112,7 @@ const PatientDetails = ({ navigation, route }) => {
             mobile: values.mobile,
             gender: values.gender,
             selectDoctor: values.doctor,
-            dob:values.dob
+            dob: values.dob
           });
           if (response.status !== 201) {
             setMessage(true);
@@ -138,189 +138,184 @@ const PatientDetails = ({ navigation, route }) => {
       console.log(err);
       setMessage(true);
       Alert.alert('Error', 'Something went wrong');
-
     }
   };
-
   const onAgeChange = (value) => {
     formikRef.current.setFieldValue('age', value)
-
-
   };
-
   return (
     <>
       <ScrollView>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
 
-        <View style={styles.container}>
-          <StatusBar backgroundColor="#009387" barStyle="light-content" />
-          <View style={styles.header}>
+          <View style={styles.container}>
+            <StatusBar backgroundColor="#009387" barStyle="light-content" />
+            <View style={styles.header}>
 
-          </View>
-          <Formik
-            initialValues={{
-              name: '',
-              age: '',
-              mobile: '',
-              gender: '',
-              doctor: '',
-            }}
-            innerRef={formikRef}
-            validationSchema={validationSchema}
-            onSubmit={signUp}>
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-              setFieldValue,
-            }) => (
-              <Animatable.View
-                style={[
-                  styles.footer,
-                  {
-                    backgroundColor: colors.background,
-                  },
-                ]}>
-                <Text
+            </View>
+            <Formik
+              initialValues={{
+                name: '',
+                age: '',
+                mobile: '',
+                gender: '',
+                doctor: '',
+              }}
+              innerRef={formikRef}
+              validationSchema={validationSchema}
+              onSubmit={signUp}>
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+                setFieldValue,
+              }) => (
+                <Animatable.View
                   style={[
-                    styles.text_footer,
+                    styles.footer,
                     {
-                      color: colors.text,
+                      backgroundColor: colors.background,
                     },
                   ]}>
-                  Patient
-                </Text>
-                <View style={styles.action}>
-                  <FontAwesome name="user-o" color={colors.text} size={20} />
-                  <TextInput
-                    placeholder="Patient Name"
+                  <Text
                     style={[
-                      styles.textInput,
+                      styles.text_footer,
                       {
                         color: colors.text,
                       },
-                    ]}
-                    placeholderStyle={{ color: '#666666', fontSize: 20 }}
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    value={values.name}
-                    placeholderTextColor="#598"
-
-                  />
-                  <Text style={styles.errorMsg}>
-                    {touched.name && errors.name}
+                    ]}>
+                    Patient
                   </Text>
-                </View>
-                <View>
-                <View style={styles.dobContainer}>
-      {/* <Button title="Show Date Picker" onPress={showDatePicker} />
+                  <View style={styles.action}>
+                    <FontAwesome name="user-o" color={colors.text} size={20} />
+                    <TextInput
+                      placeholder="Patient Name"
+                      style={[
+                        styles.textInput,
+                        {
+                          color: colors.text,
+                        },
+                      ]}
+                      placeholderStyle={{ color: '#666666', fontSize: 20 }}
+                      onChangeText={handleChange('name')}
+                      onBlur={handleBlur('name')}
+                      value={values.name}
+                      placeholderTextColor="#598"
+
+                    />
+                    <Text style={styles.errorMsg}>
+                      {touched.name && errors.name}
+                    </Text>
+                  </View>
+                  <View>
+                    <View style={styles.dobContainer}>
+                      {/* <Button title="Show Date Picker" onPress={showDatePicker} />
        */}
-       <TouchableHighlight
-        onPress={showDatePicker}
-        style={styles.dateButton}>
-        <Text style={styles.buttonText}>{
-          date==='select dob'? 'Select Date': selectedDob.toDateString()
-        }</Text>
-      </TouchableHighlight>
+                      <TouchableHighlight
+                        onPress={showDatePicker}
+                        style={styles.dateButton}>
+                        <Text style={styles.buttonText}>{
+                          date === 'select dob' ? 'Select Date' : selectedDob.toDateString()
+                        }</Text>
+                      </TouchableHighlight>
 
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-        value={selectedDob}
-        
-      />
-    </View>
-                </View>
+                      <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                        value={selectedDob}
 
-                <Text
-                  style={[
-                    styles.text_footer,
-                    {
-                      color: colors.text,
-                      marginTop: 35,
-                    },
-                  ]}>
-                  Age
-                </Text>
-                <View style={styles.action}>
-                  <Feather name="user" color={colors.text} size={20} />
-                  <TextInput
-                    onKeyPress={(e) => {
-                      if (e.nativeEvent.key === '.') {
-                        formikRef.current.setFieldValue('age', values.age + '.')
-                      }
-                    }}
-                    placeholder="Age"
-                    placeholderTextColor="#598"
-                    placeholderStyle={{ color: '#666666', fontSize: 20 }}
+                      />
+                    </View>
+                  </View>
 
+                  <Text
                     style={[
-                      styles.textInput,
+                      styles.text_footer,
                       {
                         color: colors.text,
+                        marginTop: 35,
                       },
-                    ]}
-                    keyboardType="numeric"
-
-                    onChangeText={handleChange('age')}
-                    onBlur={handleBlur('age')}
-                    value={values.age}
-                    maxLength={3}
-                  />
-                  <Text style={styles.errorMsg}>
-                    {touched.age && errors.age}
+                    ]}>
+                    Age
                   </Text>
-                </View>
+                  <View style={styles.action}>
+                    <Feather name="user" color={colors.text} size={20} />
+                    <TextInput
+                      onKeyPress={(e) => {
+                        if (e.nativeEvent.key === '.') {
+                          formikRef.current.setFieldValue('age', values.age + '.')
+                        }
+                      }}
+                      placeholder="Age"
+                      placeholderTextColor="#598"
+                      placeholderStyle={{ color: '#666666', fontSize: 20 }}
 
-                <View style={styles.dropdown}>
-                  <RNPickerSelect
-                    onValueChange={value => {
-                      values.gender = value;
-                      setGender(values.gender);
-                      console.log(values.gender);
-                    }}
-                    placeholder={{
-                      label: 'Select Gender',
+                      style={[
+                        styles.textInput,
+                        {
+                          color: colors.text,
+                        },
+                      ]}
+                      keyboardType="numeric"
 
-                    }}
-                    placeholderTextColor="red"
-                    items={[
-                      { label: 'Male', value: 'Male' },
-                      { label: 'Female', value: 'Female' },
-                    ]}
-                    value={gender}
-                    style={{
-                      fontSize: 16,
-                      paddingHorizontal: 10,
-                      paddingVertical: 8,
-                      borderWidth: 0.5,
-                      borderColor: 'purple',
-                      borderRadius: 8,
-                      color: 'black',
-                      paddingRight: 30,
-                      top: 20,
-                      right: 10,
-                    }} />
-                </View>
-                <Text
-                  style={[
-                    styles.text_footer,
-                    {
-                      color: colors.text,
-                      marginTop: 35,
-                    },
-                  ]}>
-                  Mobile
-                </Text>
-                <View style={styles.action}>
-                  <Feather name="user" color={colors.text} size={20} />
-                  {/* <TextInput
+                      onChangeText={handleChange('age')}
+                      onBlur={handleBlur('age')}
+                      value={values.age}
+                      maxLength={3}
+                    />
+                    <Text style={styles.errorMsg}>
+                      {touched.age && errors.age}
+                    </Text>
+                  </View>
+
+                  <View style={styles.dropdown}>
+                    <RNPickerSelect
+                      onValueChange={value => {
+                        values.gender = value;
+                        setGender(values.gender);
+                        console.log(values.gender);
+                      }}
+                      placeholder={{
+                        label: 'Select Gender',
+
+                      }}
+                      placeholderTextColor="red"
+                      items={[
+                        { label: 'Male', value: 'Male' },
+                        { label: 'Female', value: 'Female' },
+                      ]}
+                      value={gender}
+                      style={{
+                        fontSize: 16,
+                        paddingHorizontal: 10,
+                        paddingVertical: 8,
+                        borderWidth: 0.5,
+                        borderColor: 'purple',
+                        borderRadius: 8,
+                        color: 'black',
+                        paddingRight: 30,
+                        top: 20,
+                        right: 10,
+                      }} />
+                  </View>
+                  <Text
+                    style={[
+                      styles.text_footer,
+                      {
+                        color: colors.text,
+                        marginTop: 35,
+                      },
+                    ]}>
+                    Mobile
+                  </Text>
+                  <View style={styles.action}>
+                    <Feather name="user" color={colors.text} size={20} />
+                    {/* <TextInput
                     placeholder="Mobile"
                     placeholderTextColor="#666666"
                     placeholderStyle={{color: '#666666', fontSize: 20}}
@@ -336,107 +331,104 @@ const PatientDetails = ({ navigation, route }) => {
                     keyboardType="numeric"
                     maxLength={10}
                   /> */}
-                  <ValidatedTextInput
-                    placeholder="Phone"
-                    style={[
-                      styles.textInput,
-                      {
-                        color: colors.text,
-                      },
-                    ]}
-                    placeholderStyle={{ color: '#666666', fontSize: 20 }}
-                    onChangeText={handleChange('mobile')}
-                    onBlur={handleBlur('mobile')}
-                    value={values.mobile}
-                    keyboardType="numeric"
-                    maxLength={10}
-                    placeholderTextColor="#598"
+                    <ValidatedTextInput
+                      placeholder="Phone"
+                      style={[
+                        styles.textInput,
+                        {
+                          color: colors.text,
+                        },
+                      ]}
+                      placeholderStyle={{ color: '#666666', fontSize: 20 }}
+                      onChangeText={handleChange('mobile')}
+                      onBlur={handleBlur('mobile')}
+                      value={values.mobile}
+                      keyboardType="numeric"
+                      maxLength={10}
+                      placeholderTextColor="#598"
 
-                  />
-                  <Text style={styles.errorMsg}>
-                    {touched.mobile && errors.mobile}
-                  </Text>
-                </View>
+                    />
+                    <Text style={styles.errorMsg}>
+                      {touched.mobile && errors.mobile}
+                    </Text>
+                  </View>
+                  <View style={styles.dropdown}>
+                    <RNPickerSelect
+                      onValueChange={value => {
+                        values.doctor = value;
+                        console.log(values.doctor);
+                        setDoctorValue(values.doctor);
+                      }}
+                      items={Object.values(doctors).map(item => {
+                        return { label: item.name, value: item.id };
+                      })}
+                      placeholder={{
+                        label: 'Select Doctor',
+                        value: null,
+                      }}
+                      value={doctorValue}
+                      placeholderStyle={{ color: '#666666', fontSize: 20 }}
+                      placeholderTextColor="#598"
+                    />
+                  </View>
+                  <View style={
+                    styles.buttons
+                  }>
 
-                <View style={styles.dropdown}>
-                  <RNPickerSelect
-                    onValueChange={value => {
-                      values.doctor = value;
-                      console.log(values.doctor);
-                      setDoctorValue(values.doctor);
-                    }}
-                    items={Object.values(doctors).map(item => {
-                      return { label: item.name, value: item.id };
-                    })}
-                    placeholder={{
-                      label: 'Select Doctor',
-                      value: null,
-                    }}
-                    value={doctorValue}
-                    placeholderStyle={{ color: '#666666', fontSize: 20 }}
-                    placeholderTextColor="#598"
-
-
-                  />
-                </View>
-                <View style={
-                  styles.buttons
-                }>
-
-                  <TouchableOpacity
-                    style={
-                      !(values.name && values.age && values.mobile)
-                        ? styles.buttonDisabled
-                        : styles.button
-                    }
-                    onPress={handleSubmit}
-                    disabled={!(values.name && values.age && values.mobile)}
-                    testID="loginButton">
-                    <Text
+                    <TouchableOpacity
                       style={
                         !(values.name && values.age && values.mobile)
-                          ? styles.textDisabled
-                          : styles.buttonText
-                      }>
+                          ? styles.buttonDisabled
+                          : styles.button
+                      }
+                      onPress={handleSubmit}
+                      disabled={!(values.name && values.age && values.mobile)}
+                      testID="loginButton">
+                      <Text
+                        style={
+                          !(values.name && values.age && values.mobile)
+                            ? styles.textDisabled
+                            : styles.buttonText
+                        }>
 
-                      Submit
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[
-                      styles.button,
-
-
-                    ]}
-                    onPress={() => {
-
-                      formikRef.current?.resetForm();
-                      setGender('')
-                      setDoctorValue('')
-
-                    }}
-                    testID="clearFieldsButton">
-                    <Text
+                        Submit
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
                       style={[
-                        styles.textSign,
+                        styles.button,
 
-                      ]}>
-                      Clear
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </Animatable.View>
-            )}
-          </Formik>
-        </View>
-      </KeyboardAvoidingView>
-      {message && (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>
-            Something went wrong. Please try again.
-          </Text>
-        </View>
-      )}
+
+                      ]}
+                      onPress={() => {
+
+                        formikRef.current?.resetForm();
+                        setGender('')
+                        setDoctorValue('')
+
+                      }}
+                      testID="clearFieldsButton">
+                      <Text
+                        style={[
+                          styles.textSign,
+
+                        ]}>
+                        Clear
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </Animatable.View>
+              )}
+            </Formik>
+          </View>
+        </KeyboardAvoidingView>
+        {message && (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>
+              Something went wrong. Please try again.
+            </Text>
+          </View>
+        )}
       </ScrollView>
     </>
   );

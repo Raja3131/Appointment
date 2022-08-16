@@ -11,8 +11,7 @@ const Cash = ({ navigation, route }) => {
 
   useEffect(() => {
     console.log(firstname, doctor, app_date, appt_Time, dob, phoneNumber, age, address);
-  }
-    , [])
+  },[])
   const onPress = () => {
     try {
       Api.post('http://192.168.0.112:45455/Appointment/NewAppointment', {
@@ -30,8 +29,6 @@ const Cash = ({ navigation, route }) => {
         organizationID: "org1",
         ActiveSubmitForm: "",
         doctorName:doctor,
-        
-
 
       }).then(res => {
         Alert.alert('Appointment booked successfully')

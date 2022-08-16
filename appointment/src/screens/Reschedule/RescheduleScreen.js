@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -15,40 +15,51 @@ import TimeSlot from '../../db/TimeSlot';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-import { styles } from './styles';
+import {styles} from './styles';
 import doctors from '../../db/doctors';
 import moment from 'moment';
-import { number } from 'prop-types';
+import {number} from 'prop-types';
 import axios from 'axios';
 
-const RescheduleScreen = ({ route, navigation }) => {
+const RescheduleScreen = ({route, navigation}) => {
   let currentDate = new Date();
   let currentHour = currentDate.getHours();
 
-  const { id: id } = route.params;
-  const { name: appointmentName } = route.params;
-  const { date: appointmentDate } = route.params;
-  const { time: appointmentTime } = route.params;
-  const { doctor: appointmentDoctor } = route.params;
+  const {AppointmentTranID: AppointmentTranID} = route.params;
+  const {NationalityIDNo: NationalityIDNo} = route.params;
+  const {title: title} = route.params;
+  const {FirstName: FirstName} = route.params;
+  const {LastName: LastName} = route.params;
+  const {ArabicName: ArabicName} = route.params;
+  const {Age: Age} = route.params;
+  const {DOB: DOB} = route.params;
+  const {Gender: Gender} = route.params;
+  const {Address: Address} = route.params;
+  const {Apptdate: Apptdate} = route.params;
+  const {Appttime: Appttime} = route.params;
+  const {DoctorName: DoctorName} = route.params;
+  const {FileNo: FileNo} = route.params;
+
   const [appointments, setAppointments] = useState([]);
-  const [name1, setName] = useState(`${appointmentName}`);
+  const [name1, setName] = useState(`${title}`);
   const [date, setDate] = useState('Select Date');
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [newDatee, setNewDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [time1, setTime] = useState(`${appointmentTime}`);
-  const [doctor, setDoctor] = useState(`${appointmentDoctor}`);
+  const [time1, setTime] = useState(`${Appttime}`);
+  const [doctor, setDoctor] = useState(`${DoctorName}`);
   const [mode, setMode] = useState('date');
   const [timeSlot, setTimeSlot] = useState([]);
   const [select, setSelect] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [patient, setPatient] = useState('');
 
   useEffect(() => {
     setTimeSlot(TimeSlot);
-    console.log(doctors)
-  });
-  useEffect(() => {
+    console.log(doctors);
   }, []);
-const confirmReschedule = () => {
+
+  const confirmReschedule = () => {
     Alert.alert(
       'Confirm Reschedule',
       'Are you sure you want to reschedule this appointment?',
@@ -58,11 +69,11 @@ const confirmReschedule = () => {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        { text: 'Yes', onPress: () => reschedule() },
+        {text: 'Yes', onPress: () => reschedule()},
       ],
-      { cancelable: false },
+      {cancelable: false},
     );
-  }
+  };
   // firstname,
   // lastname: "",
   // gender: "Male",
@@ -78,18 +89,85 @@ const confirmReschedule = () => {
   // ActiveSubmitForm: ""
 
   const reschedule = () => {
-    Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`, {     
-      FileNo:id,
-      app_date: "2022-08-11T12:19:35.449Z",
-      appt_Time: "2022-08-11T12:19:35.449Z",
+    
+    Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`, {
+      // file_no: FileNo,
+      // AppointmentTranID: AppointmentTranID,
+      // national_ID_No:NationalityIDNo,
+      // firstname:FirstName,
+      // lastname:LastName,
+      // gender:Gender,
+      // arabicname: ArabicName,
+      // Age: Age,
+      // dob: DOB,
+      // address: Address,
+      // doctorName:DoctorName,
+      // app_date: newDate,
+      // appt_Time: select,
+      // organizationID: "org1",
+      // ActiveSubmitForm: "",
+
+      file_No: FileNo,
+      appointmentTranID: AppointmentTranID,
+      national_ID_No: "22",
+      app_date: newDatee.toDateString(),
+      appt_Time: newDatee.toDateString(),
+      firstName: FirstName,
+      // middleName: "string",
+      lastName: LastName,
+      nickName: 'string',
+      arabicName: 'قابيل م",',
+      age: 22,
+      dob:  "2019-08-12T09:51:01.26",
+      phoneNumber: "9846123123",
+      gender: "2",
+      address: 'Chennai',
+      // phoneNumber: "string",
+      // email: "string",
+      doctorName: "Ayisha",
+      // appt_Type: "string",
+      // src_Referral: "string",
+      // remarks: "string",
+      // physician_Name: "string",
+      // physician_Contact_No: "string",
+      // confirmedBy: "string",
+      // confirmedDate: "2022-08-16T08:57:51.574Z",
+      // confirmFormActive: true,
+      // appointmentFee: 0,
+      // cancelledBy: "string",
+      // cancelledDateTime: "2022-08-16T08:57:51.574Z",
+      // cancelledReason: "string",
+      // cancelFormActive: true,
+      // rescheduleBy: "string",
+      // rescheduleDate: "2022-08-16T08:57:51.574Z",
+      // userID: "string",
+      // organizationID: "string",
+      activeSubmitForm: 'Reschedule',
+      // maritalStatus: "string",
+      // address1: "string",
+      // address2: "string",
+      // emailID2: "string",
+      // district: "string",
+      // zipcode: "string",
+      // country: "string",
+      organizationID: "org1",
+      rescheduleBy:"Mobile",
+      rescheduleDate:"2022-08-16T11:48:30.655Z"
+
+
     }).then(res => {
       // if (!date || !select.startTime) {
       //   Alert.alert('Please fill all the fields');
       // } else {
+        
 
-        console.log(res);
-        setName('');
-        navigation.navigate('MyAppoints', appointments);
+      console.log(res);
+      console.log(Address)
+      
+      setName('');
+      navigation.navigate('MyAppoints', {
+        appointments,
+      });
       // }
     });
   };
@@ -97,29 +175,22 @@ const confirmReschedule = () => {
   return (
     <View style={styles.container}>
       <View style={styles.appointDetailsContainer}>
-      <Text style={styles.idText}>{id}</Text>
+        <Text style={styles.idText}>{FileNo}</Text>
+        <Text>{AppointmentTranID}</Text>
 
-        <Text style={styles.detailsText}>PatientName :  {appointmentName}</Text>
-        <Text style={styles.detailsText}>Date :
-          {
-            `${moment(selectedDate).format('MMMM Do YYYY')
-            } `
-          }
+        <Text style={styles.detailsText}>PatientName : {title}</Text>
+        <Text style={styles.detailsText}>
+          Date :{`${moment(newDatee).format('MMMM Do YYYY')} `}
         </Text>
-        <Text>Time:{
-          `${appointmentTime} `
-        }</Text>
+        <Text>Time:{`${Appttime} `}</Text>
         <View>
           <Text style={styles.detailsText}>
             DoctorName:
-            {
-              doctors.map((
-                doctor1) => {
-                if (doctor1.id == doctor) {
-                  return doctor1.name;
-                }
+            {doctors.map(doctor1 => {
+              if (doctor1.id == doctor) {
+                return doctor1.name;
               }
-              )}
+            })}
           </Text>
         </View>
       </View>
@@ -134,7 +205,7 @@ const confirmReschedule = () => {
               name="calendar"
               size={20}
               color="#fff"
-              style={{ marginRight: 10, marginLeft: 10 }}
+              style={{marginRight: 10, marginLeft: 10}}
             />
             {date === 'Select Date'
               ? '    Select Date'
@@ -151,45 +222,51 @@ const confirmReschedule = () => {
               setShow(false);
               setSelectedDate(newDate);
               setDate('New Date');
+              setNewDate(newDate);
+              console.log(newDate);
             }}
-
             minimumDate={new Date()}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
-            default={
-              new Date().setDate(new Date().getDate() + 1)
-            }
+            default={new Date().setDate(new Date().getDate() + 1)}
           />
         )}
       </View>
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
-            let myMoment = moment(`${slot.startTime} - ${slot.endTime}`, 'HH:mm A')
-            let myMoment2 = moment(`${slot.startTime} - ${slot.endTime}`, 'HH:mm A');
+            let myMoment = moment(
+              `${slot.startTime} - ${slot.endTime}`,
+              'HH:mm A',
+            );
+            let myMoment2 = moment(
+              `${slot.startTime} - ${slot.endTime}`,
+              'HH:mm A',
+            );
             slot.startTime = myMoment.format('hA');
             slot.endTime = myMoment2.format('hA');
-            ;
-
-            if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString()) {
-
+            if (
+              currentHour < myMoment.hour() &&
+              currentDate.toDateString() === selectedDate.toDateString()
+            ) {
               return (
                 <Pressable
-                key={slot.id}
-                onPress={() => {
-                  setSelect(slot);
-                  setTime(`${slot.startTime}  ${slot.endTime}`);
-                }}
-                style={[
-                  styles.timeSlotItem,
-                  select === slot ? styles.timeSlotItemSelect : null,
-                ]}>
-                <Text style={styles.timeSlotButtonText}>
-                  {slot.startTime}  {slot.endTime}
-                </Text>
-              </Pressable>
+                  key={slot.id}
+                  onPress={() => {
+                    setSelect(slot);
+                    setTime(`${slot.startTime}  ${slot.endTime}`);
+                  }}
+                  style={[
+                    styles.timeSlotItem,
+                    select === slot ? styles.timeSlotItemSelect : null,
+                  ]}>
+                  <Text style={styles.timeSlotButtonText}>
+                    {slot.startTime} {slot.endTime}
+                  </Text>
+                </Pressable>
               );
-            }
-            else if (currentDate.toDateString() !== selectedDate.toDateString()) {
+            } else if (
+              currentDate.toDateString() !== selectedDate.toDateString()
+            ) {
               return (
                 <Pressable
                   key={slot.id}
@@ -201,9 +278,7 @@ const confirmReschedule = () => {
                     styles.timeSlotItem,
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
-                  <Text style={styles.timeButtonText}>
-                    {slot.startTime}
-                  </Text>
+                  <Text style={styles.timeButtonText}>{slot.startTime}</Text>
                 </Pressable>
               );
             }
@@ -212,16 +287,10 @@ const confirmReschedule = () => {
       )}
 
       <Pressable
-        onPress={() => confirmReschedule(
-
-          selectedDate.toDateString(),
-          select.startTime,
-
-        )}
+        onPress={() => confirmReschedule(newDatee, select.startTime)}
         style={styles.button}>
         <Text style={styles.buttonText}>Reschedule</Text>
       </Pressable>
-
     </View>
   );
 };
