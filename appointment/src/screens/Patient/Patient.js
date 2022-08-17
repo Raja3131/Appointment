@@ -42,6 +42,7 @@ const PatientDetails = ({ navigation, route }) => {
   const [doctorValue, setDoctorValue] = useState('')
   const [selectedDob, setSelectedDob] = useState(new Date());
   const [date, setDate] = useState('select dob');
+  const [selectAge, setSelectAge] = useState('');
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -218,7 +219,7 @@ const PatientDetails = ({ navigation, route }) => {
                         onPress={showDatePicker}
                         style={styles.dateButton}>
                         <Text style={styles.buttonText}>{
-                          date === 'select dob' ? 'Select Date' : selectedDob.toDateString()
+                          date === 'select dob' ? 'Select Dob' : selectedDob.toDateString()
                         }</Text>
                       </TouchableHighlight>
 
@@ -228,6 +229,11 @@ const PatientDetails = ({ navigation, route }) => {
                         onConfirm={handleConfirm}
                         onCancel={hideDatePicker}
                         value={selectedDob}
+                        maximumDate={
+                          new Date()
+                        }
+            
+
 
                       />
                     </View>

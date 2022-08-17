@@ -21,25 +21,11 @@ const MyAppoints = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [patient, setPatient] = useState([]);
-
   useFocusEffect(
     React.useCallback(() => {
-
       getAppointments();
-      // console.log(getAppointsList)
-
     }, []),
   );
-  // const getAppointsList = appointments.map((appoint)=>{
-  //   return{
-  //     ...appoint,
-
-  //   }
-  // })
-
-
-
-
   const getAppointments = async () => {
     try {
       const response = await axios.get(
@@ -52,8 +38,7 @@ const MyAppoints = ({ navigation }) => {
       setLoading(false);
     }
   };
-
-  const deleteAppointment = async(
+  const deleteAppointment = async (
     FileNo,
     AppointmentTranID,
     NationalityIDNo,
@@ -86,53 +71,27 @@ const MyAppoints = ({ navigation }) => {
           {
             text: 'Yes',
             onPress: () => {
-              Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`,{
+              Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`, {
                 file_No: FileNo,
                 appointmentTranID: AppointmentTranID,
                 national_ID_No: "22",
                 app_date: Apptdate,
                 appt_Time: Appttime,
                 firstName: FirstName,
-                // middleName: "string",
                 lastName: LastName,
                 nickName: 'string',
                 arabicName: 'قابيل م",',
                 age: 22,
-                dob:  "2019-08-12T09:51:01.26",
+                dob: "2019-08-12T09:51:01.26",
                 phoneNumber: "9846123123",
                 gender: "2",
                 address: 'Chennai',
-                // phoneNumber: "string",
-                // email: "string",
                 doctorName: "Ayisha",
-                // appt_Type: "string",
-                // src_Referral: "string",
-                // remarks: "string",
-                // physician_Name: "string",
-                // physician_Contact_No: "string",
-                // confirmedBy: "string",
-                // confirmedDate: "2022-08-16T08:57:51.574Z",
-                // confirmFormActive: true,
-                // appointmentFee: 0,
-                // cancelledBy: "string",
-                // cancelledDateTime: "2022-08-16T08:57:51.574Z",
-                // cancelledReason: "string",
-                // cancelFormActive: true,
-                // rescheduleBy: "string",
-                // rescheduleDate: "2022-08-16T08:57:51.574Z",
-                // userID: "string",
-                // organizationID: "string",
                 activeSubmitForm: 'Cancel',
-                // maritalStatus: "string",
-                // address1: "string",
-                // address2: "string",
-                // emailID2: "string",
-                // district: "string",
-                // zipcode: "string",
-                // country: "string",
+
                 organizationID: "org1",
-                CancelledBy:"Mobile",
-                CancelledDateTime:"2022-08-16T11:48:30.655Z"
+                CancelledBy: "Mobile",
+                CancelledDateTime: "2022-08-16T11:48:30.655Z"
               })
                 .then(() => {
                   getAppointments();
@@ -163,10 +122,8 @@ const MyAppoints = ({ navigation }) => {
     Apptdate,
     Appttime,
     DoctorName,
-) => {
-
+  ) => {
     navigation.navigate(
-
       'Reschedule',
       {
         FileNo,
@@ -182,7 +139,7 @@ const MyAppoints = ({ navigation }) => {
         Address,
         Apptdate,
         Appttime,
-        DoctorName     
+        DoctorName
       },
     );
   };
@@ -192,7 +149,7 @@ const MyAppoints = ({ navigation }) => {
       return <ActivityIndicator size="large" color="#0000ff" />;
     }
 
-    if (appointments.length === 0) {
+    if (appointments.length === 0 ) {
       return (
         <>
           <Message message="No Appointments" primary />
@@ -208,10 +165,17 @@ const MyAppoints = ({ navigation }) => {
       <View key={appointment.id} style={styles.appointment}>
         <Text style={styles.appointmentText}>
           {moment(appointment.Apptdate).format('MMMM Do YYYY')} -{' '}
-          {appointment.Appttime}
+          {moment.utc(appointment.Appttime).local().add(1, 'hours').format('h:mm p')}m
         </Text>
-        <Text style={styles.idText}>{appointment.FileNo}</Text>
+        {/* <Text style={styles.idText}>{appointment.FileNo}</Text>  */}
+       {
+        appointment.IsCancelled?
+        <Text style={styles.idText}>Cancelled</Text>
+        :
+        <Text style={styles.idText}>Open</Text>
+       }
         <Text style={styles.appointmentText}>{appointment.FirstName}</Text>
+        
         <Text style={styles.doctorText}>
           {doctors.map(doctor1 => {
             if (doctor1.id == appointment.doctor) {
@@ -242,7 +206,13 @@ const MyAppoints = ({ navigation }) => {
             }
             }
             style={styles.appointmentButton}>
-            <Text style={styles.appointmentButtonText}>Reschedule</Text>
+              {
+                appointment.IsCancelled?
+                <Text style={styles.appointmentButtonText}>ReAppoint</Text>
+                :
+                <Text style={styles.appointmentButtonText}>Reschedule</Text>
+              }
+            
           </Pressable>
           <Pressable
             onPress={() => deleteAppointment(appointment.FileNo,
@@ -276,5 +246,4 @@ const MyAppoints = ({ navigation }) => {
     </ScrollView>
   );
 };
-
 export default MyAppoints;

@@ -89,6 +89,7 @@ const RescheduleScreen = ({route, navigation}) => {
   // ActiveSubmitForm: ""
 
   const reschedule = () => {
+    console.log(select.startTime)
     
     Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`, {
       // file_no: FileNo,
@@ -110,8 +111,8 @@ const RescheduleScreen = ({route, navigation}) => {
       file_No: FileNo,
       appointmentTranID: AppointmentTranID,
       national_ID_No: "22",
-      app_date: newDatee.toDateString(),
-      appt_Time: newDatee.toDateString(),
+      app_date: newDatee,
+      appt_Time: select.startTime,
       firstName: FirstName,
       // middleName: "string",
       lastName: LastName,
@@ -152,7 +153,7 @@ const RescheduleScreen = ({route, navigation}) => {
       // country: "string",
       organizationID: "org1",
       rescheduleBy:"Mobile",
-      rescheduleDate:"2022-08-16T11:48:30.655Z"
+      rescheduleDate: newDatee,
 
 
     }).then(res => {
@@ -273,6 +274,8 @@ const RescheduleScreen = ({route, navigation}) => {
                   onPress={() => {
                     setSelect(slot);
                     setTime(`${slot.startTime} - ${slot.endTime}`);
+                    console.log(select.endTime)
+
                   }}
                   style={[
                     styles.timeSlotItem,

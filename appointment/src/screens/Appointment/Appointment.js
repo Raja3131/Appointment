@@ -103,7 +103,7 @@ const Appointment = ({ route, navigation }) => {
       name: name,
       doctor: selectDoctor,
       date: selectedDate.toDateString(),
-      time: select.startTime,
+      time: select.endTime,
       age: age,
       dob: dob,
       mobile: mobile,
@@ -199,7 +199,7 @@ const Appointment = ({ route, navigation }) => {
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
                   <Text style={styles.timeButtonText}>
-                    {slot.startTime}
+                    {slot.startTime} -{slot.endTime}
                   </Text>
                 </Pressable>
               );

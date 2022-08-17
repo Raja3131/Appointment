@@ -11,14 +11,15 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     elevation: 5,
-    height: 140,
+    height: 100,
     width: '96%',
+    alignSelf: 'center',
 
   },
   pressableView: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: -20,
 
   },
   appointmentButton: {
@@ -34,6 +35,7 @@ export const styles = StyleSheet.create({
     color: '#333',
     fontFamily: 'Ubuntu-Italic',
     fontWeight: 'bold',
+    marginTop: -5,
   },
   title: {
     fontSize: 24,
@@ -63,10 +65,9 @@ export const styles = StyleSheet.create({
     backgroundColor: '#a71e51',
     padding: 10,
     borderRadius: 10,
-    elevation: 10,
+    elevation: 20,
     width: '50%',
     alignItems: 'center',
-    marginTop: 20,
     marginLeft: '25%',
     shadowOffset: { width: 20, height: 20 },
     shadowColor: '#a71e51',

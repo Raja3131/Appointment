@@ -19,7 +19,7 @@ const Cash = ({ navigation, route }) => {
         lastname: "",
         gender: "Male",
         app_date,
-        appt_Time,
+        appt_Time:appt_Time,
         dob: "1995-07-10 05:30:00.000",
         phoneNumber,
         age,
@@ -41,7 +41,7 @@ const Cash = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textContainer}>Appointment Details</Text>
+
       <View style={styles.appointmentDetailsContainer}>
         <Text style={styles.nameText}>Patient Name:{firstname}</Text>
         <Text style={styles.nameText}>Time:{appt_Time}</Text>
