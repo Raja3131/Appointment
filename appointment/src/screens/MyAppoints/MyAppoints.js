@@ -164,7 +164,7 @@ const MyAppoints = ({ navigation }) => {
     return appointments.map(appointment => (
       <View key={appointment.id} style={styles.appointment}>
         <Text style={styles.appointmentText}>
-          {moment(appointment.Apptdate).format('MMMM Do YYYY')} -{' '}
+          {moment(appointment.Apptdate).format('Do-MMMM-YYYY')} -{' '}
           {moment.utc(appointment.Appttime).local().add(1, 'hours').format('h:mm p')}m
         </Text>
         {/* <Text style={styles.idText}>{appointment.FileNo}</Text>  */}
@@ -208,30 +208,34 @@ const MyAppoints = ({ navigation }) => {
             style={styles.appointmentButton}>
               {
                 appointment.IsCancelled?
-                <Text style={styles.appointmentButtonText}>ReAppoint</Text>
+                null
                 :
                 <Text style={styles.appointmentButtonText}>Reschedule</Text>
               }
             
           </Pressable>
+         {
+          appointment.IsCancelled?
+          null:
           <Pressable
-            onPress={() => deleteAppointment(appointment.FileNo,
-              appointment.AppointmentTranID,
-              appointment.NationalityIDNo,
-              appointment.title,
-              appointment.FirstName,
-              appointment.LastName,
-              appointment.ArabicName,
-              appointment.Age,
-              appointment.DOB,
-              appointment.Gender,
-              appointment.Address,
-              appointment.Apptdate,
-              appointment.Appttime,
-              appointment.DoctorName,)}
-            style={styles.cancelButton}>
-            <Text style={styles.appointmentButtonText}>Cancel</Text>
-          </Pressable>
+          onPress={() => deleteAppointment(appointment.FileNo,
+            appointment.AppointmentTranID,
+            appointment.NationalityIDNo,
+            appointment.title,
+            appointment.FirstName,
+            appointment.LastName,
+            appointment.ArabicName,
+            appointment.Age,
+            appointment.DOB,
+            appointment.Gender,
+            appointment.Address,
+            appointment.Apptdate,
+            appointment.Appttime,
+            appointment.DoctorName,)}
+          style={styles.cancelButton}>
+          <Text style={styles.appointmentButtonText}>Cancel</Text>
+        </Pressable>
+         }
         </View>
       </View>
     ));

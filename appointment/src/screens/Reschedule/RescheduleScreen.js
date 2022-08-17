@@ -90,6 +90,7 @@ const RescheduleScreen = ({route, navigation}) => {
 
   const reschedule = () => {
     console.log(select.startTime)
+
     
     Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`, {
       // file_no: FileNo,
@@ -157,9 +158,9 @@ const RescheduleScreen = ({route, navigation}) => {
 
 
     }).then(res => {
-      // if (!date || !select.startTime) {
-      //   Alert.alert('Please fill all the fields');
-      // } else {
+      if (!newDatee || !select.startTime) {
+        Alert.alert('Please fill all the fields');
+      } else {
         
 
       console.log(res);
@@ -169,7 +170,7 @@ const RescheduleScreen = ({route, navigation}) => {
       navigation.navigate('MyAppoints', {
         appointments,
       });
-      // }
+      }
     });
   };
 
@@ -181,18 +182,18 @@ const RescheduleScreen = ({route, navigation}) => {
 
         <Text style={styles.detailsText}>PatientName : {title}</Text>
         <Text style={styles.detailsText}>
-          Date :{`${moment(newDatee).format('MMMM Do YYYY')} `}
+          Date :{`${moment(newDatee).format('Do-MMM-YYYY')} `}
         </Text>
-        <Text>Time:{`${Appttime} `}</Text>
+        <Text>Time:{`${moment.utc(Appttime).local().add(1, 'hours').format('h:mm p')} `}m</Text>
         <View>
-          <Text style={styles.detailsText}>
+          {/* <Text style={styles.detailsText}>
             DoctorName:
             {doctors.map(doctor1 => {
               if (doctor1.id == doctor) {
                 return doctor1.name;
               }
             })}
-          </Text>
+          </Text> */}
         </View>
       </View>
       <Text style={styles.header}>Reschedule Your Appointment</Text>
