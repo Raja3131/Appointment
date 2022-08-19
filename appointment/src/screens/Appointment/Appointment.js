@@ -226,7 +226,7 @@ const Appointment = ({ route, navigation }) => {
               <Modal.Body>
                 <VStack space={3}>
                   <HStack alignItems="center" justifyContent="space-between">
-                    <Text fontWeight="medium">Time</Text>
+                    <Text fontWeight="medium">Appointment Time</Text>
                     <Text color="blueGray.400">{select.startTime}</Text>
                   </HStack>
                   <HStack alignItems="center" justifyContent="space-between">

@@ -14,7 +14,7 @@ const Cash = ({ navigation, route }) => {
   },[])
   const onPress = () => {
     try {
-      Api.post('http://192.168.0.112:45455/Appointment/NewAppointment', {
+      Api.post('https://AlkaffAPI.cmps.in/Appointment/NewAppointment', {
         firstname,
         lastname: "",
         gender: "Male",

@@ -16,8 +16,6 @@ import {
   TouchableHighlight
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
 import Api from '../../api/Api';
 import { useTheme } from '@react-navigation/native';
 import { ButtonGroup } from 'react-native-elements';
@@ -100,12 +98,8 @@ const PatientDetails = ({ navigation, route }) => {
   const signUp = async (values, actions) => {
     const { name, age, mobile } = values;
     try {
-      const response = await Api.post('/patient', {
-        name,
-        age,
-        mobile,
-      });
-      if (response.status === 201) {
+     
+     
         if (values.doctor) {
           navigation.navigate('DoctorProfile', {
             name: values.name,
@@ -115,11 +109,7 @@ const PatientDetails = ({ navigation, route }) => {
             selectDoctor: values.doctor,
             dob: values.dob
           });
-          if (response.status !== 201) {
-            setMessage(true);
-            Alert.alert('Error', 'Something went wrong');
-
-          }
+          
         } else {
           navigation.navigate('Doctors', {
             name: values.name,
@@ -132,9 +122,7 @@ const PatientDetails = ({ navigation, route }) => {
         formikRef.current?.resetForm();
         setGender('')
         setDoctorValue('')
-      } else {
-        Alert.alert('Error', 'Something went wrong');
-      }
+     
     } catch (err) {
       console.log(err);
       setMessage(true);
@@ -191,7 +179,6 @@ const PatientDetails = ({ navigation, route }) => {
                     Patient
                   </Text>
                   <View style={styles.action}>
-                    <FontAwesome name="user-o" color={colors.text} size={20} />
                     <TextInput
                       placeholder="Patient Name"
                       style={[
@@ -250,7 +237,6 @@ const PatientDetails = ({ navigation, route }) => {
                     Age
                   </Text>
                   <View style={styles.action}>
-                    <Feather name="user" color={colors.text} size={20} />
                     <TextInput
                       onKeyPress={(e) => {
                         if (e.nativeEvent.key === '.') {
@@ -320,7 +306,6 @@ const PatientDetails = ({ navigation, route }) => {
                     Mobile
                   </Text>
                   <View style={styles.action}>
-                    <Feather name="user" color={colors.text} size={20} />
                     {/* <TextInput
                     placeholder="Mobile"
                     placeholderTextColor="#666666"

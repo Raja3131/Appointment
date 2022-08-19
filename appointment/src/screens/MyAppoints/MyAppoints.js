@@ -29,7 +29,7 @@ const MyAppoints = ({ navigation }) => {
   const getAppointments = async () => {
     try {
       const response = await axios.get(
-        'http://192.168.0.112:45455/Calendar/ForMobileAPIPatientList/org1',
+        'https://AlkaffAPI.cmps.in/Calendar/ForMobileAPIPatientList/org1',
       );
       setAppointments(response.data);
       setLoading(TextTrackCueList);
@@ -71,7 +71,7 @@ const MyAppoints = ({ navigation }) => {
           {
             text: 'Yes',
             onPress: () => {
-              Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`, {
+              Api.post(`https://AlkaffAPI.cmps.in/Appointment/NewAppointment`, {
                 file_No: FileNo,
                 appointmentTranID: AppointmentTranID,
                 national_ID_No: "22",
