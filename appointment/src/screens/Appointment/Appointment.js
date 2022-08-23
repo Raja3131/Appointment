@@ -103,7 +103,7 @@ const Appointment = ({ route, navigation }) => {
       name: name,
       doctor: selectDoctor,
       date: selectedDate.toDateString(),
-      time: select.endTime,
+      time: time,
       age: age,
       dob: dob,
       mobile: mobile,
@@ -153,7 +153,7 @@ const Appointment = ({ route, navigation }) => {
               setSelectedDate(newDate);
               setDate('New Date');
             }}
-            minimumDate={new Date()}
+            minimumDate={new Date().setDate(new Date().getDate() + 1)}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
           />
         )}
@@ -161,10 +161,10 @@ const Appointment = ({ route, navigation }) => {
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
-            let myMoment = moment(`${slot.startTime}`, 'HH:mm A')
-            let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
-            slot.startTime = myMoment.format('hA');
-            slot.endTime = myMoment2.format('hA');
+            let myMoment = moment(`${slot.startTime}`, 'HH:mm:ss')
+            // let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
+            slot.startTime = myMoment.format('HH:mm:ss');
+            // slot.endTime = myMoment2.format('hA');
             ;
             if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString()) {
               return (
@@ -172,7 +172,7 @@ const Appointment = ({ route, navigation }) => {
                   key={slot.id}
                   onPress={() => {
                     setSelect(slot);
-                    setTime(`${slot.startTime} - ${slot.endTime}`);
+                    setTime(`${slot.startTime}`);
                   }}
                   style={[
                     styles.timeSlotItem,
@@ -181,7 +181,7 @@ const Appointment = ({ route, navigation }) => {
                   <Text style={
                     select === slot ? styles.timeSlotItemTextSelect : styles.timeSlotItemText
                   }>
-                    {slot.startTime} - {slot.endTime}
+                    {slot.startTime}
                   </Text>
                 </Pressable>
               );
@@ -192,14 +192,14 @@ const Appointment = ({ route, navigation }) => {
                   key={slot.id}
                   onPress={() => {
                     setSelect(slot);
-                    setTime(`${slot.startTime} - ${slot.endTime}`);
+                    setTime(`${slot.startTime}`);
                   }}
                   style={[
                     styles.timeSlotItem,
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
                   <Text style={styles.timeButtonText}>
-                    {slot.startTime} -{slot.endTime}
+                    {slot.startTime} 
                   </Text>
                 </Pressable>
               );

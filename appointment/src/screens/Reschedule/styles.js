@@ -129,12 +129,7 @@ export const styles = StyleSheet.create({
       shadowOpacity: 2,
       shadowRadius: 20,
       elevation: 5,
-      marginBottom: 20,
-
-
-
-
-
+      marginBottom: 20
     },
     detailsText: {
       fontSize: 18,

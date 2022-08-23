@@ -4,22 +4,28 @@ import Api from '../../api/Api';
 import doctors from '../../db/doctors';
 import moment from 'moment';
 import { styles } from './styles';
+import { url } from '../../utils/url';
 const Cash = ({ navigation, route }) => {
-  const { name: firstname, doctor, date: app_date, time: appt_Time, dob, mobile: phoneNumber, age, address } = route.params;
+  const { name: firstname, doctor, date: app_date, time: time, dob, mobile: phoneNumber, age, address } = route.params;
   const dobFormat = moment(dob).format('DD-MM-YYYY');
   // const selectDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
   useEffect(() => {
-    console.log(firstname, doctor, app_date, appt_Time, dob, phoneNumber, age, address);
+    console.log(firstname, doctor, app_date, dob, phoneNumber, time, age, address);
   },[])
   const onPress = () => {
+    debugger;
+    let d = new Date(app_date+" "+time);
+  //d.setMinutes(d.getMinutes() - 330)
+   let s = new Date(app_date+" "+d.getTime());
+  console.log(d)
     try {
-      Api.post('https://AlkaffAPI.cmps.in/Appointment/NewAppointment', {
+      Api.post(`${url}/Appointment/NewAppointment`, {
         firstname,
         lastname: "",
         gender: "Male",
         app_date,
-        appt_Time:appt_Time,
+        appt_Time:d,
         dob: "1995-07-10 05:30:00.000",
         phoneNumber,
         age,
@@ -31,6 +37,7 @@ const Cash = ({ navigation, route }) => {
         doctorName:doctor,
 
       }).then(res => {
+        dubugger;
         Alert.alert('Appointment booked successfully')
         navigation.navigate('Patients')
       })
@@ -44,7 +51,7 @@ const Cash = ({ navigation, route }) => {
 
       <View style={styles.appointmentDetailsContainer}>
         <Text style={styles.nameText}>Patient Name:{firstname}</Text>
-        <Text style={styles.nameText}>Time:{appt_Time}</Text>
+        <Text style={styles.nameText}>Time:{time}</Text>
         <Text style={styles.nameText}>Age:{age}</Text>
         <Text style={styles.nameText}>Mobile:{phoneNumber}</Text>
         <Text style={styles.nameText}>DOB:{moment(dobFormat).format('DD-MM-YYYY')}</Text>
@@ -53,7 +60,7 @@ const Cash = ({ navigation, route }) => {
           `${app_date
           } `
         }</Text>
-        <Text style={styles.timeText}>{appt_Time}</Text>
+        <Text style={styles.timeText}>{time}</Text>
         <Text style={styles.doctorText}>
           DoctorName:
           {

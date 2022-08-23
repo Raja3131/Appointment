@@ -3,15 +3,7 @@ import { color } from '@mui/system';
 
 export const styles =StyleSheet.create({
     appointmentDetailsContainer:{
-        // flexDirection:'column',
-        // justifyContent:'center',
-        // alignItems:'center',
-        // backgroundColor:'#00bfff',
-        // borderWidth:1,
-        // borderRadius:5,
-        // borderColor:'#fff',
-        // padding:10,
-        // height:180,
+       
         flexDirection: 'column',
       alignItems: 'center',
       justifyContent:'center',
@@ -19,7 +11,7 @@ export const styles =StyleSheet.create({
       width: '80%',
       padding: 10,
       borderRadius: 10,
-      backgroundColor: '#E9E6E6',
+      backgroundColor: '#E9E9E9',
       shadowOffset: {width: 10, height: 10},
       shadowColor: '#000',
       shadowOpacity: 2,

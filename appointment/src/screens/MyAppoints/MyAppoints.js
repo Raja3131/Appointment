@@ -15,6 +15,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import doctors from '../../db/doctors';
 import axios from 'axios';
 import moment from 'moment';
+import { url } from '../../utils/url';
 
 const MyAppoints = ({ navigation }) => {
   const [appointments, setAppointments] = useState([]);
@@ -24,16 +25,20 @@ const MyAppoints = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       getAppointments();
+      // debugger;
     }, []),
   );
   const getAppointments = async () => {
     try {
       const response = await axios.get(
-        'https://AlkaffAPI.cmps.in/Calendar/ForMobileAPIPatientList/org1',
+        `${url}/Calendar/ForMobileAPIPatientList/org1`,
       );
       setAppointments(response.data);
+      // debugger;
+
       setLoading(TextTrackCueList);
     } catch (error) {
+      console.log('Error')
       setError(true);
       setLoading(false);
     }
@@ -71,12 +76,12 @@ const MyAppoints = ({ navigation }) => {
           {
             text: 'Yes',
             onPress: () => {
-              Api.post(`https://AlkaffAPI.cmps.in/Appointment/NewAppointment`, {
+              Api.post(`${url}/Appointment/NewAppointment`, {
                 file_No: FileNo,
                 appointmentTranID: AppointmentTranID,
                 national_ID_No: "22",
                 app_date: Apptdate,
-                appt_Time: Appttime,
+                appt_Time:moment(Appttime).subtract({hours:5,minutes:30}),
                 firstName: FirstName,
                 lastName: LastName,
                 nickName: 'string',
@@ -161,11 +166,11 @@ const MyAppoints = ({ navigation }) => {
         </>
       );
     }
-    return appointments.map(appointment => (
+    return appointments.reverse().map(appointment => (
       <View key={appointment.id} style={styles.appointment}>
         <Text style={styles.appointmentText}>
           {moment(appointment.Apptdate).format('Do-MMMM-YYYY')} -{' '}
-          {moment.utc(appointment.Appttime).local().add(1, 'hours').format('h:mm p')}m
+          {moment(appointment.Appttime).format('hh:mm a')}
         </Text>
         {/* <Text style={styles.idText}>{appointment.FileNo}</Text>  */}
        {
@@ -186,7 +191,6 @@ const MyAppoints = ({ navigation }) => {
         <View style={styles.pressableView}>
           <Pressable
             onPress={() => {
-
               rescheduleAppointment(
                 appointment.FileNo,
                 appointment.AppointmentTranID,

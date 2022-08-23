@@ -20,6 +20,7 @@ import doctors from '../../db/doctors';
 import moment from 'moment';
 import {number} from 'prop-types';
 import axios from 'axios';
+import { url } from '../../utils/url';
 
 const RescheduleScreen = ({route, navigation}) => {
   let currentDate = new Date();
@@ -57,6 +58,7 @@ const RescheduleScreen = ({route, navigation}) => {
   useEffect(() => {
     setTimeSlot(TimeSlot);
     console.log(doctors);
+    
   }, []);
 
   const confirmReschedule = () => {
@@ -89,10 +91,10 @@ const RescheduleScreen = ({route, navigation}) => {
   // ActiveSubmitForm: ""
 
   const reschedule = () => {
-    console.log(select.startTime)
+    console.log(time1)
 
     
-    Api.post(`http://192.168.0.112:45455/Appointment/NewAppointment`, {
+    Api.post(`${url}/Appointment/NewAppointment`, {
       // file_no: FileNo,
       // AppointmentTranID: AppointmentTranID,
       // national_ID_No:NationalityIDNo,
@@ -113,7 +115,7 @@ const RescheduleScreen = ({route, navigation}) => {
       appointmentTranID: AppointmentTranID,
       national_ID_No: "22",
       app_date: newDatee,
-      appt_Time: select.startTime,
+      appt_Time: time1,
       firstName: FirstName,
       // middleName: "string",
       lastName: LastName,
@@ -154,25 +156,31 @@ const RescheduleScreen = ({route, navigation}) => {
       // country: "string",
       organizationID: "org1",
       rescheduleBy:"Mobile",
-      rescheduleDate: newDatee,
+      rescheduleDate:  new Date(newDatee.toDateString() + ' ' + time1.toString())
 
 
     }).then(res => {
-      if (!newDatee || !select.startTime) {
-        Alert.alert('Please fill all the fields');
-      } else {
+      // if (!newDatee || !time1) {
+      //   Alert.alert('Please fill all the fields');
+      // } 
         
 
       console.log(res);
-      console.log(Address)
+      console.log(res.data);
+      debugger;
       
       setName('');
       navigation.navigate('MyAppoints', {
         appointments,
       });
-      }
-    });
-  };
+    }).catch(err => {
+      console.log(err);
+    }).finally(() => {
+      setIsLoading(false);
+    }).done();
+  }
+
+
 
   return (
     <View style={styles.container}>
@@ -184,7 +192,7 @@ const RescheduleScreen = ({route, navigation}) => {
         <Text style={styles.detailsText}>
           Date :{`${moment(newDatee).format('Do-MMM-YYYY')} `}
         </Text>
-        <Text>Time:{`${moment.utc(Appttime).local().add(1, 'hours').format('h:mm p')} `}m</Text>
+        <Text>Time:{`${moment(Appttime).format('HH:mm:ss')} `}</Text>
         <View>
           {/* <Text style={styles.detailsText}>
             DoctorName:
@@ -227,7 +235,7 @@ const RescheduleScreen = ({route, navigation}) => {
               setNewDate(newDate);
               console.log(newDate);
             }}
-            minimumDate={new Date()}
+            minimumDate={new Date().setDate(new Date().getDate() + 1)}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
             default={new Date().setDate(new Date().getDate() + 1)}
           />
@@ -237,15 +245,15 @@ const RescheduleScreen = ({route, navigation}) => {
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
             let myMoment = moment(
-              `${slot.startTime} - ${slot.endTime}`,
-              'HH:mm A',
+              `${slot.startTime} `,
+              'HH:mm:ss',
             );
             let myMoment2 = moment(
-              `${slot.startTime} - ${slot.endTime}`,
-              'HH:mm A',
+              `${slot.startTime} `,
+              'HH:mm:ss',
             );
-            slot.startTime = myMoment.format('hA');
-            slot.endTime = myMoment2.format('hA');
+            slot.startTime = myMoment.format('HH:mm:ss');
+            // slot.endTime = myMoment2.format('hA');
             if (
               currentHour < myMoment.hour() &&
               currentDate.toDateString() === selectedDate.toDateString()
@@ -255,14 +263,14 @@ const RescheduleScreen = ({route, navigation}) => {
                   key={slot.id}
                   onPress={() => {
                     setSelect(slot);
-                    setTime(`${slot.startTime}  ${slot.endTime}`);
+                    setTime(`${slot.startTime} `);
                   }}
                   style={[
                     styles.timeSlotItem,
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
                   <Text style={styles.timeSlotButtonText}>
-                    {slot.startTime} {slot.endTime}
+                    {slot.startTime} 
                   </Text>
                 </Pressable>
               );
@@ -274,8 +282,8 @@ const RescheduleScreen = ({route, navigation}) => {
                   key={slot.id}
                   onPress={() => {
                     setSelect(slot);
-                    setTime(`${slot.startTime} - ${slot.endTime}`);
-                    console.log(select.endTime)
+                    setTime(`${slot.startTime}`);
+                    console.log(time1)
 
                   }}
                   style={[
@@ -291,7 +299,7 @@ const RescheduleScreen = ({route, navigation}) => {
       )}
 
       <Pressable
-        onPress={() => confirmReschedule(newDatee, select.startTime)}
+        onPress={() => confirmReschedule(newDatee, time1)}
         style={styles.button}>
         <Text style={styles.buttonText}>Reschedule</Text>
       </Pressable>
