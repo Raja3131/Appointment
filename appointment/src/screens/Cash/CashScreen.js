@@ -14,7 +14,6 @@ const Cash = ({ navigation, route }) => {
     console.log(firstname, doctor, app_date, dob, phoneNumber, time, age, address);
   },[])
   const onPress = () => {
-    debugger;
     let d = new Date(app_date+" "+time);
   //d.setMinutes(d.getMinutes() - 330)
    let s = new Date(app_date+" "+d.getTime());
@@ -37,7 +36,6 @@ const Cash = ({ navigation, route }) => {
         doctorName:doctor,
 
       }).then(res => {
-        dubugger;
         Alert.alert('Appointment booked successfully')
         navigation.navigate('Patients')
       })
@@ -54,13 +52,11 @@ const Cash = ({ navigation, route }) => {
         <Text style={styles.nameText}>Time:{time}</Text>
         <Text style={styles.nameText}>Age:{age}</Text>
         <Text style={styles.nameText}>Mobile:{phoneNumber}</Text>
-        <Text style={styles.nameText}>DOB:{moment(dobFormat).format('DD-MM-YYYY')}</Text>
         <Text style={styles.nameText}>Address:{address}</Text>
         <Text style={styles.dateText}> Date:  {
           `${app_date
           } `
         }</Text>
-        <Text style={styles.timeText}>{time}</Text>
         <Text style={styles.doctorText}>
           DoctorName:
           {

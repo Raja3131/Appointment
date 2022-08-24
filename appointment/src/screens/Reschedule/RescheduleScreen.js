@@ -92,6 +92,7 @@ const RescheduleScreen = ({route, navigation}) => {
 
   const reschedule = () => {
     console.log(time1)
+    debugger;
 
     
     Api.post(`${url}/Appointment/NewAppointment`, {
@@ -115,7 +116,7 @@ const RescheduleScreen = ({route, navigation}) => {
       appointmentTranID: AppointmentTranID,
       national_ID_No: "22",
       app_date: newDatee,
-      appt_Time: time1,
+      appt_Time:  new Date(newDatee.toDateString() + ' ' + time1.toString()),
       firstName: FirstName,
       // middleName: "string",
       lastName: LastName,
@@ -160,14 +161,11 @@ const RescheduleScreen = ({route, navigation}) => {
 
 
     }).then(res => {
-      // if (!newDatee || !time1) {
-      //   Alert.alert('Please fill all the fields');
-      // } 
-        
-
+    
       console.log(res);
       console.log(res.data);
-      debugger;
+      Alert.alert('Rescheduled Successfully')
+      // debugger;
       
       setName('');
       navigation.navigate('MyAppoints', {
@@ -192,7 +190,7 @@ const RescheduleScreen = ({route, navigation}) => {
         <Text style={styles.detailsText}>
           Date :{`${moment(newDatee).format('Do-MMM-YYYY')} `}
         </Text>
-        <Text>Time:{`${moment(Appttime).format('HH:mm:ss')} `}</Text>
+        <Text style={styles.detailsText}>Time:{`${moment(Appttime).format('hh:mm:A')} `}</Text>
         <View>
           {/* <Text style={styles.detailsText}>
             DoctorName:
@@ -235,7 +233,7 @@ const RescheduleScreen = ({route, navigation}) => {
               setNewDate(newDate);
               console.log(newDate);
             }}
-            minimumDate={new Date().setDate(new Date().getDate() + 1)}
+            minimumDate={new Date().setDate(new Date().getDate())}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
             default={new Date().setDate(new Date().getDate() + 1)}
           />
@@ -246,13 +244,13 @@ const RescheduleScreen = ({route, navigation}) => {
           {timeSlot.map(slot => {
             let myMoment = moment(
               `${slot.startTime} `,
-              'HH:mm:ss',
+              'hh:mm:A',
             );
             let myMoment2 = moment(
               `${slot.startTime} `,
-              'HH:mm:ss',
+              'hh:mm:A',
             );
-            slot.startTime = myMoment.format('HH:mm:ss');
+            slot.startTime = myMoment.format('hh:mm:A');
             // slot.endTime = myMoment2.format('hA');
             if (
               currentHour < myMoment.hour() &&
@@ -290,7 +288,7 @@ const RescheduleScreen = ({route, navigation}) => {
                     styles.timeSlotItem,
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
-                  <Text style={styles.timeButtonText}>{slot.startTime}</Text>
+                  <Text style={styles.timeSlotButtonText}>{slot.startTime}</Text>
                 </Pressable>
               );
             }

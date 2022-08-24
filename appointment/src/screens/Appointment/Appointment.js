@@ -153,7 +153,7 @@ const Appointment = ({ route, navigation }) => {
               setSelectedDate(newDate);
               setDate('New Date');
             }}
-            minimumDate={new Date().setDate(new Date().getDate() + 1)}
+            minimumDate={new Date().setDate(new Date().getDate())}
             maximumDate={new Date().setDate(new Date().getDate() + 1)}
           />
         )}
@@ -161,9 +161,9 @@ const Appointment = ({ route, navigation }) => {
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
-            let myMoment = moment(`${slot.startTime}`, 'HH:mm:ss')
+            let myMoment = moment(`${slot.startTime}`, 'hh:mm:A')
             // let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
-            slot.startTime = myMoment.format('HH:mm:ss');
+            slot.startTime = myMoment.format('hh:mm:A');
             // slot.endTime = myMoment2.format('hA');
             ;
             if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString()) {
@@ -178,9 +178,9 @@ const Appointment = ({ route, navigation }) => {
                     styles.timeSlotItem,
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
-                  <Text style={
-                    select === slot ? styles.timeSlotItemTextSelect : styles.timeSlotItemText
-                  }>
+                  <Text 
+                    style={styles.timeButtonText}
+                  >
                     {slot.startTime}
                   </Text>
                 </Pressable>

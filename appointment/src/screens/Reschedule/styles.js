@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     timeSlotItem: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
-      width: '18%',
+      width: '25%',
       height:40,
       backgroundColor: '#f3f6fb',
       borderRadius: 10,
@@ -81,14 +81,13 @@ export const styles = StyleSheet.create({
       backgroundColor: '#009387',
       borderColor: '#009387',
       borderWidth: 1,
-      width: '20%',
+      width: '25%',
       borderRadius: 10,
       padding: 10,
     },
     timeSlotItemText: {
       color: '#fff',
-      fontSize: 12,
-      fontWeight: 'bold',
+      fontSize: 14,
       textAlign: 'center',
       
     },

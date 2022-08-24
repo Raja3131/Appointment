@@ -170,7 +170,7 @@ const MyAppoints = ({ navigation }) => {
       <View key={appointment.id} style={styles.appointment}>
         <Text style={styles.appointmentText}>
           {moment(appointment.Apptdate).format('Do-MMMM-YYYY')} -{' '}
-          {moment(appointment.Appttime).format('hh:mm a')}
+          {moment(appointment.Appttime).format('hh:mm A')}
         </Text>
         {/* <Text style={styles.idText}>{appointment.FileNo}</Text>  */}
        {

@@ -16,38 +16,38 @@ const TimeSlot= [
     },
     {
         id: 4,
-        startTime: '01:00',
+        startTime: '13:00',
         isAvailable: true
     },
     {
         id: 5,
-        startTime: '02:00',
+        startTime: '14:00',
         isAvailable: true
     },
     {
         id: 6,
-        startTime: '03:00',
+        startTime: '15:00',
         isAvailable: true
     },
     {
         id: 7,
-        startTime: '04:00',
+        startTime: '16:00',
         isAvailable: true
     },
     {
 
         id: 8,
-        startTime: '05:00',
+        startTime: '17:00',
         isAvailable: true
     },
     {
         id: 9,
-        startTime: '06:00',
+        startTime: '18:00',
         isAvailable: true
     },
     {
         id: 10,
-        startTime: '07:00',
+        startTime: '19:00',
         isAvailable: true
     },
     

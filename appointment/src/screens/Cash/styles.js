@@ -7,7 +7,7 @@ export const styles =StyleSheet.create({
         flexDirection: 'column',
       alignItems: 'center',
       justifyContent:'center',
-      height:180,
+      height:250,
       width: '80%',
       padding: 10,
       borderRadius: 10,
@@ -32,7 +32,7 @@ export const styles =StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         borderRadius:10,
-        marginTop:40
+        marginTop:80
       },
       buttonText:{
         color:'#555',
