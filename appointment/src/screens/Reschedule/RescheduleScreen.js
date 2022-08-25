@@ -20,7 +20,7 @@ import doctors from '../../db/doctors';
 import moment from 'moment';
 import {number} from 'prop-types';
 import axios from 'axios';
-import { url } from '../../utils/url';
+import {url} from '../../utils/url';
 
 const RescheduleScreen = ({route, navigation}) => {
   let currentDate = new Date();
@@ -54,14 +54,17 @@ const RescheduleScreen = ({route, navigation}) => {
   const [select, setSelect] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [patient, setPatient] = useState('');
+  const [enable, setEnable] = useState(false);
 
   useEffect(() => {
     setTimeSlot(TimeSlot);
     console.log(doctors);
-    
   }, []);
 
-  const confirmReschedule = () => {
+  const confirmReschedule = (newDatee, time1) => {
+    if (!newDatee && !time1) {
+      Alert.alert('select date');
+    }
     Alert.alert(
       'Confirm Reschedule',
       'Are you sure you want to reschedule this appointment?',
@@ -91,10 +94,11 @@ const RescheduleScreen = ({route, navigation}) => {
   // ActiveSubmitForm: ""
 
   const reschedule = () => {
-    console.log(time1)
-    debugger;
+    // if (!newDatee && new Date(newDatee.toDateString() + ' ' + time1.toString())){
+    //   Alert.alert('Select date and time')
+    // }
+    // else{
 
-    
     Api.post(`${url}/Appointment/NewAppointment`, {
       // file_no: FileNo,
       // AppointmentTranID: AppointmentTranID,
@@ -114,22 +118,22 @@ const RescheduleScreen = ({route, navigation}) => {
 
       file_No: FileNo,
       appointmentTranID: AppointmentTranID,
-      national_ID_No: "22",
+      national_ID_No: '22',
       app_date: newDatee,
-      appt_Time:  new Date(newDatee.toDateString() + ' ' + time1.toString()),
+      appt_Time: new Date(newDatee.toDateString() + ' ' + time1.toString()),
       firstName: FirstName,
       // middleName: "string",
       lastName: LastName,
       nickName: 'string',
       arabicName: 'قابيل م",',
       age: 22,
-      dob:  "2019-08-12T09:51:01.26",
-      phoneNumber: "9846123123",
-      gender: "2",
+      dob: '2019-08-12T09:51:01.26',
+      phoneNumber: '9846123123',
+      gender: '2',
       address: 'Chennai',
       // phoneNumber: "string",
       // email: "string",
-      doctorName: "Ayisha",
+      doctorName: 'Ayisha',
       // appt_Type: "string",
       // src_Referral: "string",
       // remarks: "string",
@@ -155,30 +159,31 @@ const RescheduleScreen = ({route, navigation}) => {
       // district: "string",
       // zipcode: "string",
       // country: "string",
-      organizationID: "org1",
-      rescheduleBy:"Mobile",
-      rescheduleDate:  new Date(newDatee.toDateString() + ' ' + time1.toString())
+      organizationID: 'org1',
+      rescheduleBy: 'Mobile',
+      rescheduleDate: new Date(
+        newDatee.toDateString() + ' ' + time1.toString(),
+      ),
+    })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+        Alert.alert('Rescheduled Successfully');
+        // debugger;
 
-
-    }).then(res => {
-    
-      console.log(res);
-      console.log(res.data);
-      Alert.alert('Rescheduled Successfully')
-      // debugger;
-      
-      setName('');
-      navigation.navigate('MyAppoints', {
-        appointments,
-      });
-    }).catch(err => {
-      console.log(err);
-    }).finally(() => {
-      setIsLoading(false);
-    }).done();
-  }
-
-
+        setName('');
+        navigation.navigate('MyAppoints', {
+          appointments,
+        });
+      })
+      .catch(err => {
+        Alert.alert('Something Went Wrong');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+      .done();
+  };
 
   return (
     <View style={styles.container}>
@@ -190,7 +195,9 @@ const RescheduleScreen = ({route, navigation}) => {
         <Text style={styles.detailsText}>
           Date :{`${moment(newDatee).format('Do-MMM-YYYY')} `}
         </Text>
-        <Text style={styles.detailsText}>Time:{`${moment(Appttime).format('hh:mm:A')} `}</Text>
+        <Text style={styles.detailsText}>
+          Time:{`${moment(Appttime).format('hh:mm:A')} `}
+        </Text>
         <View>
           {/* <Text style={styles.detailsText}>
             DoctorName:
@@ -242,15 +249,9 @@ const RescheduleScreen = ({route, navigation}) => {
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
-            let myMoment = moment(
-              `${slot.startTime} `,
-              'hh:mm:A',
-            );
-            let myMoment2 = moment(
-              `${slot.startTime} `,
-              'hh:mm:A',
-            );
-            slot.startTime = myMoment.format('hh:mm:A');
+            let myMoment = moment(`${slot.startTime} `, 'HH:mm:ss');
+            let myMoment2 = moment(`${slot.startTime} `, 'HH:mm:ss');
+            slot.startTime = myMoment.format('HH:mm:ss');
             // slot.endTime = myMoment2.format('hA');
             if (
               currentHour < myMoment.hour() &&
@@ -262,13 +263,14 @@ const RescheduleScreen = ({route, navigation}) => {
                   onPress={() => {
                     setSelect(slot);
                     setTime(`${slot.startTime} `);
+                    setEnable(true);
                   }}
                   style={[
                     styles.timeSlotItem,
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
                   <Text style={styles.timeSlotButtonText}>
-                    {slot.startTime} 
+                    {slot.startTime}
                   </Text>
                 </Pressable>
               );
@@ -276,20 +278,24 @@ const RescheduleScreen = ({route, navigation}) => {
               currentDate.toDateString() !== selectedDate.toDateString()
             ) {
               return (
-                <Pressable
-                  key={slot.id}
-                  onPress={() => {
-                    setSelect(slot);
-                    setTime(`${slot.startTime}`);
-                    console.log(time1)
-
-                  }}
-                  style={[
-                    styles.timeSlotItem,
-                    select === slot ? styles.timeSlotItemSelect : null,
-                  ]}>
-                  <Text style={styles.timeSlotButtonText}>{slot.startTime}</Text>
-                </Pressable>
+                <>
+                  <Pressable
+                    key={slot.id}
+                    onPress={() => {
+                      setSelect(slot);
+                      setTime(`${slot.startTime}`);
+                      setEnable(true);
+                      console.log(time1);
+                    }}
+                    style={[
+                      styles.timeSlotItem,
+                      select === slot ? styles.timeSlotItemSelect : null,
+                    ]}>
+                    <Text style={styles.timeSlotButtonText}>
+                      {slot.startTime}
+                    </Text>
+                  </Pressable>
+                </>
               );
             }
           })}
@@ -297,8 +303,9 @@ const RescheduleScreen = ({route, navigation}) => {
       )}
 
       <Pressable
+        disabled={enable ? false : true}
         onPress={() => confirmReschedule(newDatee, time1)}
-        style={styles.button}>
+        style={[enable ? styles.button : styles.buttonDisabled]}>
         <Text style={styles.buttonText}>Reschedule</Text>
       </Pressable>
     </View>

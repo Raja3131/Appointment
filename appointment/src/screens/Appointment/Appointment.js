@@ -161,12 +161,13 @@ const Appointment = ({ route, navigation }) => {
       {date === 'Select Date' ? null : (
         <View style={styles.timeSlot}>
           {timeSlot.map(slot => {
-            let myMoment = moment(`${slot.startTime}`, 'hh:mm:A')
+            let myMoment = moment(`${slot.startTime}`, 'HH:mm:ss')
             // let myMoment2 = moment(`${slot.endTime}`, 'HH:mm A');
-            slot.startTime = myMoment.format('hh:mm:A');
+            slot.startTime = myMoment.format('HH:mm:ss');
             // slot.endTime = myMoment2.format('hA');
             ;
             if (currentHour < myMoment.hour() && currentDate.toDateString() === selectedDate.toDateString()) {
+              
               return (
                 <Pressable
                   key={slot.id}
@@ -294,11 +295,11 @@ const Appointment = ({ route, navigation }) => {
         setAddress(nextValue);
       }}
     >
-      <Radio value="Chennai" my="1">
-        Chennai
+      <Radio value="Dubai" my="1">
+        Dubai
       </Radio>
-      <Radio value="Tambaram" my="1">
-        Tambaram
+      <Radio value="Halab" my="1">
+        Halab
       </Radio>
     </Radio.Group>
               </Modal.Body>

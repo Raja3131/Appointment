@@ -138,6 +138,15 @@ export const styles = StyleSheet.create({
       fontFamily: 'Ubuntu-Italic',
 
     },
+    buttonDisabled:{
+      backgroundColor: '#E7E7E7',
+      borderRadius: 10,
+      padding: 10,
+      margin: 20,
+      width: '40%',
+      alignItems: 'center',
+      
+    }
     
     
   });

@@ -31,7 +31,7 @@ const TimeSlot= [
     },
     {
         id: 7,
-        startTime: '16:00',
+        startTime:  '16:00',
         isAvailable: true
     },
     {
