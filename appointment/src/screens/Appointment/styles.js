@@ -155,6 +155,16 @@ export const styles = StyleSheet.create({
       fontSize: 18,
       color: '#fff',
       fontFamily: 'Ubuntu-Italic',
+    },
+    buttonDisabled:{
+      backgroundColor: '#E7E7E7',
+      borderRadius: 10,
+      width: '80%',
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin:40
+      
     }
   });
   

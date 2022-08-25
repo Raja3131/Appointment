@@ -193,7 +193,7 @@ const RescheduleScreen = ({route, navigation}) => {
 
         <Text style={styles.detailsText}>PatientName : {title}</Text>
         <Text style={styles.detailsText}>
-          Date :{`${moment(newDatee).format('Do-MMM-YYYY')} `}
+          Date :{`${moment(Apptdate).format('Do-MMM-YYYY')} `}
         </Text>
         <Text style={styles.detailsText}>
           Time:{`${moment(Appttime).format('hh:mm:A')} `}

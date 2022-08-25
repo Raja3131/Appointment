@@ -107,7 +107,7 @@ const PatientDetails = ({ navigation, route }) => {
             mobile: values.mobile,
             gender: values.gender,
             selectDoctor: values.doctor,
-            dob: values.dob
+           
           });
           
         } else {
@@ -199,31 +199,7 @@ const PatientDetails = ({ navigation, route }) => {
                     </Text>
                   </View>
                   <View>
-                    <View style={styles.dobContainer}>
-                      {/* <Button title="Show Date Picker" onPress={showDatePicker} />
-       */}
-                      <TouchableHighlight
-                        onPress={showDatePicker}
-                        style={styles.dateButton}>
-                        <Text style={styles.buttonText}>{
-                          date === 'select dob' ? 'Select Dob' : selectedDob.toDateString()
-                        }</Text>
-                      </TouchableHighlight>
-
-                      <DateTimePickerModal
-                        isVisible={isDatePickerVisible}
-                        mode="date"
-                        onConfirm={handleConfirm}
-                        onCancel={hideDatePicker}
-                        value={selectedDob}
-                        maximumDate={
-                          new Date()
-                        }
-            
-
-
-                      />
-                    </View>
+                   
                   </View>
 
                   <Text

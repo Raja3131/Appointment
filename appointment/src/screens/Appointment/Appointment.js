@@ -47,6 +47,8 @@ const Appointment = ({ route, navigation }) => {
   const [time, setTime] = useState('');
   const [address, setAddress] = useState('Chennai');
   const [value, setValue] = React.useState('one');
+  const [enable, setEnable] = useState(false);
+
   let currentDate = new Date()
   let currentHour = currentDate.getHours()
 
@@ -174,6 +176,7 @@ const Appointment = ({ route, navigation }) => {
                   onPress={() => {
                     setSelect(slot);
                     setTime(`${slot.startTime}`);
+                    setEnable(true);
                   }}
                   style={[
                     styles.timeSlotItem,
@@ -194,6 +197,7 @@ const Appointment = ({ route, navigation }) => {
                   onPress={() => {
                     setSelect(slot);
                     setTime(`${slot.startTime}`);
+                    setEnable(true);
                   }}
                   style={[
                     styles.timeSlotItem,
@@ -213,8 +217,10 @@ const Appointment = ({ route, navigation }) => {
 
         <Center>
           <Pressable
+        disabled={enable ? false : true}
+
             onPress={() => setShowModal(true)}
-            style={styles.bookButton}>
+            style={[enable ? styles.bookButton : styles.buttonDisabled]}>
             <Text style={styles.bookButtonText}>Proceed</Text>
           </Pressable>
           <Modal
@@ -238,7 +244,7 @@ const Appointment = ({ route, navigation }) => {
                   </HStack>
                   <HStack alignItems="center" justifyContent="space-between">
                     <Text fontWeight="medium">Amount</Text>
-                    <Text color="green.500">300</Text>
+                    <Text color="green.500">50 Dirham</Text>
                   </HStack>
                 </VStack>
               </Modal.Body>

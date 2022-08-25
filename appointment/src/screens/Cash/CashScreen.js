@@ -54,8 +54,7 @@ const Cash = ({ navigation, route }) => {
         <Text style={styles.nameText}>Mobile:{phoneNumber}</Text>
         <Text style={styles.nameText}>Address:{address}</Text>
         <Text style={styles.dateText}> Date:  {
-          `${app_date
-          } `
+         moment(app_date).format('Do-MMMM-YYYY')
         }</Text>
         <Text style={styles.doctorText}>
           DoctorName:

@@ -62,7 +62,7 @@ const MyAppoints = ({ navigation }) => {
     if (FileNo) {
       setLoading(true);
       Alert.alert(
-        'Delete Appointment',
+        'Cancel Appointment',
         'Are you sure you want to cancel this appointment?',
         [
           {
@@ -99,6 +99,7 @@ const MyAppoints = ({ navigation }) => {
                 CancelledDateTime: "2022-08-16T11:48:30.655Z"
               })
                 .then(() => {
+                  Alert.alert('Appointment Cancelled Successfully')
                   getAppointments();
                 })
                 .catch(() => {

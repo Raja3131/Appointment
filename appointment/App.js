@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React,{useEffect} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -18,14 +18,19 @@ import {
 } from 'react-native';
 import AppNavContainer from './src/navigation/index';
 import {AppointsContextProvider} from './src/context/Provider';
+import RNBootSplash from "react-native-bootsplash";
 
 const App = ()=>{
+  useEffect(() => {
+    setTimeout(() => {
+      RNBootSplash.hide({fade: true});
+    }, 3000);
+  }, []);
 
 
   return(
     <>
       
-
       <AppointsContextProvider>
         <AppNavContainer>
 
