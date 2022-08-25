@@ -270,7 +270,7 @@ const RescheduleScreen = ({route, navigation}) => {
                     select === slot ? styles.timeSlotItemSelect : null,
                   ]}>
                   <Text style={styles.timeSlotButtonText}>
-                    {slot.startTime}
+                    {slot.startTime}.
                   </Text>
                 </Pressable>
               );
