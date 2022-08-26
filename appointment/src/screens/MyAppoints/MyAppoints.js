@@ -15,6 +15,15 @@ import { useFocusEffect } from '@react-navigation/native';
 import doctors from '../../db/doctors';
 import axios from 'axios';
 import moment from 'moment';
+import {
+  Button,
+  Modal,
+  VStack,
+  HStack,
+  Radio,
+  Center,
+  NativeBaseProvider,
+} from 'native-base';
 import { url } from '../../utils/url';
 
 const MyAppoints = ({ navigation }) => {
@@ -22,6 +31,8 @@ const MyAppoints = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [patient, setPatient] = useState([]);
+  const [showModal,setShowModal] = useState(false);
+  const [cancelledReason,setCancelledReason] = useState('');
   useFocusEffect(
     React.useCallback(() => {
       getAppointments();
@@ -96,7 +107,8 @@ const MyAppoints = ({ navigation }) => {
 
                 organizationID: "org1",
                 CancelledBy: "Mobile",
-                CancelledDateTime: "2022-08-16T11:48:30.655Z"
+                CancelledDateTime: "2022-08-16T11:48:30.655Z",
+                cancelledReason:cancelledReason
               })
                 .then(() => {
                   Alert.alert('Appointment Cancelled Successfully')
@@ -223,24 +235,93 @@ const MyAppoints = ({ navigation }) => {
           appointment.IsCancelled?
           null:
           <Pressable
-          onPress={() => deleteAppointment(appointment.FileNo,
-            appointment.AppointmentTranID,
-            appointment.NationalityIDNo,
-            appointment.title,
-            appointment.FirstName,
-            appointment.LastName,
-            appointment.ArabicName,
-            appointment.Age,
-            appointment.DOB,
-            appointment.Gender,
-            appointment.Address,
-            appointment.Apptdate,
-            appointment.Appttime,
-            appointment.DoctorName,)}
+          onPress={() => setShowModal(true)}
           style={styles.cancelButton}>
           <Text style={styles.appointmentButtonText}>Cancel</Text>
         </Pressable>
          }
+         <NativeBaseProvider>
+          <Center>
+          <Modal
+            isOpen={showModal}
+            size="lg"
+            onClose={() => setShowModal(false)}>
+            <Modal.Content maxWidth="350">
+              <Modal.CloseButton />
+              <Modal.Header>Cancel Reason</Modal.Header>
+              <Modal.Body>
+                <Radio.Group name="payment">
+                  <VStack space={3}>
+                    <Radio
+                      alignItems="flex-start"
+                      _text={{
+                        mt: '-1',
+                        ml: '2',
+                        fontSize: 'sm',
+                      }}
+                      value="Not Well"
+                      onPress={() => setCancelledReason('Not Well')}
+
+                    >
+                      Not Well
+                    </Radio>
+                    <Radio
+                      alignItems="flex-start"
+                      _text={{
+                        mt: '-1',
+                        ml: '2',
+                        fontSize: 'sm',
+                      }}
+                      value="Not in Station"
+                      onPress={() => setCancelledReason('Not in Station')}
+                    >
+                      Not in Station
+                    </Radio>
+                    <Radio
+                      alignItems="flex-start"
+                      _text={{
+                        mt: '-1',
+                        ml: '2',
+                        fontSize: 'sm',
+                      }}
+                      value="payment3"
+                      onPress={() => setCancelledReason('Cured')}
+                      >
+                     Cured
+                    </Radio>
+                  </VStack>
+                </Radio.Group>
+              </Modal.Body>
+              <Modal.Footer>
+               <Button
+                    flex="2"
+                    onPress={() => {
+                      deleteAppointment(appointment.FileNo,
+                        appointment.AppointmentTranID,
+                        appointment.NationalityIDNo,
+                        appointment.title,
+                        appointment.FirstName,
+                        appointment.LastName,
+                        appointment.ArabicName,
+                        appointment.Age,
+                        appointment.DOB,
+                        appointment.Gender,
+                        appointment.Address,
+                        appointment.Apptdate,
+                        appointment.Appttime,
+                        appointment.DoctorName,
+                        )
+                      setShowModal(false);
+                    }}>
+                    Cash
+                  </Button>
+                  
+                
+              </Modal.Footer>
+            </Modal.Content>
+          </Modal>
+          </Center>
+         </NativeBaseProvider>
         </View>
       </View>
     ));
