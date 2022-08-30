@@ -27,7 +27,7 @@ import Api from '../../api/Api';
 import { styles } from './styles';
 import moment from 'moment';
 
-const Appointment = ({ route, navigation }) => {
+const Appointment = ({ route,navigation }) => {
   const { selectDoctor } = route.params;
   const { name } = route.params;
   const { dob } = route.params

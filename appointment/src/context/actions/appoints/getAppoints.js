@@ -11,3 +11,5 @@ export const getAppointsError = (error) =>({
     type: "GET_APPOINTS_ERROR",
     payload: error
 })
+
+

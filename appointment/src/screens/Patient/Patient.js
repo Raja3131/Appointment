@@ -13,7 +13,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Alert,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Api from '../../api/Api';
@@ -29,18 +29,15 @@ import { styles } from './styles';
 import Message from '../../components/Common/Message/Message';
 import useAppoints from '../../services/QueryCalls';
 import ValidatedTextInput from '../../utils/ValidatetextInput';
-// import  DateTimePicker  from '@react-native-community/datetimepicker';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { useCallback } from "react";
 const PatientDetails = ({ navigation, route }) => {
   const formikRef = useRef();
-  const { data } = useAppoints();
   const [message, setMessage] = useState(false);
-  const [appoints, setAppoints] = useState([]);
-  const [gender, setGender] = useState('');
-  const [doctorValue, setDoctorValue] = useState('')
-  const [selectedDob, setSelectedDob] = useState(new Date());
-  const [date, setDate] = useState('select dob');
-  const [selectAge, setSelectAge] = useState('');
+  const [dob, setDob] = useState(new Date());
+  const [age, setAge] = useState(null);
+  const inputRef = useRef();
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -83,310 +80,135 @@ const PatientDetails = ({ navigation, route }) => {
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
+    console.log('showDatePicker');
   };
 
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
+    console.log('hideDatePicker');
   };
 
-  const handleConfirm = (date) => {
-    setSelectedDob(date);
-    setDate(date.toLocaleDateString());
-    hideDatePicker();
-
+  const handleDob = dob => {
+    setDob(dob);
+    setDatePickerVisibility(false);
+    console.log(dob.toLocaleDateString());
   };
   const signUp = async (values, actions) => {
     const { name, age, mobile } = values;
     try {
-     
-     
-        if (values.doctor) {
-          navigation.navigate('DoctorProfile', {
-            name: values.name,
-            age: values.age,
-            mobile: values.mobile,
-            gender: values.gender,
-            selectDoctor: values.doctor,
-           
-          });
-          
-        } else {
-          navigation.navigate('Doctors', {
-            name: values.name,
-            age: values.age,
-            mobile: values.mobile,
-            gender: values.gender,
-          });
-        }
-        actions.resetForm();
-        formikRef.current?.resetForm();
-        setGender('')
-        setDoctorValue('')
-     
+      if (values.doctor) {
+        navigation.navigate('DoctorProfile', {
+          name: values.name,
+          age: values.age,
+          mobile: values.mobile,
+          gender: values.gender,
+          selectDoctor: values.doctor,
+        });
+      } else {
+        navigation.navigate('Doctors', {
+          name: values.name,
+          age: values.age,
+          mobile: values.mobile,
+          gender: values.gender,
+        });
+      }
+      actions.resetForm();
+      formikRef.current?.resetForm();
+      setGender('');
+      setDoctorValue('');
     } catch (err) {
       console.log(err);
       setMessage(true);
       Alert.alert('Error', 'Something went wrong');
     }
   };
-  const onAgeChange = (value) => {
-    formikRef.current.setFieldValue('age', value)
-  };
+
+  const getAge = useCallback((dob) => {
+    let today = new Date();
+    let birthDate = new Date(dob);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    console.log(age);
+    setAge(age);
+    setDob(dob);
+    setDatePickerVisibility(false);
+    inputRef.current.setNativeProps({ text: age.toString() });
+
+    console.log(dob.toLocaleDateString());
+
+  }, [])
+
+  const handleAgeToDob = (age) => {
+    setAge(age)
+    console.log(age)
+    let CurrentDate = new Date();
+    CurrentDate.setFullYear(CurrentDate.getFullYear() - age);
+    let DateOfBirth = CurrentDate;
+    setDob(DateOfBirth)
+
+  }
   return (
     <>
       <ScrollView>
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-
           <View style={styles.container}>
             <StatusBar backgroundColor="#009387" barStyle="light-content" />
-            <View style={styles.header}>
-
-            </View>
-            <Formik
-              initialValues={{
-                name: '',
-                age: '',
-                mobile: '',
-                gender: '',
-                doctor: '',
-              }}
-              innerRef={formikRef}
-              validationSchema={validationSchema}
-              onSubmit={signUp}>
-              {({
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                values,
-                errors,
-                touched,
-                setFieldValue,
-              }) => (
-                <Animatable.View
+            <View style={styles.header}></View>
+            <Animatable.View
+              style={[
+                styles.footer,
+                {
+                  backgroundColor: colors.background,
+                },
+              ]}>
+              <View style={styles.dobContainer}>
+                <TouchableHighlight onPress={showDatePicker}>
+                  <Text>{dob.toLocaleDateString()}</Text>
+                </TouchableHighlight>
+                {isDatePickerVisible && (
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    onConfirm={getAge}
+                    onCancel={hideDatePicker}
+                    value={dob}
+                    maximumDate={new Date()}
+                  />
+                )}
+              </View>
+              <Text
+                style={[
+                  styles.text_footer,
+                  {
+                    color: colors.text,
+                    marginTop: 35,
+                  },
+                ]}>
+                Age
+              </Text>
+              <View style={styles.action}>
+                <TextInput
+                  placeholder="Age"
+                  placeholderTextColor="#598"
+                  placeholderStyle={{ color: '#666666', fontSize: 20 }}
                   style={[
-                    styles.footer,
+                    styles.textInput,
                     {
-                      backgroundColor: colors.background,
+                      color: colors.text,
                     },
-                  ]}>
-                  <Text
-                    style={[
-                      styles.text_footer,
-                      {
-                        color: colors.text,
-                      },
-                    ]}>
-                    Patient
-                  </Text>
-                  <View style={styles.action}>
-                    <TextInput
-                      placeholder="Patient Name"
-                      style={[
-                        styles.textInput,
-                        {
-                          color: colors.text,
-                        },
-                      ]}
-                      placeholderStyle={{ color: '#666666', fontSize: 20 }}
-                      onChangeText={handleChange('name')}
-                      onBlur={handleBlur('name')}
-                      value={values.name}
-                      placeholderTextColor="#598"
-
-                    />
-                    <Text style={styles.errorMsg}>
-                      {touched.name && errors.name}
-                    </Text>
-                  </View>
-                  <View>
-                   
-                  </View>
-
-                  <Text
-                    style={[
-                      styles.text_footer,
-                      {
-                        color: colors.text,
-                        marginTop: 35,
-                      },
-                    ]}>
-                    Age
-                  </Text>
-                  <View style={styles.action}>
-                    <TextInput
-                      onKeyPress={(e) => {
-                        if (e.nativeEvent.key === '.') {
-                          formikRef.current.setFieldValue('age', values.age + '.')
-                        }
-                      }}
-                      placeholder="Age"
-                      placeholderTextColor="#598"
-                      placeholderStyle={{ color: '#666666', fontSize: 20 }}
-
-                      style={[
-                        styles.textInput,
-                        {
-                          color: colors.text,
-                        },
-                      ]}
-                      keyboardType="numeric"
-
-                      onChangeText={handleChange('age')}
-                      onBlur={handleBlur('age')}
-                      value={values.age}
-                      maxLength={3}
-                    />
-                    <Text style={styles.errorMsg}>
-                      {touched.age && errors.age}
-                    </Text>
-                  </View>
-
-                  <View style={styles.dropdown}>
-                    <RNPickerSelect
-                      onValueChange={value => {
-                        values.gender = value;
-                        setGender(values.gender);
-                        console.log(values.gender);
-                      }}
-                      placeholder={{
-                        label: 'Select Gender',
-
-                      }}
-                      placeholderTextColor="red"
-                      items={[
-                        { label: 'Male', value: 'Male' },
-                        { label: 'Female', value: 'Female' },
-                      ]}
-                      value={gender}
-                      style={{
-                        fontSize: 16,
-                        paddingHorizontal: 10,
-                        paddingVertical: 8,
-                        borderWidth: 0.5,
-                        borderColor: 'purple',
-                        borderRadius: 8,
-                        color: 'black',
-                        paddingRight: 30,
-                        top: 20,
-                        right: 10,
-                      }} />
-                  </View>
-                  <Text
-                    style={[
-                      styles.text_footer,
-                      {
-                        color: colors.text,
-                        marginTop: 35,
-                      },
-                    ]}>
-                    Mobile
-                  </Text>
-                  <View style={styles.action}>
-                    {/* <TextInput
-                    placeholder="Mobile"
-                    placeholderTextColor="#666666"
-                    placeholderStyle={{color: '#666666', fontSize: 20}}
-                    style={[
-                      styles.textInput,
-                      {
-                        color: colors.text,
-                      },
-                    ]}
-                    onChangeText={handleChange('mobile')}
-                    onBlur={handleBlur('mobile')}
-                    value={values.mobile}
-                    keyboardType="numeric"
-                    maxLength={10}
-                  /> */}
-                    <ValidatedTextInput
-                      placeholder="Phone"
-                      style={[
-                        styles.textInput,
-                        {
-                          color: colors.text,
-                        },
-                      ]}
-                      placeholderStyle={{ color: '#666666', fontSize: 20 }}
-                      onChangeText={handleChange('mobile')}
-                      onBlur={handleBlur('mobile')}
-                      value={values.mobile}
-                      keyboardType="numeric"
-                      maxLength={10}
-                      placeholderTextColor="#598"
-
-                    />
-                    <Text style={styles.errorMsg}>
-                      {touched.mobile && errors.mobile}
-                    </Text>
-                  </View>
-                  <View style={styles.dropdown}>
-                    <RNPickerSelect
-                      onValueChange={value => {
-                        values.doctor = value;
-                        console.log(values.doctor);
-                        setDoctorValue(values.doctor);
-                      }}
-                      items={Object.values(doctors).map(item => {
-                        return { label: item.name, value: item.id };
-                      })}
-                      placeholder={{
-                        label: 'Select Doctor',
-                        value: null,
-                      }}
-                      value={doctorValue}
-                      placeholderStyle={{ color: '#666666', fontSize: 20 }}
-                      placeholderTextColor="#598"
-                    />
-                  </View>
-                  <View style={
-                    styles.buttons
-                  }>
-
-                    <TouchableOpacity
-                      style={
-                        !(values.name && values.age && values.mobile)
-                          ? styles.buttonDisabled
-                          : styles.button
-                      }
-                      onPress={handleSubmit}
-                      disabled={!(values.name && values.age && values.mobile)}
-                      testID="loginButton">
-                      <Text
-                        style={
-                          !(values.name && values.age && values.mobile)
-                            ? styles.textDisabled
-                            : styles.buttonText
-                        }>
-
-                        Submit
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[
-                        styles.button,
-
-
-                      ]}
-                      onPress={() => {
-
-                        formikRef.current?.resetForm();
-                        setGender('')
-                        setDoctorValue('')
-
-                      }}
-                      testID="clearFieldsButton">
-                      <Text
-                        style={[
-                          styles.textSign,
-
-                        ]}>
-                        Clear
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </Animatable.View>
-              )}
-            </Formik>
+                  ]}
+                  keyboardType="numeric"
+                  value={age}
+                  maxLength={3}
+                  onChangeText={handleAgeToDob}
+                  ref={inputRef}
+                />
+                <Text style={styles.errorMsg}></Text>
+              </View>
+            </Animatable.View>
           </View>
         </KeyboardAvoidingView>
         {message && (
@@ -399,6 +221,6 @@ const PatientDetails = ({ navigation, route }) => {
       </ScrollView>
     </>
   );
-}
+};
 
 export default PatientDetails;
