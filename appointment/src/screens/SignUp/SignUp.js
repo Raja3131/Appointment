@@ -21,9 +21,12 @@ const SignUpScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
         username: '',
+        email:'',
         password: '',
         confirm_password: '',
+
         check_textInputChange: false,
+        check_mailInputChange: false,
         secureTextEntry: true,
         confirm_secureTextEntry: true,
     });
@@ -43,6 +46,22 @@ const SignUpScreen = ({navigation}) => {
             });
         }
     }
+    const mailInputChange = (val) => {
+        if( val.length !== 0 ) {
+            setData({
+                ...data,
+                email: val,
+                check_mailInputChange: true
+            });
+        } else {
+            setData({
+                ...
+                data,
+                email: val,
+                check_mailInputChange: false
+                });
+                }
+                }
 
     const handlePasswordChange = (val) => {
         setData({
@@ -108,6 +127,32 @@ const SignUpScreen = ({navigation}) => {
                 </Animatable.View>
                 : null}
             </View>
+            <Text style={styles.text_footer}>Email</Text>
+            <View style={styles.action}>
+                <FontAwesome 
+                    name="user-o"
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Your Email"
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    onChangeText={(val) => mailInputChange(val)}
+                />
+                {data.check_mailInputChange ? 
+                <Animatable.View
+                    animation="bounceIn"
+                >
+                    <Feather 
+                        name="check-circle"
+                        color="green"
+                        size={20}
+                    />
+                </Animatable.View>
+                : null}
+            </View>
+            
 
             <Text style={[styles.text_footer, {
                 marginTop: 35

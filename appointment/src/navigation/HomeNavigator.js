@@ -13,16 +13,13 @@ const HomeScreen = () => {
 
     const HomeStack = createNativeStackNavigator();
     return (
-        <HomeStack.Navigator initialRouteName='Splash' component={SplashScreen}>
-            <HomeStack.Screen options={{ headerShown: false }} name="Splash" component={SplashScreen} />   
+        <HomeStack.Navigator>
             <HomeStack.Screen options={{ headerShown: false }} name="Patients" component={PatientDetails} />
             <HomeStack.Screen options={{ headerShown: false }} name="Doctors" component={DoctorsScreen}/>
             <HomeStack.Screen name="DoctorProfile" component={DoctorDetailsScreen} />
             <HomeStack.Screen name="Appointment" component={Appointment} />
             <HomeStack.Screen name="Reschedule" component={RescheduleScreen} />
             <HomeStack.Screen name="Cash" component={CashScreen} />
-            
-
         </HomeStack.Navigator>
     );
 };
