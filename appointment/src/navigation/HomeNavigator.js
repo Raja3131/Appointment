@@ -7,13 +7,14 @@ import Appointment from '../screens/Appointment/Appointment';
 import PatientDetails from '../screens/Patient/Patient';
 import RescheduleScreen from '../screens/Reschedule/RescheduleScreen';
 import CashScreen from '../screens/Cash/CashScreen';
-
+import SplashScreen from '../screens/Splash/Splash';
 
 const HomeScreen = () => {
 
     const HomeStack = createNativeStackNavigator();
     return (
-        <HomeStack.Navigator initialRouteName='Patients'>
+        <HomeStack.Navigator initialRouteName='Splash' component={SplashScreen}>
+            <HomeStack.Screen options={{ headerShown: false }} name="Splash" component={SplashScreen} />   
             <HomeStack.Screen options={{ headerShown: false }} name="Patients" component={PatientDetails} />
             <HomeStack.Screen options={{ headerShown: false }} name="Doctors" component={DoctorsScreen}/>
             <HomeStack.Screen name="DoctorProfile" component={DoctorDetailsScreen} />

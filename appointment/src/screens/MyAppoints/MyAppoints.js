@@ -36,7 +36,6 @@ const MyAppoints = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       getAppointments();
-      // debugger;
     }, []),
   );
   const getAppointments = async () => {
@@ -45,7 +44,6 @@ const MyAppoints = ({ navigation }) => {
         `${url}/Calendar/ForMobileAPIPatientList/org1`,
       );
       setAppointments(response.data);
-      // debugger;
 
       setLoading(TextTrackCueList);
     } catch (error) {

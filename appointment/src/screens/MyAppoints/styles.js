@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
+import theme from '../../styles/theme';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f6fb',
+    backgroundColor: theme.WHITE_COLOR,
 
   },
   appointment: {
-    backgroundColor: '#009387',
+    backgroundColor: theme.PRIMARY_COLOR,
     margin: 10,
     padding: 10,
     borderRadius: 10,
@@ -54,12 +55,12 @@ export const styles = StyleSheet.create({
   },
   addText: {
     fontSize: 16,
-    color: '#f3f6fb',
+    color: theme.WHITE_COLOR,
 
   },
   appointmentButtonText: {
     fontSize: 16,
-    color: '#f3f6fb',
+    color: theme.WHITE_COLOR,
   },
   cancelButton: {
     backgroundColor: '#b03562',
@@ -77,7 +78,7 @@ export const styles = StyleSheet.create({
   },
   doctorText: {
     fontSize: 16,
-    color: '#f3f6fb',
+    color: theme.WHITE_COLOR,
     fontFamily: 'Ubuntu-Italic',
     fontWeight: 'bold',
   }

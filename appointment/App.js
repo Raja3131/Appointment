@@ -17,7 +17,6 @@ import {
   View
 } from 'react-native';
 import AppNavContainer from './src/navigation/index';
-import {AppointsContextProvider} from './src/context/Provider';
 import RNBootSplash from "react-native-bootsplash";
 
 const App = ()=>{
@@ -31,13 +30,8 @@ const App = ()=>{
   return(
     <>
       
-      <AppointsContextProvider>
         <AppNavContainer>
-
-       
-
         </AppNavContainer>
-      </AppointsContextProvider>
     </>
   
   )

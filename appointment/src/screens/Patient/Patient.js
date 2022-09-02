@@ -18,16 +18,13 @@ import {
 import * as Animatable from 'react-native-animatable';
 import Api from '../../api/Api';
 import {useTheme} from '@react-navigation/native';
-import {ButtonGroup} from 'react-native-elements';
 import * as Yup from 'yup';
 import {Formik} from 'formik';
-// import { Picker } from '@react-native-picker/picker';
 import RNPickerSelect from 'react-native-picker-select';
 import doctors from '../../db/doctors';
 import {useEffect} from 'react';
 import {styles} from './styles';
 import Message from '../../components/Common/Message/Message';
-import useAppoints from '../../services/QueryCalls';
 import ValidatedTextInput from '../../utils/ValidatetextInput';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';

@@ -15,16 +15,7 @@ const Tab = createBottomTabNavigator();
 const MyTabs = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [appointments, setAppointments] = useState([]);
-  useEffect(() => {
-    axios.get('http://testingapi.wynkemr.com/DoctorMaster/Getalldoctorssearch/1062')
-    .then(res => {
-      console.log(res.data.Doctorsearchpatients)
-      setAppointments(res.data);
-      setIsLoading(false);
-
-    })
-  }, [setAppointments, setIsLoading]);
-
+  
   return (
     <Tab.Navigator>
       <Tab.Screen

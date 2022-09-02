@@ -4,23 +4,30 @@ import HomeScreen from './HomeNavigator';
 import {Text, StatusBar} from 'react-native';
 import DrawerNavigator from './DrawerNavigator';
 import MyTabs from './TabNavigator';
-import {QueryClientProvider,QueryClient} from 'react-query'
+import { useState } from 'react';
+import AuthNavigator from './AuthNavigator';
+
 
 const AppNavContainer = () => {
-  const queryClient = new QueryClient();
+  const [splash,setSpalsh] = useState(true)
+
 
 
   
 
   return (
     <NavigationContainer>
-      {/* <HomeScreen /> */}
-      {/* <DrawerNavigator /> */}
-      <QueryClientProvider client={queryClient}>
+      {/* {
+        splash ?
+      <HomeScreen />
+      :
       <MyTabs />
 
 
-                </QueryClientProvider>
+      } */}
+      <AuthNavigator />
+      {/* <DrawerNavigator /> */}
+      
     </NavigationContainer>
   );
 };
