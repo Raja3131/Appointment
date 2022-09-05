@@ -13,11 +13,8 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-
 import { useTheme } from 'react-native-paper';
-
 import { AuthContext } from '../../components/context';
-
 import Users from '../../model/users';
 import {styles} from './styles'
 import {globalStyles} from '../../styles/globalStyles'
@@ -34,9 +31,7 @@ const SignInScreen = ({navigation}) => {
     });
 
     const { colors } = useTheme();
-
     // const { signIn } = React.useContext(AuthContext);
-
     const textInputChange = (val) => {
         if( val.trim().length >= 4 ) {
             setData({
@@ -97,6 +92,7 @@ const SignInScreen = ({navigation}) => {
         const foundUser = Users.filter( item => {
             return userName == item.username && password == item.password;
         } );
+        
 
         if ( data.username.length == 0 || data.password.length == 0 ) {
             Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
