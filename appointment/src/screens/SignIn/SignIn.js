@@ -31,7 +31,7 @@ const SignInScreen = ({navigation}) => {
     });
 
     const { colors } = useTheme();
-    // const { signIn } = React.useContext(AuthContext);
+    const { signIn } = React.useContext(AuthContext);
     const textInputChange = (val) => {
         if( val.trim().length >= 4 ) {
             setData({
