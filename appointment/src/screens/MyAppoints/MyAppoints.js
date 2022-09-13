@@ -88,7 +88,7 @@ const MyAppoints = ({ navigation }) => {
               Api.post(`${url}/Appointment/NewAppointment`, {
                 file_No: FileNo,
                 appointmentTranID: AppointmentTranID,
-                national_ID_No: "22",
+                national_ID_No: Math.floor(Math.random() * 10) + 1,
                 app_date: Apptdate,
                 appt_Time:moment(Appttime).subtract({hours:5,minutes:30}),
                 firstName: FirstName,

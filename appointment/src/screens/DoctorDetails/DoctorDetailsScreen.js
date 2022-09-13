@@ -15,10 +15,11 @@ const DoctorDetailsScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     setDoctorsList(doctors)
+    console.log(name,selectDoctor)
   }, [])
 
 const onPress = () => {
-  if (name && selectDoctor) {
+  if (selectDoctor) {
     navigation.navigate('Appointment', { name: name, selectDoctor: selectDoctor,dob:dob,age:age,mobile:mobile })
   }
   else {

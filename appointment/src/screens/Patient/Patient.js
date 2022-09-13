@@ -29,6 +29,7 @@ import ValidatedTextInput from '../../utils/ValidatetextInput';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useCallback} from 'react';
+import moment from 'moment';
 const PatientDetails = ({navigation, route}) => {
   const formikRef = useRef();
   const [message, setMessage] = useState(false);
@@ -95,29 +96,25 @@ const PatientDetails = ({navigation, route}) => {
     setDatePickerVisibility(false);
     console.log(dob.toLocaleDateString());
   };
-  const signUp = async (values, actions) => {
-    const {name, age, mobile} = values;
+  const signUp = async () => {
     try {
-      if (values.doctor) {
+      if (doctor) {
         navigation.navigate('DoctorProfile', {
-          name: values.name,
-          age: values.age,
-          mobile: values.mobile,
-          gender: values.gender,
-          selectDoctor: values.doctor,
+          name: name,
+          age: age,
+          mobile: mobile,
+          gender: gender,
+          selectDoctor: doctor,
+          dob:dob.toLocaleDateString()
         });
       } else {
         navigation.navigate('Doctors', {
-          name: values.name,
-          age: values.age,
-          mobile: values.mobile,
-          gender: values.gender,
+          name: name,
+          age: age,
+          mobile: mobile,
+          gender: gender,
         });
       }
-      actions.resetForm();
-      formikRef.current?.resetForm();
-      setGender('');
-      setDoctorValue('');
     } catch (err) {
       console.log(err);
       setMessage(true);
@@ -188,7 +185,10 @@ const PatientDetails = ({navigation, route}) => {
                         },
                       ]}
                       placeholderStyle={{ color: '#666666', fontSize: 20 }}
-                      onChangeText={(text)=>setName(text)}
+                      onChangeText={(text)=>{
+                        setName(text)
+                        console.log(text)
+                      }}
                       value={name}
                       placeholderTextColor="#598"
 
@@ -330,7 +330,7 @@ const PatientDetails = ({navigation, route}) => {
                           ? styles.buttonDisabled
                           : styles.button
                       }
-                      onPress={handleSubmit}
+                      onPress={signUp}
                       disabled={!(name && age && mobile)}
                       testID="loginButton">
                       <Text

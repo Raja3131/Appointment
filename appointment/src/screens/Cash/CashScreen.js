@@ -30,7 +30,7 @@ const Cash = ({ navigation, route }) => {
         age,
         address,
         arabicname: "اجاسي كريس ج",
-        national_ID_No: "22",
+        national_ID_No: Math.floor(Math.random() * 10) + 1,
         organizationID: "org1",
         ActiveSubmitForm: "",
         doctorName:doctor,

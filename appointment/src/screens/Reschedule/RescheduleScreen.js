@@ -118,7 +118,7 @@ const RescheduleScreen = ({route, navigation}) => {
 
       file_No: FileNo,
       appointmentTranID: AppointmentTranID,
-      national_ID_No: '22',
+      national_ID_No: NationalityIDNo,
       app_date: newDatee,
       appt_Time: new Date(newDatee.toDateString() + ' ' + time1.toString()),
       firstName: FirstName,
