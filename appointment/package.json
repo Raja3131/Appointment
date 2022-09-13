@@ -17,7 +17,6 @@
     "@react-navigation/drawer": "^6.3.1",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
-    "@reduxjs/toolkit": "^1.8.1",
     "animatable": "^1.2.3",
     "axios": "^0.26.0",
     "formik": "^2.2.9",

@@ -113,6 +113,9 @@ const PatientDetails = ({navigation, route}) => {
   }, []);
 
   const handleAgeToDob = age => {
+    if(age>120){
+      Alert.alert('Age must be between 120')
+    }
     setAge(age);
     console.log(age);
     let CurrentDate = new Date();
@@ -218,8 +221,12 @@ const textInputChange = (val) => {
             
                   </View>
               <View style={styles.dobContainer}>
-                <TouchableHighlight onPress={showDatePicker}>
-                  <Text>{moment(dob).format('Do-MMMM-YYYY')}</Text>
+                
+                <TouchableHighlight onPress={showDatePicker}
+                style={styles.dateButton}
+                
+                >
+                  <Text>DOB : {moment(dob).format('Do-MMMM-YYYY')}</Text>
                 </TouchableHighlight>
                 {isDatePickerVisible && (
                   <DateTimePickerModal
@@ -231,6 +238,7 @@ const textInputChange = (val) => {
                     maximumDate={new Date()}
                   />
                 )}
+                
               </View>
               <Text
                 style={[
@@ -373,6 +381,9 @@ const textInputChange = (val) => {
                         formikRef.current?.resetForm();
                         setGender('')
                         setDoctor('')
+                        setMobile('')
+                        setDob('')
+                        setAge('')
 
                       }}
                       testID="clearFieldsButton">
