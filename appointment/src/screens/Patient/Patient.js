@@ -30,56 +30,29 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useCallback} from 'react';
 import moment from 'moment';
+import  Feather  from 'react-native-vector-icons/Feather';
 const PatientDetails = ({navigation, route}) => {
   const formikRef = useRef();
   const [message, setMessage] = useState(false);
   const [dob, setDob] = useState(new Date());
   const [age, setAge] = useState(null);
-  const [name, setName] = useState('');
   const [gender, setGender] = useState(null);
   const [mobile, setMobile] = useState('');
   const [doctor, setDoctor] = useState('');
 
   const inputRef = useRef();
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .matches(/^[a-z0-9_.-\s]+$/i, 'Name is not valid')
-      .required('Name is required')
-      .min(3, 'Name must be at least 3 characters')
-      .max(50, 'Name must be less than 50 characters')
-      .trim(),
-    age: Yup.string()
-      .matches(/^[0-9]+$/, 'Age must be number')
-      .required('Age is required')
-      .test('mobile', 'Mobile number must be positive', value => {
-        return value > 0;
-      })
-      .test('age', 'Age must be positive', value => {
-        return value > 0;
-      })
-      .test('age', 'Age must be less than 120', value => {
-        return value < 120;
-      })
-      .test('age', 'Age must be at least 0', value => {
-        return value > 0;
-      }),
-    mobile: Yup.string()
-      .matches(/^[0-9]+$/, 'Invalid Mobile Number')
-      .required('Mobile is required')
-      .min(10, 'Mobile must be at least 10 characters')
-      .typeError('Mobile must be a number')
-
-      .test('mobile', 'Mobile number must be positive', value => {
-        return value > 0;
-      })
-      .test('mobile', 'Mobile number must be an integer', value => {
-        return value % 1 === 0;
-      }),
-  });
+ 
 
   const {colors} = useTheme();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [data, setData] = React.useState({
+    name: '',
+    check_textInputChange: false,
+    isValidUser: true,
+});
+
+
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -100,7 +73,7 @@ const PatientDetails = ({navigation, route}) => {
     try {
       if (doctor) {
         navigation.navigate('DoctorProfile', {
-          name: name,
+          name: data.name,
           age: age,
           mobile: mobile,
           gender: gender,
@@ -148,9 +121,39 @@ const PatientDetails = ({navigation, route}) => {
     setDob(DateOfBirth);
   };
 
-  const handleSubmit = () =>{
-    console.log('Submitted')
+  
+  const handleValidUser = (val) => {
+    if( val.trim().length >= 4 ) {
+        setData({
+            ...data,
+            isValidUser: true
+        });
+    } else {
+        setData({
+            ...data,
+            isValidUser: false
+        });
+    }
+}
+
+const textInputChange = (val) => {
+  if( val.trim().length >= 4 ) {
+      setData({
+          ...data,
+          name: val,
+          check_textInputChange: true,
+          isValidUser: true
+      });
+  } else {
+      setData({
+          ...data,
+          name: val,
+          check_textInputChange: false,
+          isValidUser: false
+      });
   }
+}
+
 
   return (
     <>
@@ -185,22 +188,38 @@ const PatientDetails = ({navigation, route}) => {
                         },
                       ]}
                       placeholderStyle={{ color: '#666666', fontSize: 20 }}
-                      onChangeText={(text)=>{
-                        setName(text)
-                        console.log(text)
-                      }}
-                      value={name}
+                      onChangeText={(val) => {textInputChange(val)
+                        console.log(val)
+                      }
+                      }
                       placeholderTextColor="#598"
+                      onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
 
 
                     />
                     <Text style={styles.errorMsg}>
-                     
+                    {data.check_textInputChange ? 
+                <Animatable.View
+                    animation="bounceIn"
+                >
+                    <Feather 
+                        name="check-circle"
+                        color="green"
+                        size={20}
+                    />
+                </Animatable.View>
+                : null}
                     </Text>
+                    { data.isValidUser ? null : 
+            <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+            </Animatable.View>
+            }
+            
                   </View>
               <View style={styles.dobContainer}>
                 <TouchableHighlight onPress={showDatePicker}>
-                  <Text>{dob.toLocaleDateString()}</Text>
+                  <Text>{moment(dob).format('Do-MMMM-YYYY')}</Text>
                 </TouchableHighlight>
                 {isDatePickerVisible && (
                   <DateTimePickerModal
@@ -326,16 +345,16 @@ const PatientDetails = ({navigation, route}) => {
 
                     <TouchableOpacity
                       style={
-                        !(name && age && mobile)
+                        !(data.name && age && mobile)
                           ? styles.buttonDisabled
                           : styles.button
                       }
                       onPress={signUp}
-                      disabled={!(name && age && mobile)}
+                      disabled={!(data.name && age && mobile)}
                       testID="loginButton">
                       <Text
                         style={
-                          !(name && age && mobile)
+                          !(data.name && age && mobile)
                             ? styles.textDisabled
                             : styles.buttonText
                         }>

@@ -33,6 +33,7 @@ const MyAppoints = ({ navigation }) => {
   const [patient, setPatient] = useState([]);
   const [showModal,setShowModal] = useState(false);
   const [cancelledReason,setCancelledReason] = useState('');
+  
   useFocusEffect(
     React.useCallback(() => {
       getAppointments();
@@ -311,7 +312,7 @@ const MyAppoints = ({ navigation }) => {
                         )
                       setShowModal(false);
                     }}>
-                    Cash
+                    Cancel
                   </Button>
                   
                 
