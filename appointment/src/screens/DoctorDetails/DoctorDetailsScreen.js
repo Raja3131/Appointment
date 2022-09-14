@@ -23,7 +23,7 @@ const onPress = () => {
     navigation.navigate('Appointment', { name: name, selectDoctor: selectDoctor,dob:dob,age:age,mobile:mobile })
   }
   else {
-    navigation.navigate('Patients', { selectedDoctor: selectDoctor })
+    navigation.navigate('Patients', { selectedDoctor: selectDoctor }) 
   }
 }
 

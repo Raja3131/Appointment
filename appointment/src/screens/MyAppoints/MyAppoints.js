@@ -232,7 +232,17 @@ const MyAppoints = ({ navigation }) => {
           </Pressable>
           <Pressable style={styles.viewButton}
           onPress={() =>{
-            navigation.navigate('View');
+            navigation.navigate('View',{
+              name:appointment.FirstName,
+              age:appointment.Age,
+              gender:appointment.Gender,
+              doctorName:appointment.DoctorName,
+              address:appointment.Address,
+              dob:appointment.DOB,
+              appDate:appointment.Apptdate,
+              appTime:appointment.Appttime
+
+            });
           }}
           >
             <Text style={styles.text}>View</Text>
