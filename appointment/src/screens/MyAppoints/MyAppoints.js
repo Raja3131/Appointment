@@ -230,6 +230,13 @@ const MyAppoints = ({ navigation }) => {
               }
             
           </Pressable>
+          <Pressable style={styles.viewButton}
+          onPress={() =>{
+            navigation.navigate('View');
+          }}
+          >
+            <Text style={styles.text}>View</Text>
+          </Pressable>
          {
           appointment.IsCancelled?
           null:

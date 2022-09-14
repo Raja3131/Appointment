@@ -39,6 +39,8 @@ const PatientDetails = ({navigation, route}) => {
   const [gender, setGender] = useState(null);
   const [mobile, setMobile] = useState('');
   const [doctor, setDoctor] = useState('');
+  const [services,setServices] = useState('');
+  const [aServices,setAServices] = useState('');
 
   const inputRef = useRef();
 
@@ -268,18 +270,42 @@ const textInputChange = (val) => {
                         { label: 'Female', value: 'Female' },
                       ]}
                       value={gender}
-                      style={{
-                        fontSize: 16,
-                        paddingHorizontal: 10,
-                        paddingVertical: 8,
-                        borderWidth: 0.5,
-                        borderColor: 'purple',
-                        borderRadius: 8,
-                        color: 'black',
-                        paddingRight: 30,
-                        top: 20,
-                        right: 10,
-                      }} />
+                      style={styles.dropDown} />
+                       <RNPickerSelect
+                      onValueChange={value => {
+                        setServices(value);
+                        console.log(services);
+                      }}
+                      placeholder={{
+                        label: 'Services',
+
+                      }}
+                      placeholderTextColor="red"
+                      items={[
+                        { label: 'Elder Care', value: 'Elder Care' },
+                        { label: 'Home Nursing', value: 'Home Nursing' },
+                        { label: 'Physiotherapy', value: 'Physiotherapy' },
+                        { label: 'Doctor Visit', value: 'Doctor Visit' },
+
+                      ]}
+                      value={services}
+                      style={styles.dropDown} />
+                      <RNPickerSelect
+                      onValueChange={value => {
+                        setAServices(value);
+                        console.log(gender);
+                      }}
+                      placeholder={{
+                        label: 'Additional Services',
+
+                      }}
+                      placeholderTextColor="red"
+                      items={[
+                        { label: 'Pharmacy Diagnostic', value: 'Pharmacy Diagnostic' },
+                        { label: 'Assistant&Convenience', value: 'Assistant&Convenience' },
+                      ]}
+                      value={aServices}
+                      style={styles.dropDown} />
                       
                   <View style={styles.action}>
                   

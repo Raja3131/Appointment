@@ -127,7 +127,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: '#009387',
+    backgroundColor: '#f5f5f5',
     elevation: 5,
     shadowOffset: 5,
     shadowColor: '#000',
@@ -135,4 +135,16 @@ export const styles = StyleSheet.create({
     shadowRadius: 20,
 
   },
+  dropDown:{
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: 'purple',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30,
+    top: 20,
+    right: 10,
+  }
 });
