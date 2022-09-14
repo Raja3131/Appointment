@@ -172,15 +172,7 @@ const textInputChange = (val) => {
                   backgroundColor: colors.background,
                 },
               ]}>
-                 <Text
-                    style={[
-                      styles.text_footer,
-                      {
-                        color: colors.text,
-                      },
-                    ]}>
-                    Patient
-                  </Text>
+                 
                   <View style={styles.action}>
                     <TextInput
                       placeholder="Patient Name"
@@ -226,7 +218,7 @@ const textInputChange = (val) => {
                 style={styles.dateButton}
                 
                 >
-                  <Text>DOB : {moment(dob).format('Do-MMMM-YYYY')}</Text>
+                  <Text>DOB : {moment(dob).format('Do-MMM-YYYY')}</Text>
                 </TouchableHighlight>
                 {isDatePickerVisible && (
                   <DateTimePickerModal
@@ -240,16 +232,7 @@ const textInputChange = (val) => {
                 )}
                 
               </View>
-              <Text
-                style={[
-                  styles.text_footer,
-                  {
-                    color: colors.text,
-                    marginTop: 35,
-                  },
-                ]}>
-                Age
-              </Text>
+              
               <View style={styles.action}>
                 <TextInput
                   placeholder="Age"
@@ -297,16 +280,7 @@ const textInputChange = (val) => {
                         top: 20,
                         right: 10,
                       }} />
-                        <Text
-                    style={[
-                      styles.text_footer,
-                      {
-                        color: colors.text,
-                        marginTop: 35,
-                      },
-                    ]}>
-                    Mobile
-                  </Text>
+                      
                   <View style={styles.action}>
                   
                     <ValidatedTextInput

@@ -19,7 +19,6 @@
     "@react-navigation/native-stack": "^6.5.0",
     "animatable": "^1.2.3",
     "axios": "^0.26.0",
-    "formik": "^2.2.9",
     "moment": "^2.29.2",
     "native-base": "^3.3.7",
     "prop-types": "^15.8.1",
@@ -47,7 +46,6 @@
     "react-native-screens": "^3.12.0",
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^9.2.0",
-    "react-redux": "^8.0.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {

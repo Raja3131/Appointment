@@ -37,7 +37,7 @@ const MyAppoints = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       getAppointments();
-    }, []),
+    }, [getAppointments]),
   );
   const getAppointments = async () => {
     try {
